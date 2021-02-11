@@ -15,7 +15,8 @@ App.propTypes = {
       PropTypes.shape({
         name: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired,
-        // year: PropTypes.number.isRequired
+        genre: PropTypes.string.isRequired,
+        released: PropTypes.number.isRequired
       })
   ).isRequired
 };
