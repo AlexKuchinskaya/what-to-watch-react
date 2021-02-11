@@ -10,6 +10,15 @@ const App = (props) => {
   );
 };
 
+App.propTypes = {
+  films: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        image: PropTypes.string.isRequired,
+        // year: PropTypes.number.isRequired
+      })
+  ).isRequired
+};
 export default App;
 
 

@@ -36,10 +36,10 @@ const MainPage = (props) => {
           </div>
 
           <div className="movie-card__desc">
-            <h2 className="movie-card__title">The Grand Budapest Hotel</h2>
+            <h2 className="movie-card__title">{films[20].name}</h2>
             <p className="movie-card__meta">
-              <span className="movie-card__genre">Drama</span>
-              <span className="movie-card__year">2014</span>
+              <span className="movie-card__genre">{films[20].genre}</span>
+              <span className="movie-card__year">{films[20].released}</span>
             </p>
 
             <div className="movie-card__buttons">
@@ -124,5 +124,14 @@ const MainPage = (props) => {
   </React.Fragment>;
 };
 
-
+MainPage.propTypes = {
+  films: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        image: PropTypes.string.isRequired,
+        genre: PropTypes.string.isRequired,
+        released: PropTypes.number.isRequired
+      })
+  ).isRequired
+};
 export default MainPage;

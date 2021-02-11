@@ -123,6 +123,12 @@ const films = [
     released: 2014,
     image: `img/midnight-special.jpg`
   },
+  {
+    name: `The Grand Budapest Hotel`,
+    genre: `Comedy`,
+    released: 2014,
+    image: `img/the-grand-budapest-hotel-poster.jpg`
+  }
 ];
 
 ReactDOM.render(

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const MovieCard = (props) => {
   const {filmName, filmImage} = props;
-  // const {filmName = `Fantastic Beasts: The Crimes of Grindelwald`} = props;
+
   return <React.Fragment>;
     <article className="small-movie-card catalog__movies-card">
       <div className="small-movie-card__image">
@@ -14,6 +14,11 @@ const MovieCard = (props) => {
       </h3>
     </article>
   </React.Fragment>;
+};
+
+MovieCard.propTypes = {
+  filmName: PropTypes.string.isRequired,
+  filmImage: PropTypes.string.isRequired,
 };
 
 export default MovieCard;
