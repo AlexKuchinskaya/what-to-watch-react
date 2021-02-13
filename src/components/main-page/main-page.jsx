@@ -1,9 +1,10 @@
 import React from 'react';
 import MovieCard from '../main-page/movie-card';
-import {FilmsPropType} from '../types/types';
+import Logo from '../logo/logo';
+import {mainPageAndAppPropTypes} from '../types/types';
 
 const MainPage = (props) => {
-  const {films} = props;
+  const {films, promoFilm, isLogoLinkLight} = props;
 
   return <>
     <section className="movie-card">
@@ -14,13 +15,7 @@ const MainPage = (props) => {
       <h1 className="visually-hidden">WTW</h1>
 
       <header className="page-header movie-card__head">
-        <div className="logo">
-          <a className="logo__link">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
+        <Logo />
 
         <div className="user-block">
           <div className="user-block__avatar">
@@ -32,14 +27,14 @@ const MainPage = (props) => {
       <div className="movie-card__wrap">
         <div className="movie-card__info">
           <div className="movie-card__poster">
-            <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327"/>
+            <img src={promoFilm.posterImage} alt="The Grand Budapest Hotel poster" width="218" height="327"/>
           </div>
 
           <div className="movie-card__desc">
-            <h2 className="movie-card__title">{films[20].name}</h2>
+            <h2 className="movie-card__title">{promoFilm.name}</h2>
             <p className="movie-card__meta">
-              <span className="movie-card__genre">{films[20].genre}</span>
-              <span className="movie-card__year">{films[20].released}</span>
+              <span className="movie-card__genre">{promoFilm.genre}</span>
+              <span className="movie-card__year">{promoFilm.released}</span>
             </p>
 
             <div className="movie-card__buttons">
@@ -108,13 +103,7 @@ const MainPage = (props) => {
       </section>
 
       <footer className="page-footer">
-        <div className="logo">
-          <a className="logo__link logo__link--light">
-            <span className="logo__letter logo__letter--1">W</span>
-            <span className="logo__letter logo__letter--2">T</span>
-            <span className="logo__letter logo__letter--3">W</span>
-          </a>
-        </div>
+        <Logo isLogoLinkLight={isLogoLinkLight}/>
 
         <div className="copyright">
           <p>© 2019 What to watch Ltd.</p>
@@ -124,7 +113,5 @@ const MainPage = (props) => {
   </ >;
 };
 
-MainPage.propTypes = {
-  films: FilmsPropType,
-};
+MainPage.propTypes = mainPageAndAppPropTypes;
 export default MainPage;

@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {mainPageAndAppPropTypes} from '../types/types';
 import MainPage from '../main-page/main-page';
 import SignIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
@@ -10,22 +10,22 @@ import ReviewAdding from '../add-review/add-review';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 
 const App = (props) => {
-  const {films} = props;
+  const {films, promoFilm, isLogoLinkLight} = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <MainPage films={films} />
+          <MainPage films={films} promoFilm={promoFilm} isLogoLinkLight={isLogoLinkLight}/>
         </Route>
         <Route exact path="/login">
-          <SignIn />
+          <SignIn isLogoLinkLight={isLogoLinkLight}/>
         </Route>
         <Route exact path="/mylist">
-          <MyList />
+          <MyList isLogoLinkLight={isLogoLinkLight}/>
         </Route>
         <Route exact path="/films/:id">
-          <MoviePage />
+          <MoviePage isLogoLinkLight={isLogoLinkLight}/>
         </Route>
         <Route exact path="/films/:id/review">
           <ReviewAdding />
@@ -41,16 +41,7 @@ const App = (props) => {
   );
 };
 
-App.propTypes = {
-  films: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        image: PropTypes.string.isRequired,
-        genre: PropTypes.string.isRequired,
-        released: PropTypes.number.isRequired
-      })
-  ).isRequired
-};
+App.propTypes = mainPageAndAppPropTypes;
 export default App;
 
 
