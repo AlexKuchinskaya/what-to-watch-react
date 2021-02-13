@@ -1,11 +1,11 @@
 import React from 'react';
 import MovieCard from '../main-page/movie-card';
-import PropTypes from 'prop-types';
+import {FilmsPropType} from '../types/types';
 
 const MainPage = (props) => {
   const {films} = props;
 
-  return <React.Fragment>
+  return <>
     <section className="movie-card">
       <div className="movie-card__bg">
         <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel"/>
@@ -99,7 +99,7 @@ const MainPage = (props) => {
         </ul>
 
         <div className="catalog__movies-list">
-          {films.map((film, i) => <MovieCard key={name + i} filmName={film.name} filmImage={film.image}/>)}
+          {films.map((film) => <MovieCard key={film.id} film={film}/>)}
         </div>
 
         <div className="catalog__more">
@@ -121,17 +121,10 @@ const MainPage = (props) => {
         </div>
       </footer>
     </div>
-  </React.Fragment>;
+  </ >;
 };
 
 MainPage.propTypes = {
-  films: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        image: PropTypes.string.isRequired,
-        genre: PropTypes.string.isRequired,
-        released: PropTypes.number.isRequired
-      })
-  ).isRequired
+  films: FilmsPropType,
 };
 export default MainPage;
