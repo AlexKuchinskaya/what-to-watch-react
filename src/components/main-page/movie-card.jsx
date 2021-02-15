@@ -1,24 +1,23 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {FilmPropType} from '../types/types';
 
 const MovieCard = (props) => {
-  const {filmName, filmImage} = props;
+  const {name, previewImage} = props.film;
 
-  return <React.Fragment>;
+  return <>;
     <article className="small-movie-card catalog__movies-card">
       <div className="small-movie-card__image">
-        <img src={filmImage} alt={filmName} width="280" height="175" />
+        <img src={previewImage} alt={name} width="280" height="175" />
       </div>
       <h3 className="small-movie-card__title">
-        <a className="small-movie-card__link" href="movie-page.html">{filmName}</a>
+        <a className="small-movie-card__link" href="movie-page.html">{name}</a>
       </h3>
     </article>
-  </React.Fragment>;
+  </>;
 };
 
 MovieCard.propTypes = {
-  filmName: PropTypes.string.isRequired,
-  filmImage: PropTypes.string.isRequired,
+  film: FilmPropType
 };
 
 export default MovieCard;
