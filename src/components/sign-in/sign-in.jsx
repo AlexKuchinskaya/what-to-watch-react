@@ -1,12 +1,11 @@
 import React from 'react';
 import Logo from '../logo/logo';
-import {LogoPropTypes} from '../types/types';
 
-const SignIn = ({isLogoLinkLight}) => {
+const SignIn = () => {
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
-        <Logo />
+        <Logo isLogoLinkLight={false}/>
 
         <h1 className="page-title user-page__title">Sign in</h1>
       </header>
@@ -30,7 +29,7 @@ const SignIn = ({isLogoLinkLight}) => {
       </div>
 
       <footer className="page-footer">
-        <Logo isLogoLinkLight={isLogoLinkLight}/>
+        <Logo isLogoLinkLight={true}/>
 
         <div className="copyright">
           <p>© 2019 What to watch Ltd.</p>
@@ -40,6 +39,5 @@ const SignIn = ({isLogoLinkLight}) => {
   );
 };
 
-SignIn.propTypes = LogoPropTypes;
 export default SignIn;
 

@@ -10,22 +10,22 @@ import ReviewAdding from '../add-review/add-review';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 
 const App = (props) => {
-  const {films, promoFilm, isLogoLinkLight} = props;
+  const {films, promoFilm} = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <MainPage films={films} promoFilm={promoFilm} isLogoLinkLight={isLogoLinkLight}/>
+          <MainPage films={films} promoFilm={promoFilm} />
         </Route>
         <Route exact path="/login">
-          <SignIn isLogoLinkLight={isLogoLinkLight}/>
+          <SignIn />
         </Route>
         <Route exact path="/mylist">
-          <MyList isLogoLinkLight={isLogoLinkLight}/>
+          <MyList />
         </Route>
         <Route exact path="/films/:id">
-          <MoviePage isLogoLinkLight={isLogoLinkLight}/>
+          <MoviePage />
         </Route>
         <Route exact path="/films/:id/review">
           <ReviewAdding />

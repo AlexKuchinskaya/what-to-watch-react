@@ -1,10 +1,10 @@
 import React from 'react';
-import MovieCard from '../main-page/movie-card';
+import MovieCard from '../movie-card/movie-card';
 import Logo from '../logo/logo';
 import {mainPageAndAppPropTypes} from '../types/types';
 
 const MainPage = (props) => {
-  const {films, promoFilm, isLogoLinkLight} = props;
+  const {films, promoFilm} = props;
 
   return <>
     <section className="movie-card">
@@ -15,7 +15,7 @@ const MainPage = (props) => {
       <h1 className="visually-hidden">WTW</h1>
 
       <header className="page-header movie-card__head">
-        <Logo />
+        <Logo isLogoLinkLight={false}/>
 
         <div className="user-block">
           <div className="user-block__avatar">
@@ -103,7 +103,7 @@ const MainPage = (props) => {
       </section>
 
       <footer className="page-footer">
-        <Logo isLogoLinkLight={isLogoLinkLight}/>
+        <Logo isLogoLinkLight={true}/>
 
         <div className="copyright">
           <p>© 2019 What to watch Ltd.</p>

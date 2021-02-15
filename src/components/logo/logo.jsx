@@ -1,5 +1,6 @@
 import React from 'react';
-import {LogoPropTypes} from '../types/types';
+import PropTypes from 'prop-types';
+
 
 const Logo = ({isLogoLinkLight}) => {
   return (
@@ -15,4 +16,6 @@ const Logo = ({isLogoLinkLight}) => {
 
 export default Logo;
 
-Logo.propTypes = LogoPropTypes;
+Logo.propTypes = {
+  isLogoLinkLight: PropTypes.bool
+};

@@ -1,8 +1,7 @@
 import React from 'react';
 import Logo from '../logo/logo';
-import {LogoPropTypes} from '../types/types';
 
-const MoviePage = ({isLogoLinkLight}) => {
+const MoviePage = () => {
   return <>
     <section className="movie-card movie-card--full">
       <div className="movie-card__hero">
@@ -13,7 +12,7 @@ const MoviePage = ({isLogoLinkLight}) => {
         <h1 className="visually-hidden">WTW</h1>
 
         <header className="page-header movie-card__head">
-          <Logo />
+          <Logo isLogoLinkLight={false}/>
 
           <div className="user-block">
             <div className="user-block__avatar">
@@ -136,7 +135,7 @@ const MoviePage = ({isLogoLinkLight}) => {
       </section>
 
       <footer className="page-footer">
-        <Logo isLogoLinkLight={isLogoLinkLight}/>
+        <Logo isLogoLinkLight={true}/>
 
         <div className="copyright">
           <p>© 2019 What to watch Ltd.</p>
@@ -146,5 +145,4 @@ const MoviePage = ({isLogoLinkLight}) => {
   </ >;
 };
 
-MoviePage.propTypes = LogoPropTypes;
 export default MoviePage;
