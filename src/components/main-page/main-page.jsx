@@ -1,7 +1,7 @@
 import React from 'react';
-import MovieCard from '../movie-card/movie-card';
 import Logo from '../logo/logo';
-import {mainPageAndAppPropTypes} from '../types/types';
+import {filmsListPropTypes} from '../../types/types';
+import FilmList from '../films-list/films-list';
 
 const MainPage = (props) => {
   const {films, promoFilm} = props;
@@ -93,9 +93,7 @@ const MainPage = (props) => {
           </li>
         </ul>
 
-        <div className="catalog__movies-list">
-          {films.map((film) => <MovieCard key={film.id} film={film}/>)}
-        </div>
+        <FilmList films={films}/>
 
         <div className="catalog__more">
           <button className="catalog__button" type="button">Show more</button>
@@ -113,5 +111,5 @@ const MainPage = (props) => {
   </ >;
 };
 
-MainPage.propTypes = mainPageAndAppPropTypes;
+MainPage.propTypes = filmsListPropTypes;
 export default MainPage;

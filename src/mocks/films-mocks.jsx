@@ -1,4 +1,4 @@
-export const films = [
+export const filmsMock = [
   {
     id: 1,
     name: `Fantastic Beasts: The Crimes of Grindelwald`,

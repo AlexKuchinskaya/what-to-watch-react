@@ -1,11 +1,20 @@
-import React from 'react';
-import {FilmPropType} from '../types/types';
+import React, {useState} from 'react';
+import {FilmPropType} from '../../types/types';
 
 const MovieCard = (props) => {
-  const {name, previewImage} = props.film;
+  const {id, name, previewImage} = props.film;
 
+  const [activeMovieCardId, setActiveFilm] = useState({
+    id: 0
+  });
+  console.log([activeMovieCardId, setActiveFilm]);
+  const handleFilmMouseHover = (evt) => {
+    const SelectedMovieCardId = evt.currentTarget.id;
+    console.log(`SelectedMovieCardId`, SelectedMovieCardId)
+    // setActiveFilm();
+  };
   return <>;
-    <article className="small-movie-card catalog__movies-card">
+    <article onMouseOver={(handleFilmMouseHover)} className="small-movie-card catalog__movies-card" id={id}>
       <div className="small-movie-card__image">
         <img src={previewImage} alt={name} width="280" height="175" />
       </div>

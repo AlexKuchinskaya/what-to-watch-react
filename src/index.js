@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import {films} from './mocks/films';
-import {promoFilm} from './components/mocks/mocks';
+import {filmsMock} from './mocks/films-mocks';
+import {promoFilm} from './mocks/promo-film-mocks';
 
 ReactDOM.render(
     <App
-      films = {films}
+      films = {filmsMock}
       promoFilm = {promoFilm}
     />,
     document.querySelector(`#root`)

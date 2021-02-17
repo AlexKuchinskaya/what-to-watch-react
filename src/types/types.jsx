@@ -31,7 +31,7 @@ export const PromoFilmPropType = PropTypes.shape({
 });
 
 
-export const mainPageAndAppPropTypes = {
+export const filmsListPropTypes = {
   films: FilmsPropType,
   promoFilm: PromoFilmPropType
 };

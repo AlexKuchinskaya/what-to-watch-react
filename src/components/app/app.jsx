@@ -1,5 +1,5 @@
 import React from 'react';
-import {mainPageAndAppPropTypes} from '../types/types';
+import {filmsListPropTypes} from '../../types/types';
 import MainPage from '../main-page/main-page';
 import SignIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
@@ -22,7 +22,7 @@ const App = (props) => {
           <SignIn />
         </Route>
         <Route exact path="/mylist">
-          <MyList />
+          <MyList films={films} />
         </Route>
         <Route exact path="/films/:id">
           <MoviePage />
@@ -41,7 +41,7 @@ const App = (props) => {
   );
 };
 
-App.propTypes = mainPageAndAppPropTypes;
+App.propTypes = filmsListPropTypes;
 export default App;
 
 
