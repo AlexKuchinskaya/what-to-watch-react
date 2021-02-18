@@ -31,7 +31,7 @@ const App = (props) => {
           <ReviewAdding />
         </Route>
         <Route exact path="/player/:id">
-          <Player />
+          <Player promoFilm={promoFilm}/>
         </Route>
         <Route>
           <NotFoundPage />

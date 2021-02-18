@@ -1,14 +1,28 @@
 import React, {useState} from 'react';
+import {ratingNumberList} from '../../const/rating-consts';
+import {getRandomInteger} from '../../utils/utils';
 import Logo from '../logo/logo';
 
+const MIN_RATING = 1;
+const MAX_RATING = 10;
+const getRandomRatingNumber = getRandomInteger(MIN_RATING, MAX_RATING);
 const ReviewAdding = () => {
-  const ratingNumberList = [`1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9`, `10`];
 
-  const [review, setReview] = useState(``);
+  const [review, setReview] = useState();
   const handleTextareaChange = (evt) => {
     setReview(evt.target.value);
   };
 
+  const [rating, setRating] = useState({
+    ratingValue: getRandomRatingNumber.toString(),
+    isRatingChecked: false
+  });
+
+  const handleFilmRatingInput = (evt) => {
+    const {value, checked} = evt.target;
+    setRating({ratingValue: value, isRatingChecked: checked});
+  };
+  const {ratingValue} = rating;
   return (
     <section className="movie-card movie-card--full">
       <div className="movie-card__header">
@@ -48,15 +62,23 @@ const ReviewAdding = () => {
         <form
           action="#"
           onSubmit={(evt) => evt.preventDefault()}
-          className="add-review__form"
+          className="add-review__htmlForm"
         >
           <div className="rating">
             <div className="rating__stars">
               {ratingNumberList.map((ratingNumber, index) =>
-                <>
-                  <input key={`${index}-${ratingNumber}`} className="rating__input" id={`star-${ratingNumber}`} type="radio" name="rating" value={ratingNumber}/>
-                  <label key={`${ratingNumber}-${index}`} className="rating__label" htmlFor={`star-${ratingNumber}`}>Rating {ratingNumber}</label>
-                </>
+                <React.Fragment key={`${index}-${ratingNumber}`}>
+                  <input
+                    onChange={handleFilmRatingInput}
+
+                    className="rating__input" id={`star-${ratingNumber}`}
+                    type="radio"
+                    name="rating"
+                    value={ratingNumber}
+                    checked={ratingNumber === ratingValue ? `checked` : ``}
+                  />
+                  <label className="rating__label" htmlFor={`star-${ratingNumber}`}>{`Rating ${ratingNumber}`}</label>
+                </React.Fragment>
               )}
             </div>
           </div>
