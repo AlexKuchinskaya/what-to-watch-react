@@ -2,9 +2,13 @@ import React from 'react';
 import Logo from '../logo/logo';
 import {filmsListPropTypes} from '../../types/types';
 import FilmList from '../films-list/films-list';
+import {useHistory} from 'react-router-dom';
+import Footer from '../footer/footer';
 
 const MainPage = (props) => {
   const {films, promoFilm} = props;
+
+  const history = useHistory();
 
   return <>
     <section className="movie-card">
@@ -18,7 +22,7 @@ const MainPage = (props) => {
         <Logo isLogoLinkLight={false}/>
 
         <div className="user-block">
-          <div className="user-block__avatar">
+          <div onClick={() => history.push(`/mylist`)} className="user-block__avatar">
             <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
           </div>
         </div>
@@ -100,13 +104,7 @@ const MainPage = (props) => {
         </div>
       </section>
 
-      <footer className="page-footer">
-        <Logo isLogoLinkLight={true}/>
-
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   </ >;
 };

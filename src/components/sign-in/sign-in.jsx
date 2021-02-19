@@ -1,4 +1,5 @@
 import React from 'react';
+import Footer from '../footer/footer';
 import Logo from '../logo/logo';
 
 const SignIn = () => {
@@ -28,13 +29,7 @@ const SignIn = () => {
         </form>
       </div>
 
-      <footer className="page-footer">
-        <Logo isLogoLinkLight={true}/>
-
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

@@ -70,7 +70,6 @@ const ReviewAdding = () => {
                 <React.Fragment key={`${index}-${ratingNumber}`}>
                   <input
                     onChange={handleFilmRatingInput}
-
                     className="rating__input" id={`star-${ratingNumber}`}
                     type="radio"
                     name="rating"

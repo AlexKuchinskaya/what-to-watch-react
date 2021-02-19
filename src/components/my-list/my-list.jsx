@@ -2,6 +2,7 @@ import React from 'react';
 import FilmList from '../films-list/films-list';
 import Logo from '../logo/logo';
 import {filmsListPropTypes} from '../../types/types';
+import Footer from '../footer/footer';
 
 const MyList = (props) => {
   const {films} = props;
@@ -27,13 +28,7 @@ const MyList = (props) => {
         </div>
       </section>
 
-      <footer className="page-footer">
-        <Logo isLogoLinkLight={true}/>
-
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
