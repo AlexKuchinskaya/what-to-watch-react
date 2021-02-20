@@ -11,14 +11,14 @@ const MoviePage = (props) => {
   const selectedMovie = films.find((film) => {
     return film.id === idNumber;
   });
-  const {backgroundImage, name, genre, released, posterImage, rating, director, starring, description} = selectedMovie;
+  const {backgroundImage, name, genre, released, posterImage, rating, director, starring} = selectedMovie;
 
   const similarMovies = films.filter((film) => {
     if (film.id !== selectedMovie.id) {
       return film.genre === genre;
     }
+    return null;
   });
-  console.log(`similarMovies`, similarMovies)
 
   return <>
     <section className="movie-card movie-card--full">
@@ -117,7 +117,7 @@ const MoviePage = (props) => {
           {similarMovies.map((similarMovie, index) =>
             <article key={`${index}-${similarMovie.videoLink}`} className="small-movie-card catalog__movies-card">
               <div className="small-movie-card__image">
-                <img src={similarMovie.previewImage}  alt={similarMovie.name} width="280" height="175" />
+                <img src={similarMovie.previewImage} alt={similarMovie.name} width="280" height="175" />
               </div>
               <h3 className="small-movie-card__title">
                 <Link className="small-movie-card__link" to="/">{similarMovie.name} </Link>

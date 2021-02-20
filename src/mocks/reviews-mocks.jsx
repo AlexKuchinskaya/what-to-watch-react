@@ -14,7 +14,7 @@ export const reviewsList = [
       id: 2,
       user: {
         id: 16,
-        name: "Mollie"
+        name: `Mollie`
       },
       rating: 2.4,
       comment: `A movie that will take you to another world full of emotions.`,
