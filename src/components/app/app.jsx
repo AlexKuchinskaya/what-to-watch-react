@@ -11,7 +11,6 @@ import {Switch, Route, BrowserRouter} from 'react-router-dom';
 
 const App = (props) => {
   const {films, promoFilm} = props;
-
   return (
     <BrowserRouter>
       <Switch>
@@ -25,7 +24,7 @@ const App = (props) => {
           <MyList films={films} />
         </Route>
         <Route exact path="/films/:id">
-          <MoviePage />
+          <MoviePage films={films}/>
         </Route>
         <Route exact path="/films/:id/review">
           <ReviewAdding />
@@ -40,7 +39,6 @@ const App = (props) => {
     </BrowserRouter>
   );
 };
-
 App.propTypes = filmsListPropTypes;
 export default App;
 
