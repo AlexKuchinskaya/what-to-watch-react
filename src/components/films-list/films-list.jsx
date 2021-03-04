@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import MovieCard from '../movie-card/movie-card';
-import {filmsListPropTypes} from '../../types/types';
+import {FilmsPropType} from '../../types/types';
 
 const FilmList = (props) => {
   const {films} = props;
 
-  const [activeMovieCardId, setActiveMovieCardId] = useState();
+  const [activeMovieCardId, setActiveMovieCardId] = useState(0);
 
   const handleMovieSelect = (selectedMovieId) => {
     setActiveMovieCardId(selectedMovieId);
@@ -14,12 +14,12 @@ const FilmList = (props) => {
   return (
     <div className="catalog__movies-list">
       {/* Active film id: {activeMovieCardId} */}
-      <br />
       {films.map((film) => (
         <MovieCard
           key={film.id}
           film={film}
           onMovieSelect={handleMovieSelect}
+          activeMovieCardId={activeMovieCardId}
           isSelected={film.id === activeMovieCardId}
         />
       ))}
@@ -27,5 +27,8 @@ const FilmList = (props) => {
   );
 };
 
-FilmList.propTypes = filmsListPropTypes;
+FilmList.propTypes = {
+  films: FilmsPropType
+};
+
 export default FilmList;

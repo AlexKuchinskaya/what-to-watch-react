@@ -8,28 +8,29 @@ import Player from '../player/player';
 import MoviePage from '../film/movie-page';
 import ReviewAdding from '../add-review/add-review';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {Routes} from '../../const/routes-path';
 
 const App = (props) => {
   const {films, promoFilm} = props;
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/">
+        <Route exact path={Routes.MAIN}>
           <MainPage films={films} promoFilm={promoFilm} />
         </Route>
-        <Route exact path="/login">
+        <Route exact path={Routes.LOG_IN}>
           <SignIn />
         </Route>
-        <Route exact path="/mylist">
+        <Route exact path={Routes.MY_LIST}>
           <MyList films={films} />
         </Route>
-        <Route exact path="/films/:id">
+        <Route exact path={Routes.FILMS_ID}>
           <MoviePage films={films}/>
         </Route>
-        <Route exact path="/films/:id/review">
+        <Route exact path={Routes.FILMS_ID_REVIEW}>
           <ReviewAdding />
         </Route>
-        <Route exact path="/player/:id">
+        <Route exact path={Routes.PLAYER}>
           <Player promoFilm={promoFilm}/>
         </Route>
         <Route>

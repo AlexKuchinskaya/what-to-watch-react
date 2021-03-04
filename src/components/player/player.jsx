@@ -39,5 +39,7 @@ const Player = (props) => {
   );
 };
 
-Player.propTypes = PromoFilmPropType;
+Player.propTypes = {
+  promoFilm: PromoFilmPropType
+};
 export default Player;

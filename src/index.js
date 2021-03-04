@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import {filmsMock} from './mocks/films-mocks';
-import {promoFilm} from './mocks/promo-film-mocks';
+import {filmsMock} from './mocks/films';
+import {promoFilm} from './mocks/promo-film';
 
 ReactDOM.render(
     <App

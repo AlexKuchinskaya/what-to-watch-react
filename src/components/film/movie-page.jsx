@@ -3,9 +3,11 @@ import Logo from '../logo/logo';
 import {Link, useParams} from 'react-router-dom';
 import Footer from '../footer/footer';
 import {filmsListPropTypes} from '../../types/types';
+import {checkFilmRating} from './rating-rendering';
 
 const MoviePage = (props) => {
   const {films} = props;
+
   let {id} = useParams();
   let idNumber = parseInt(id, 10);
   const selectedMovie = films.find((film) => {
@@ -90,7 +92,7 @@ const MoviePage = (props) => {
             <div className="movie-rating">
               <div className="movie-rating__score">{rating}</div>
               <p className="movie-rating__meta">
-                <span className="movie-rating__level">Very good</span>
+                <span className="movie-rating__level">{checkFilmRating(rating)}</span>
                 <span className="movie-rating__count">240 ratings</span>
               </p>
             </div>

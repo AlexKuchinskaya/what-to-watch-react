@@ -4,9 +4,8 @@ import {FilmPropType} from '../../types/types';
 import {useHistory, Link} from 'react-router-dom';
 
 
-const MovieCard = ({film, onMovieSelect, isSelected}) => {
+const MovieCard = ({film, onMovieSelect, activeMovieCardId}) => {
   const {id, name, previewImage} = film;
-
   const handleFilmMouseHover = () => {
     onMovieSelect(id);
   };
@@ -14,7 +13,7 @@ const MovieCard = ({film, onMovieSelect, isSelected}) => {
   const history = useHistory();
 
   const handleMovieDescriptionRedirect = () => {
-    history.push(`/films/:id`);
+    history.push(`/films/${activeMovieCardId}`);
   };
   return (
     <article onMouseOver={handleFilmMouseHover} onClick={handleMovieDescriptionRedirect} className="small-movie-card catalog__movies-card">
@@ -22,9 +21,8 @@ const MovieCard = ({film, onMovieSelect, isSelected}) => {
         <img src={previewImage} alt={name} width="280" height="175" />
       </div>
       <h3 className="small-movie-card__title">
-        <Link className="small-movie-card__link" to="/films/:id">{name}</Link>
+        <Link className="small-movie-card__link" to={`/films/${activeMovieCardId}`}>{name}</Link>
       </h3>
-      { isSelected ? `Selected` : `` }
     </article>
   );
 };
@@ -32,7 +30,7 @@ const MovieCard = ({film, onMovieSelect, isSelected}) => {
 MovieCard.propTypes = {
   film: FilmPropType,
   onMovieSelect: PropTypes.func.isRequired,
-  isSelected: PropTypes.bool
+  activeMovieCardId: PropTypes.number.isRequired
 };
 
 export default MovieCard;
