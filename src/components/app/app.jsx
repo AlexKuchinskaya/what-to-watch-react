@@ -30,9 +30,9 @@ const App = (props) => {
         <Route exact path={Routes.FILMS_ID_REVIEW}>
           <ReviewAdding />
         </Route>
-        <Route exact path={Routes.PLAYER}>
-          <Player promoFilm={promoFilm}/>
-        </Route>
+        {/* <Route exact path={Routes.PLAYER}>
+          <Player />
+        </Route> */}
         <Route>
           <NotFoundPage />
         </Route>
