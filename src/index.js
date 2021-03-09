@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import {films, promoFilm} from './components/mocks/mocks';
+import {filmsMock} from './mocks/films';
+import {promoFilm} from './mocks/promo-film';
 
 ReactDOM.render(
     <App
-      films = {films}
+      films = {filmsMock}
       promoFilm = {promoFilm}
-      isLogoLinkLight = {true}
     />,
     document.querySelector(`#root`)
 );

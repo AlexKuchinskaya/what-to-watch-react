@@ -1,10 +1,14 @@
 import React from 'react';
-import MovieCard from '../main-page/movie-card';
 import Logo from '../logo/logo';
-import {mainPageAndAppPropTypes} from '../types/types';
+import {filmsListPropTypes} from '../../types/types';
+import FilmList from '../films-list/films-list';
+import {useHistory} from 'react-router-dom';
+import Footer from '../footer/footer';
 
 const MainPage = (props) => {
-  const {films, promoFilm, isLogoLinkLight} = props;
+  const {films, promoFilm} = props;
+
+  const history = useHistory();
 
   return <>
     <section className="movie-card">
@@ -15,10 +19,10 @@ const MainPage = (props) => {
       <h1 className="visually-hidden">WTW</h1>
 
       <header className="page-header movie-card__head">
-        <Logo />
+        <Logo isLogoLinkLight={false}/>
 
         <div className="user-block">
-          <div className="user-block__avatar">
+          <div onClick={() => history.push(`/mylist`)} className="user-block__avatar">
             <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
           </div>
         </div>
@@ -93,25 +97,17 @@ const MainPage = (props) => {
           </li>
         </ul>
 
-        <div className="catalog__movies-list">
-          {films.map((film) => <MovieCard key={film.id} film={film}/>)}
-        </div>
+        <FilmList films={films}/>
 
         <div className="catalog__more">
           <button className="catalog__button" type="button">Show more</button>
         </div>
       </section>
 
-      <footer className="page-footer">
-        <Logo isLogoLinkLight={isLogoLinkLight}/>
-
-        <div className="copyright">
-          <p>© 2019 What to watch Ltd.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   </ >;
 };
 
-MainPage.propTypes = mainPageAndAppPropTypes;
+MainPage.propTypes = filmsListPropTypes;
 export default MainPage;

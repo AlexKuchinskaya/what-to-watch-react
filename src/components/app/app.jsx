@@ -1,5 +1,5 @@
 import React from 'react';
-import {mainPageAndAppPropTypes} from '../types/types';
+import {filmsListPropTypes} from '../../types/types';
 import MainPage from '../main-page/main-page';
 import SignIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
@@ -8,30 +8,30 @@ import Player from '../player/player';
 import MoviePage from '../film/movie-page';
 import ReviewAdding from '../add-review/add-review';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {Routes} from '../../const/routes-path';
 
 const App = (props) => {
-  const {films, promoFilm, isLogoLinkLight} = props;
-
+  const {films, promoFilm} = props;
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/">
-          <MainPage films={films} promoFilm={promoFilm} isLogoLinkLight={isLogoLinkLight}/>
+        <Route exact path={Routes.MAIN}>
+          <MainPage films={films} promoFilm={promoFilm} />
         </Route>
-        <Route exact path="/login">
-          <SignIn isLogoLinkLight={isLogoLinkLight}/>
+        <Route exact path={Routes.LOG_IN}>
+          <SignIn />
         </Route>
-        <Route exact path="/mylist">
-          <MyList isLogoLinkLight={isLogoLinkLight}/>
+        <Route exact path={Routes.MY_LIST}>
+          <MyList films={films} />
         </Route>
-        <Route exact path="/films/:id">
-          <MoviePage isLogoLinkLight={isLogoLinkLight}/>
+        <Route exact path={Routes.FILMS_ID}>
+          <MoviePage films={films}/>
         </Route>
-        <Route exact path="/films/:id/review">
+        <Route exact path={Routes.FILMS_ID_REVIEW}>
           <ReviewAdding />
         </Route>
-        <Route exact path="/player/:id">
-          <Player />
+        <Route exact path={Routes.PLAYER}>
+          <Player promoFilm={promoFilm}/>
         </Route>
         <Route>
           <NotFoundPage />
@@ -40,8 +40,7 @@ const App = (props) => {
     </BrowserRouter>
   );
 };
-
-App.propTypes = mainPageAndAppPropTypes;
+App.propTypes = filmsListPropTypes;
 export default App;
 
 
