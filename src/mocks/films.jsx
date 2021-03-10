@@ -89,7 +89,7 @@ export const filmsMock = [
     scoresCount: 240,
     director: `Stanley Kubrick`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
-    runTime: 99,
+    runTime: 299,
     genre: `Drama`,
     released: 2011,
     isFavorite: false
@@ -108,7 +108,7 @@ export const filmsMock = [
     scoresCount: 240,
     director: `Christopher Nolan`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
-    runTime: 99,
+    runTime: 49,
     genre: `Comedy`,
     released: 2019,
     isFavorite: false
@@ -146,7 +146,7 @@ export const filmsMock = [
     scoresCount: 240,
     director: `Steven Spielberg`,
     starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
-    runTime: 99,
+    runTime: 129,
     genre: `Comedy`,
     released: 2014,
     isFavorite: true

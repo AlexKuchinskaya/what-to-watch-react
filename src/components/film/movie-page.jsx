@@ -4,6 +4,8 @@ import {Link, useParams} from 'react-router-dom';
 import Footer from '../footer/footer';
 import {filmsListPropTypes} from '../../types/types';
 import {checkFilmRating} from './rating-rendering';
+import Tabs from './tabs';
+import MovieInDetails from './tab-details';
 
 const MoviePage = (props) => {
   const {films} = props;
@@ -74,37 +76,28 @@ const MoviePage = (props) => {
             <img src={posterImage} alt={name} width="218" height="327" />
           </div>
 
-          <div className="movie-card__desc">
-            <nav className="movie-nav movie-card__nav">
-              <ul className="movie-nav__list">
-                <li className="movie-nav__item movie-nav__item--active">
-                  <a href="#" className="movie-nav__link">Overview</a>
-                </li>
-                <li className="movie-nav__item">
-                  <a href="#" className="movie-nav__link">Details</a>
-                </li>
-                <li className="movie-nav__item">
-                  <a href="#" className="movie-nav__link">Reviews</a>
-                </li>
-              </ul>
-            </nav>
+          <Tabs>
+            <div label="Overview">
+              <div className="movie-rating">
+                <div className="movie-rating__score">{rating}</div>
+                <p className="movie-rating__meta">
+                  <span className="movie-rating__level">{checkFilmRating(rating)}</span>
+                  <span className="movie-rating__count">240 ratings</span>
+                </p>
+              </div>
 
-            <div className="movie-rating">
-              <div className="movie-rating__score">{rating}</div>
-              <p className="movie-rating__meta">
-                <span className="movie-rating__level">{checkFilmRating(rating)}</span>
-                <span className="movie-rating__count">240 ratings</span>
-              </p>
+              <div className="movie-card__text">
+                <p>{description}</p>
+
+                <p className="movie-card__director"><strong>Director: {director}</strong></p>
+
+                <p className="movie-card__starring"><strong>Starring: {starring.join(`, `)}</strong></p>
+              </div>
             </div>
-
-            <div className="movie-card__text">
-              <p>{description}</p>
-
-              <p className="movie-card__director"><strong>Director: {director}</strong></p>
-
-              <p className="movie-card__starring"><strong>Starring: {starring.join(`, `)}</strong></p>
+            <div label="Details" className="movie-card__text movie-card__row">
+              <MovieInDetails selectedMovie={selectedMovie}/>
             </div>
-          </div>
+          </Tabs>
         </div>
       </div>
     </section>
@@ -120,7 +113,7 @@ const MoviePage = (props) => {
                 <img src={similarMovie.previewImage} alt={similarMovie.name} width="280" height="175" />
               </div>
               <h3 className="small-movie-card__title">
-                <Link className="small-movie-card__link" to="/">{similarMovie.name} </Link>
+                <Link className="small-movie-card__link" to="/films/:id">{similarMovie.name} </Link>
               </h3>
             </article>
           )}
