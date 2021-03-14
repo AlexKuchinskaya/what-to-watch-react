@@ -7,7 +7,7 @@ const MovieInDetails = ({selectedMovie}) => {
   const {genre, released, runTime, director, starring} = selectedMovie;
 
   return (
-    <>
+    <div className="movie-card__text movie-card__row">
       <div className="movie-card__text-col">
         <p className="movie-card__details-item">
           <strong className="movie-card__details-name">Director</strong>
@@ -39,7 +39,7 @@ const MovieInDetails = ({selectedMovie}) => {
           <span className="movie-card__details-value">{released}</span>
         </p>
       </div>
-    </>
+    </div>
   );
 };
 

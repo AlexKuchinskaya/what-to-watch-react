@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 
 const Tabs = ({children}) => {
   const [activeTab, setactiveTab] = useState(children[0].props.label);
@@ -28,7 +29,7 @@ const Tabs = ({children}) => {
       {children.map((child) => {
         if ((child.props.label === activeTab)) {
           return (
-            <div key={child.props.label}>{child.props.children}</div>
+            <React.Fragment key={child.props.label}>{child.props.children}</React.Fragment>
           );
         }
         return null;
@@ -36,4 +37,9 @@ const Tabs = ({children}) => {
     </div>
   );
 };
+
+Tabs.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
 export default Tabs;

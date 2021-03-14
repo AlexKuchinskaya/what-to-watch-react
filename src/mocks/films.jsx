@@ -83,7 +83,7 @@ export const filmsMock = [
     backgroundImage: `https://assets.htmlacademy.ru/intensives/javascript-3/film/background/We_need_to_talk_about_Kevin.jpg`,
     backgroundColor: `#ffffff`,
     videoLink: `https://some-link`,
-    previewVideoLink: `https://some-link`,
+    previewVideoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
     description: `Kevin's mother struggles to love her strange child, despite the increasingly dangerous things he says and does as he grows up. But Kevin is just getting started, and his final act will be beyond anything anyone imagined.`,
     rating: 8.3,
     scoresCount: 240,

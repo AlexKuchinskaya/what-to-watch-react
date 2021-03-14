@@ -3,9 +3,11 @@ import Logo from '../logo/logo';
 import {Link, useParams} from 'react-router-dom';
 import Footer from '../footer/footer';
 import {filmsListPropTypes} from '../../types/types';
-import {checkFilmRating} from './rating-rendering';
 import Tabs from './tabs';
 import MovieInDetails from './tab-details';
+import MovieReviews from './tab-reviews';
+import MovieOverview from './tab-overview';
+import SimilarMovies from './similar-movies';
 
 const MoviePage = (props) => {
   const {films} = props;
@@ -15,7 +17,7 @@ const MoviePage = (props) => {
   const selectedMovie = films.find((film) => {
     return film.id === idNumber;
   });
-  const {backgroundImage, name, genre, released, posterImage, rating, director, starring, description} = selectedMovie;
+  const {backgroundImage, name, genre, released, posterImage} = selectedMovie;
 
   const similarMovies = films.filter((film) => {
     if (film.id !== selectedMovie.id) {
@@ -78,24 +80,13 @@ const MoviePage = (props) => {
 
           <Tabs>
             <div label="Overview">
-              <div className="movie-rating">
-                <div className="movie-rating__score">{rating}</div>
-                <p className="movie-rating__meta">
-                  <span className="movie-rating__level">{checkFilmRating(rating)}</span>
-                  <span className="movie-rating__count">240 ratings</span>
-                </p>
-              </div>
-
-              <div className="movie-card__text">
-                <p>{description}</p>
-
-                <p className="movie-card__director"><strong>Director: {director}</strong></p>
-
-                <p className="movie-card__starring"><strong>Starring: {starring.join(`, `)}</strong></p>
-              </div>
+              <MovieOverview selectedMovie={selectedMovie}/>
             </div>
-            <div label="Details" className="movie-card__text movie-card__row">
-              <MovieInDetails selectedMovie={selectedMovie}/>
+            <div label="Details">
+              <MovieInDetails selectedMovie={selectedMovie} />
+            </div>
+            <div label="Reviews">
+              <MovieReviews />
             </div>
           </Tabs>
         </div>
@@ -105,19 +96,7 @@ const MoviePage = (props) => {
     <div className="page-content">
       <section className="catalog catalog--like-this">
         <h2 className="catalog__title">More like this</h2>
-
-        <div className="catalog__movies-list">
-          {similarMovies.map((similarMovie, index) =>
-            <article key={`${index}-${similarMovie.videoLink}`} className="small-movie-card catalog__movies-card">
-              <div className="small-movie-card__image">
-                <img src={similarMovie.previewImage} alt={similarMovie.name} width="280" height="175" />
-              </div>
-              <h3 className="small-movie-card__title">
-                <Link className="small-movie-card__link" to="/films/:id">{similarMovie.name} </Link>
-              </h3>
-            </article>
-          )}
-        </div>
+        <SimilarMovies similarMovies={similarMovies}/>
       </section>
 
       <Footer />

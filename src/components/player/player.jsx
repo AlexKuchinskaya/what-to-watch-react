@@ -1,67 +1,88 @@
-import React, {useState, useEffect, useRef} from 'react';
+
+import React, {useEffect, useRef, useState} from 'react';
+import PropTypes from 'prop-types';
+import {PromoFilmPropType} from '../../types/types';
 import PlayerPlayButtonSvg from './player-play-button';
 import PlayerPauseButtonSvg from './player-pause-button';
-import PropTypes from 'prop-types';
-import {FilmPropType} from '../../types/types';
+import {setTime} from './player-utils';
 
-const Player = ({film, defaultIsPlaying, activeMovieCardId}) => {
-  const {name, previewImage, previewVideoLink} = film;
-  console.log(`film`, film)
+const Player = ({promoFilm}) => {
+  // const {previewImage, name, previewVideoLink} = film;
+  const [isVideoPlaying, setIsPlaying] = useState(false);
+  const [isFullScreen, setFullScreen] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(defaultIsPlaying);
+  const {name, backgroundImage, previewVideoLink} = promoFilm;
+
   const videoRef = useRef();
+  const [runTime, setRunTime] = useState(0);
+  const [durationTime, setdurationTime] = useState(0);
+
+  const DurationAndRunTimesDifference = durationTime - runTime;
+
+  const timeElapsed = setTime(DurationAndRunTimesDifference);
+  const valueProgress = Math.floor((runTime / durationTime) * 100);
+  // const videoPastTimeFormatted = setTime(runTime);
+  // const videoTotalDurationFormatted = setTime(durationTime);
+
+
+  const handleStopPlaying = () => {
+    videoRef.current.pause();
+    videoRef.current.currentTime = null;
+    setIsPlaying(false);
+  };
 
   useEffect(() => {
-    videoRef.current.oncanplaythrough = setIsLoading(false);
-    videoRef.current.onplay = setIsPlaying(true);
-    videoRef.current.onpause = setIsPlaying(true);
-
-    return (() => {
-      console.log(`после отрисовки videoRef`, videoRef.current)
-      videoRef.current.oncanplaythrough = null;
-      videoRef.current.onplay = null;
-      videoRef.current.onpause = null;
-      videoRef.current = null;
-    });
-  }, [activeMovieCardId]);
-
-  useEffect(() => {
-    if (isPlaying) {
+    if (isVideoPlaying) {
       videoRef.current.play();
       return;
+    } else {
+      videoRef.current.pause();
     }
-    videoRef.current.pause();
-  }, [isPlaying]);
+  }, [isVideoPlaying]);
+
+  useEffect(() => {
+    if (isFullScreen) {
+      videoRef.current.parentElement.requestFullscreen();
+      return;
+    } else {
+      document.webkitExitFullscreen();
+    }
+  }, [isFullScreen]);
 
   return (
-    <div className="player">
-      <video src={previewVideoLink} ref={videoRef} className="player__video" poster="img/player-poster.jpg"></video>
+    <div className="player" >
+      <video
+        src={previewVideoLink}
+        ref={videoRef}
+        muted={true}
+        className="player__video"
+        poster={backgroundImage}
+        onLoadedMetadata={(e) => {
+          setdurationTime(e.target.duration);
 
-      <button type="button" className="player__exit">Exit</button>
-
+        }}
+        onTimeUpdate={(e) => {
+          setRunTime(e.target.currentTime);
+        }}
+        onEnded={handleStopPlaying}>
+      </video>
+      <button type="button" className="player__exit" >Exit</button>
       <div className="player__controls">
         <div className="player__controls-row">
           <div className="player__time">
-            <progress className="player__progress" value="30" max="100"></progress>
-            <div className="player__toggler" style={{left: `30%`}}>Toggler</div>
+            <progress className="player__progress" value={isNaN(valueProgress) ? 0 : valueProgress} max="100"></progress>
+            <div className="player__toggler" style={{left: `${valueProgress}%`}}>Toggler</div>
           </div>
-          <div className="player__time-value">1:30:29</div>
+          <div className="player__time-value">{timeElapsed}</div>
         </div>
-
         <div className="player__controls-row">
-          <button
-            type="button"
-            className="player__play"
-            disabled={isLoading}
-            onClick={setIsPlaying(!isPlaying)}
-          >
-            {isPlaying ? PlayerPlayButtonSvg : PlayerPauseButtonSvg}
-            <span>{isPlaying ? `Play` : `Pause`}</span>
+          <button type="button" className="player__play" onClick={() => setIsPlaying(!isVideoPlaying)}>
+            {isVideoPlaying ? <PlayerPauseButtonSvg /> : <PlayerPlayButtonSvg />}
+            <span>{isVideoPlaying ? `Play` : `Pause`}</span>
           </button>
           <div className="player__name">{name}</div>
 
-          <button type="button" className="player__full-screen">
+          <button type="button" className="player__full-screen" onClick={() => setFullScreen(!isFullScreen)}>
             <svg viewBox="0 0 27 27" width="27" height="27">
               <use xlinkHref="#full-screen"></use>
             </svg>
@@ -74,6 +95,9 @@ const Player = ({film, defaultIsPlaying, activeMovieCardId}) => {
 };
 
 Player.propTypes = {
-  film: FilmPropType
+  promoFilm: PromoFilmPropType,
+  // film: FilmPropType,
+  isPlaying: PropTypes.bool
 };
 export default Player;
+

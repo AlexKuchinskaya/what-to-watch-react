@@ -55,7 +55,7 @@ export const reviewsList = [
   ],
   [
     {
-      id: 1,
+      id: 4,
       user: {
         id: 11,
         name: `Jack`
@@ -67,7 +67,7 @@ export const reviewsList = [
   ],
   [
     {
-      id: 1,
+      id: 5,
       user: {
         id: 18,
         name: `Sophie`
@@ -79,7 +79,7 @@ export const reviewsList = [
   ],
   [
     {
-      id: 1,
+      id: 5,
       user: {
         id: 18,
         name: `Sophie`
@@ -91,7 +91,7 @@ export const reviewsList = [
   ],
   [
     {
-      id: 3,
+      id: 6,
       user: {
         id: 18,
         name: `Pedro`
@@ -103,7 +103,7 @@ export const reviewsList = [
   ],
   [
     {
-      id: 19,
+      id: 7,
       user: {
         id: 18,
         name: `Lora`
