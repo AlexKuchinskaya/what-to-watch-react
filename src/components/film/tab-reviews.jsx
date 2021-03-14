@@ -1,8 +1,10 @@
 import React from 'react';
 import {FilmPropType} from '../../types/types';
-
+import {formatReviewDate} from '../../utils/date-formatting';
 
 const MovieReviews = () => {
+  const RANDOM_DATE = `2021-01-26T10:52:50.156Z`;
+  const randomDateFormatted = formatReviewDate(RANDOM_DATE);
 
   return (
     <div className="movie-card__reviews movie-card__row">
@@ -13,7 +15,7 @@ const MovieReviews = () => {
 
             <footer className="review__details">
               <cite className="review__author">Kate Muir</cite>
-              <time className="review__date" dateTime="2016-12-24">December 24, 2016</time>
+              <time className="review__date" dateTime={RANDOM_DATE}>{randomDateFormatted}</time>
             </footer>
           </blockquote>
 
@@ -26,7 +28,7 @@ const MovieReviews = () => {
 
             <footer className="review__details">
               <cite className="review__author">Bill Goodykoontz</cite>
-              <time className="review__date" dateTime="2015-11-18">November 18, 2015</time>
+              <time className="review__date" dateTime={RANDOM_DATE}>{randomDateFormatted}</time>
             </footer>
           </blockquote>
 
@@ -39,7 +41,7 @@ const MovieReviews = () => {
 
             <footer className="review__details">
               <cite className="review__author">Amanda Greever</cite>
-              <time className="review__date" dateTime="2015-11-18">November 18, 2015</time>
+              <time className="review__date" dateTime={RANDOM_DATE}>{randomDateFormatted}</time>
             </footer>
           </blockquote>
 
@@ -53,7 +55,7 @@ const MovieReviews = () => {
 
             <footer className="review__details">
               <cite className="review__author">Matthew Lickona</cite>
-              <time className="review__date" dateTime="2016-12-20">December 20, 2016</time>
+              <time className="review__date" dateTime={RANDOM_DATE}>{randomDateFormatted}</time>
             </footer>
           </blockquote>
 
@@ -66,7 +68,7 @@ const MovieReviews = () => {
 
             <footer className="review__details">
               <cite className="review__author">Paula Fleri-Soler</cite>
-              <time className="review__date" dateTime="2016-12-20">December 20, 2016</time>
+              <time className="review__date" dateTime={RANDOM_DATE}>{randomDateFormatted}</time>
             </footer>
           </blockquote>
 
@@ -79,7 +81,7 @@ const MovieReviews = () => {
 
             <footer className="review__details">
               <cite className="review__author">Paula Fleri-Soler</cite>
-              <time className="review__date" dateTime="2016-12-20">December 20, 2016</time>
+              <time className="review__date" dateTime={RANDOM_DATE}>{randomDateFormatted}</time>
             </footer>
           </blockquote>
 
