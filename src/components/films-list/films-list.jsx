@@ -7,9 +7,11 @@ const FilmList = (props) => {
 
   const [activeMovieCardId, setActiveMovieCardId] = useState(0);
 
+
   const handleMovieSelect = (selectedMovieId) => {
     setActiveMovieCardId(selectedMovieId);
   };
+
 
   return (
     <div className="catalog__movies-list">

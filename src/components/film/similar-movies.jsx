@@ -1,0 +1,26 @@
+import React from 'react';
+import {FilmsPropType} from '../../types/types';
+import {Link} from 'react-router-dom';
+
+const SimilarMovies = ({similarMovies}) => {
+
+  return (
+    <div className="catalog__movies-list">
+      {similarMovies.map((similarMovie, index) =>
+        <article key={`${index}-${similarMovie.videoLink}`} className="small-movie-card catalog__movies-card">
+          <div className="small-movie-card__image">
+            <img src={similarMovie.previewImage} alt={similarMovie.name} width="280" height="175" />
+          </div>
+          <h3 className="small-movie-card__title">
+            <Link className="small-movie-card__link" to="/films/:id">{similarMovie.name} </Link>
+          </h3>
+        </article>
+      )}
+    </div>
+  );
+};
+
+SimilarMovies.propTypes = {
+  similarMovies: FilmsPropType
+};
+export default SimilarMovies;
