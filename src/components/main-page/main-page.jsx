@@ -5,11 +5,15 @@ import FilmList from '../films-list/films-list';
 import {useHistory} from 'react-router-dom';
 import Footer from '../footer/footer';
 import GenreList from './genre-list';
+import ShowMoreButton from './show-more-button';
+import {connect} from 'react-redux';
+import {filterMoviesByGenre, getCurrentFilmsShownCount} from '../../selectors/selectors';
 
 const MainPage = (props) => {
-  const {promoFilm} = props;
+  const {promoFilm, filteredfilms, filmsShownCount} = props;
 
   const history = useHistory();
+  const isShowMoreButtonShown = filteredfilms.length > filmsShownCount;
 
   return <>
     <section className="movie-card">
@@ -65,13 +69,10 @@ const MainPage = (props) => {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-
         <GenreList />
         <FilmList />
+        {isShowMoreButtonShown ? <ShowMoreButton /> : null}
 
-        <div className="catalog__more">
-          <button className="catalog__button" type="button">Show more</button>
-        </div>
       </section>
 
       <Footer />
@@ -82,5 +83,12 @@ const MainPage = (props) => {
 
 MainPage.propTypes = filmsListPropTypes;
 
-export default MainPage;
+const mapStateToProps = (state) => ({
+  filteredfilms: filterMoviesByGenre(state),
+  filmsShownCount: getCurrentFilmsShownCount(state),
+});
+
+
+export {MainPage};
+export default connect(mapStateToProps)(MainPage);
 

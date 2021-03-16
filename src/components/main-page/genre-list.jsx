@@ -5,7 +5,7 @@ import {ActionCreator} from '../../store/action';
 import PropTypes from 'prop-types';
 
 const GenreList = (props) => {
-  const {allGenres, activeGenre, onGenreClick} = props;
+  const {allGenres, activeGenre, onGenreClick, onGenreResetShowMoreButtonClick} = props;
 
   return (
     <ul className="catalog__genres-list" >
@@ -17,6 +17,7 @@ const GenreList = (props) => {
           onClick={(evt) => {
             evt.preventDefault();
             onGenreClick(genre);
+            onGenreResetShowMoreButtonClick();
           }}
         >
           <a href="#" className="catalog__genres-link">{genre}</a>
@@ -30,6 +31,7 @@ GenreList.propTypes = {
   activeGenre: PropTypes.string.isRequired,
   allGenres: PropTypes.arrayOf(PropTypes.string),
   onGenreClick: PropTypes.func,
+  onGenreResetShowMoreButtonClick: PropTypes.func,
 };
 
 
@@ -42,7 +44,9 @@ const mapDispatchToProps = (dispatch) => ({
   onGenreClick(genre) {
     dispatch(ActionCreator.changeGenre(genre));
   },
-
+  onGenreResetShowMoreButtonClick() {
+    dispatch(ActionCreator.resetShowMoreMoviesButton());
+  }
 });
 export {GenreList};
 export default connect(mapStateToProps, mapDispatchToProps)(GenreList);

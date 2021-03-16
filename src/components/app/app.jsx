@@ -9,14 +9,22 @@ import MoviePage from '../film/movie-page';
 import ReviewAdding from '../add-review/add-review';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {Routes} from '../../const/routes-path';
+import {connect} from 'react-redux';
+import {ActionCreator} from '../../store/action';
+import {getFilmList, getPromofilm} from '../../selectors/selectors';
 
 const App = (props) => {
-  const {films, promoFilm} = props;
+  const {films, promoFilm, resetShowMoreMoviesButton, resetGenre} = props;
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path={Routes.MAIN}>
-          <MainPage films={films} promoFilm={promoFilm} />
+        <Route exact path={Routes.MAIN}
+          render={ () => {
+            resetShowMoreMoviesButton();
+            resetGenre();
+            return <MainPage films={films} promoFilm={promoFilm} />;
+          }}
+        >
         </Route>
         <Route exact path={Routes.LOG_IN}>
           <SignIn />
@@ -41,6 +49,22 @@ const App = (props) => {
   );
 };
 App.propTypes = filmsListPropTypes;
-export default App;
 
+const mapStateToProps = (state) => (
+  {
+    films: getFilmList(state),
+    promoFilm: getPromofilm(state),
+  }
+);
+
+const mapDispatchToProps = (dispatch) => ({
+  resetShowMoreMoviesButton() {
+    dispatch(ActionCreator.resetShowMoreMoviesButton());
+  },
+  resetGenre(genre) {
+    dispatch(ActionCreator.resetGenre(genre));
+  },
+});
+export {App};
+export default connect(mapStateToProps, mapDispatchToProps)(App);
 
