@@ -8,19 +8,25 @@ import {PREVIEW_HEIGHT, PREVIEW_WIDTH, VIDEO_DELAY} from '../../const/utils';
 
 
 const MovieCard = ({film, onMovieSelect, activeMovieCardId}) => {
-  const {id, name, previewImage} = film;
 
   const [isPlaying, setIsPlaying] = useState(false);
   let timer = null;
+
+  const playVideo = (element) => {
+    if (element) {
+      setTimeout(() => element.play(), VIDEO_DELAY);
+    }
+  };
 
   const handleFilmMouseEnter = () => {
     if (timer) {
       clearTimeout(timer);
     }
-    timer = setTimeout(() => {
-      setIsPlaying(true);
-    }, VIDEO_DELAY);
-    onMovieSelect(id);
+    setIsPlaying(true);
+    // timer = setTimeout(() => {
+    //   setIsPlaying(true);
+    // }, VIDEO_DELAY);
+    onMovieSelect(film.id);
   };
 
   const handleFilmMouseLeave = () => {
@@ -33,25 +39,27 @@ const MovieCard = ({film, onMovieSelect, activeMovieCardId}) => {
   const history = useHistory();
 
   const handleMovieDescriptionRedirect = () => {
-    onMovieSelect(id);
+    onMovieSelect(film.id);
     history.push(`/films/${activeMovieCardId}`);
   };
   return (
     <article onMouseEnter={handleFilmMouseEnter} onMouseLeave={handleFilmMouseLeave} onClick={handleMovieDescriptionRedirect} className="small-movie-card catalog__movies-card">
 
       <div className="small-movie-card__image">
-        {isPlaying && id === activeMovieCardId ?
+        {isPlaying && film.id === activeMovieCardId ?
           <VideoPlayer
-            film={film}
+            src={film.previewVideoLink}
+            poster={film.previewImage}
+            playVideo={playVideo}
             isPlaying={isPlaying}
             width={PREVIEW_WIDTH}
             height={PREVIEW_HEIGHT}
           /> :
-          <img src={previewImage} alt={name} width={PREVIEW_WIDTH} height={PREVIEW_HEIGHT} />}
+          <img src={film.previewImage} alt={film.name} width={PREVIEW_WIDTH} height={PREVIEW_HEIGHT} />}
       </div>
 
       <h3 className="small-movie-card__title">
-        <Link className="small-movie-card__link" to={`/films/${activeMovieCardId}`}>{name}</Link>
+        <Link className="small-movie-card__link" to={`/films/${activeMovieCardId}`}>{film.name}</Link>
       </h3>
     </article>
 

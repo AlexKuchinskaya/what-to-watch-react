@@ -1,25 +1,20 @@
 import React, {useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
-import {FilmPropType} from '../../types/types';
 
-const VideoPlayer = ({film, isPlaying, width, height}) => {
-  const {previewImage, previewVideoLink} = film;
+const VideoPlayer = ({src, poster, isPlaying, width, height, playVideo}) => {
+
   const videoRef = useRef();
-
 
   useEffect(() => {
     if (isPlaying) {
-      videoRef.current.play();
+      playVideo(videoRef.current);
       return;
     } else {
       videoRef.current.pause();
       videoRef.current.currentTime = null;
-      videoRef.current.src = previewVideoLink;
+      videoRef.current.src = src;
 
     }
-    // return () => {
-    //   videoRef.current = null;
-    // };
 
   }, [isPlaying]);
 
@@ -32,17 +27,19 @@ const VideoPlayer = ({film, isPlaying, width, height}) => {
 
   return (
     <>
-      <video ref={videoRef} muted={true} src={previewVideoLink} poster={previewImage} width={width} height={height}/>
+      <video ref={videoRef} muted={true} src={src} poster={poster} width={width} height={height}/>
 
     </>
   );
 };
 
 VideoPlayer.propTypes = {
-  film: FilmPropType,
+  poster: PropTypes.string.isRequired,
+  src: PropTypes.string.isRequired,
+  playVideo: PropTypes.func.isRequired,
   isPlaying: PropTypes.bool,
-  width: PropTypes.number,
-  height: PropTypes.number,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired
 };
 export default VideoPlayer;
 
