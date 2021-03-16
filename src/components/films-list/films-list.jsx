@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import MovieCard from '../movie-card/movie-card';
 import {FilmsPropType} from '../../types/types';
+import {connect} from 'react-redux';
+import {filterMoviesByGenre} from '../../selectors/selectors';
 
 const FilmList = (props) => {
-  const {films} = props;
+  const {filteredfilms} = props;
 
   const [activeMovieCardId, setActiveMovieCardId] = useState(0);
 
@@ -16,7 +18,7 @@ const FilmList = (props) => {
   return (
     <div className="catalog__movies-list">
       {/* Active film id: {activeMovieCardId} */}
-      {films.map((film) => (
+      {filteredfilms.map((film) => (
         <MovieCard
           key={film.id}
           film={film}
@@ -30,7 +32,22 @@ const FilmList = (props) => {
 };
 
 FilmList.propTypes = {
-  films: FilmsPropType
+  filteredfilms: FilmsPropType
 };
 
-export default FilmList;
+const mapStateToProps = (state) => (
+  {
+    filteredfilms: filterMoviesByGenre(state),
+  }
+);
+
+// const mapDispatchToProps = (dispatch) => ({
+//   onGenreClick(genre) {
+//     dispatch(ActionCreator.changeGenre(genre));
+//   },
+// });
+export {FilmList};
+export default connect(mapStateToProps)(FilmList);
+
+// export default FilmList;
+
