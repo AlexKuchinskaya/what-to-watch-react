@@ -4,10 +4,7 @@ import {filmsListPropTypes} from '../../types/types';
 import FilmList from '../films-list/films-list';
 import {useHistory} from 'react-router-dom';
 import Footer from '../footer/footer';
-import {ActionCreator} from '../../store/action';
-import {connect} from 'react-redux';
 import GenreList from './genre-list';
-import {getFilmList} from '../../selectors/selectors';
 
 const MainPage = (props) => {
   const {promoFilm} = props;
@@ -82,13 +79,8 @@ const MainPage = (props) => {
   </ >;
 };
 
-const mapStateToProps = (state) => ({
-  // activeGenre: getCurrentGenreSelector(state),
-  films: getFilmList(state),
-  // filteredfilms: filterMoviesByGenre(state),
-});
 
 MainPage.propTypes = filmsListPropTypes;
 
-export {MainPage};
-export default connect(mapStateToProps)(MainPage);
+export default MainPage;
+

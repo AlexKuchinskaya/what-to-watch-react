@@ -1,13 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import {getAllGenresFromState, getCurrentGenreSelector, getFilmList} from '../../selectors/selectors';
+import {getAllGenresFromState, getCurrentGenreSelector} from '../../selectors/selectors';
 import {ActionCreator} from '../../store/action';
 import PropTypes from 'prop-types';
 
 const GenreList = (props) => {
   const {allGenres, activeGenre, onGenreClick} = props;
-  console.log(`activeGenre`, activeGenre)
-  console.log(`allGenres`, allGenres);
 
   return (
     <ul className="catalog__genres-list" >

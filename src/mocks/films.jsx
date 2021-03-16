@@ -150,6 +150,25 @@ export const filmsMock = [
     genre: `Comedy`,
     released: 2014,
     isFavorite: true
+  },
+  {
+    id: 9,
+    name: `Johnny English 2`,
+    posterImage: `https://assets.htmlacademy.ru/intensives/javascript-3/film/poster/Johnny_English.jpg`,
+    previewImage: `img/johnny-english.jpg`,
+    backgroundImage: `https://assets.htmlacademy.ru/intensives/javascript-3/film/background/Johnny_English.jpg`,
+    backgroundColor: `#ffffff`,
+    videoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    previewVideoLink: `https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4`,
+    description: `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.`,
+    rating: 1.5,
+    scoresCount: 240,
+    director: `Steven Spielberg`,
+    starring: [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`],
+    runTime: 129,
+    genre: `Comedy`,
+    released: 2014,
+    isFavorite: true
   }
 ];
 

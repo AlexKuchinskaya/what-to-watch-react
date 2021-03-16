@@ -1,4 +1,4 @@
-import { filmsMock } from "../mocks/films";
+import {filmsMock} from "../mocks/films";
 import {ActionType} from "./action";
 
 const initialState = {
@@ -10,8 +10,8 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.CHANGE_GENRE:
       return {
-        ...state, // деструктурируем предыдущее состояние
-        genre: action.payload // меняем тот ключ который нужно поменять и возвращаем новый объект
+        ...state,
+        genre: action.payload
       };
 
     case ActionType.GET_NEW_FILMLIST_BY_GENRE:
@@ -25,4 +25,4 @@ const reducer = (state = initialState, action) => {
 
 };
 
-export {reducer}; // почему он экспортируется как объект?
+export {reducer};

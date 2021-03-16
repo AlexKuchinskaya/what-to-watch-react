@@ -3,6 +3,7 @@ import MovieCard from '../movie-card/movie-card';
 import {FilmsPropType} from '../../types/types';
 import {connect} from 'react-redux';
 import {filterMoviesByGenre} from '../../selectors/selectors';
+import {MAX_FILMS} from '../../const/utils';
 
 const FilmList = (props) => {
   const {filteredfilms} = props;
@@ -18,7 +19,7 @@ const FilmList = (props) => {
   return (
     <div className="catalog__movies-list">
       {/* Active film id: {activeMovieCardId} */}
-      {filteredfilms.map((film) => (
+      {filteredfilms.slice(0, MAX_FILMS).map((film) => (
         <MovieCard
           key={film.id}
           film={film}

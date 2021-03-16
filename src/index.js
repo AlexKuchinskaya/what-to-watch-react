@@ -7,7 +7,6 @@ import App from './components/app/app';
 import {filmsMock} from './mocks/films';
 import {promoFilm} from './mocks/promo-film';
 import {reducer} from './store/reducer';
-import { elementType } from 'prop-types';
 
 const store = createStore(reducer, composeWithDevTools());
 
