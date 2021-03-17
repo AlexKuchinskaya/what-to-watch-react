@@ -17,9 +17,9 @@ const Player = ({promoFilm}) => {
   const [runTime, setRunTime] = useState(0);
   const [durationTime, setdurationTime] = useState(0);
 
-  const DurationAndRunTimesDifference = durationTime - runTime;
+  const durationAndRunTimesDifference = durationTime - runTime;
 
-  const timeElapsed = setTime(DurationAndRunTimesDifference);
+  const timeElapsed = setTime(durationAndRunTimesDifference);
   const valueProgress = Math.floor((runTime / durationTime) * 100);
   // const videoPastTimeFormatted = setTime(runTime);
   // const videoTotalDurationFormatted = setTime(durationTime);
