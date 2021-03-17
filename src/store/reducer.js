@@ -1,4 +1,4 @@
-import {MAX_FILMS} from "../const/utils";
+import {AuthorizationStatus, MAX_FILMS} from "../const/utils";
 import {filmsMock} from "../mocks/films";
 import {promoFilm} from "../mocks/promo-film";
 import {ActionType} from "./action";
@@ -7,7 +7,8 @@ const initialState = {
   genre: `All genres`,
   filmList: filmsMock,
   promoFilmMock: promoFilm,
-  filmsShownCount: MAX_FILMS
+  filmsShownCount: MAX_FILMS,
+  authorizationStatus: AuthorizationStatus.NO_AUTH,
 };
 
 const reducer = (state = initialState, action) => {
@@ -37,6 +38,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         genre: `All genres`
+      };
+    case ActionType.LOAD_FILMS:
+      return {
+        ...state,
+        filmList: action.payload,
+      };
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
       };
     default:
       return state;
