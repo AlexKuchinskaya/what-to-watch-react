@@ -9,6 +9,7 @@ const initialState = {
   promoFilmMock: promoFilm,
   filmsShownCount: MAX_FILMS,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
+  isDataLoading: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -43,6 +44,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         filmList: action.payload,
+        isDataLoading: true
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {

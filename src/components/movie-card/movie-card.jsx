@@ -40,13 +40,13 @@ const MovieCard = ({film, onMovieSelect, activeMovieCardId}) => {
   const history = useHistory();
 
   const handleMovieDescriptionRedirect = () => {
-    onMovieSelect(film.id);
+    // onMovieSelect(film.id);
     history.push(`/films/${activeMovieCardId}`);
   };
   return (
-    <article onMouseEnter={handleFilmMouseEnter} onMouseLeave={handleFilmMouseLeave} onClick={handleMovieDescriptionRedirect} className="small-movie-card catalog__movies-card">
+    <article onMouseEnter={handleFilmMouseEnter} onMouseLeave={handleFilmMouseLeave} className="small-movie-card catalog__movies-card">
 
-      <div className="small-movie-card__image">
+      <div className="small-movie-card__image" onClick={handleMovieDescriptionRedirect}>
         {isPlaying && film.id === activeMovieCardId ?
           <VideoPlayer
             src={film.previewVideoLink}
