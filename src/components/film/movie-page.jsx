@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Logo from '../logo/logo';
 import {Link, useParams} from 'react-router-dom';
 import Footer from '../footer/footer';
@@ -9,17 +9,30 @@ import MovieReviews from './tab-reviews';
 import MovieOverview from './tab-overview';
 import SimilarMovies from './similar-movies';
 import {connect} from 'react-redux';
-import {getFilmList} from '../../selectors/selectors';
-const MoviePage = (props) => {
-  const {films} = props;
+import {getFilmList, getReviews} from '../../selectors/selectors';
+import {fetchReviewList} from '../../store/api-actions';
 
+const MoviePage = (props) => {
+  const {films, reviews, isReviewsLoading, fetchReviewList} = props;
   let {id} = useParams();
   let idNumber = parseInt(id, 10);
   const selectedMovie = films.find((film) => {
     return film.id === idNumber;
   });
   const {backgroundImage, name, genre, released, posterImage} = selectedMovie;
-
+  useEffect(() => {
+    if (!isReviewsLoading) {
+      fetchReviewList(idNumber);
+      // console.log(`reviews useeff`, reviews)
+    }
+  }, [isReviewsLoading]);
+  // if (!isReviewsLoading) {
+  //   fetchReviewList(2);
+  //   // console.log(`reviews useeff`, reviews)
+  // }
+  console.log(`reviews`, reviews)
+  // const reviewsLength = reviews.length;
+  // console.log(`reviesLength`, reviesLength)
   const similarMovies = films.filter((film) => {
     if (film.id !== selectedMovie.id) {
       return film.genre === genre;
@@ -81,7 +94,7 @@ const MoviePage = (props) => {
 
           <Tabs>
             <div label="Overview">
-              <MovieOverview selectedMovie={selectedMovie}/>
+              <MovieOverview selectedMovie={selectedMovie} reviews={reviews}/>
             </div>
             <div label="Details">
               <MovieInDetails selectedMovie={selectedMovie} />
@@ -110,10 +123,17 @@ MoviePage.propTypes = filmsListPropTypes;
 
 const mapStateToProps = (state) => (
   {
-    films: getFilmList(state)
+    films: getFilmList(state),
+    isReviewsLoading: state.isReviewsLoading,
+    reviews: getReviews(state),
   }
 );
 
+const mapDispatchToProps = (dispatch) => ({
+  fetchReviewList(filmId) {
+    dispatch(fetchReviewList(filmId));
+  },
+});
 export {MoviePage};
-export default connect(mapStateToProps)(MoviePage);
+export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);
 

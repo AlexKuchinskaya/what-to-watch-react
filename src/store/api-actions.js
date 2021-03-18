@@ -1,11 +1,20 @@
-import {ActionCreator} from '../../store/action';
-import {AuthorizationStatus} from "../const";
+import {AuthorizationStatus} from '../const/utils';
 
-export const fetchQuestionList = () => (dispatch, _getState, api) => (
+import {ActionCreator} from './action';
+
+export const fetchFilmList = () => (dispatch, _getState, api) => (
   api.get(`/films`)
-    .then(({data}) => dispatch(ActionCreator.loadFilms(data)))
+    .then(({data}) => dispatch(ActionCreator.loadFilms((data))))
 );
 
+export const fetchPromoFilm = () => (dispatch, _getState, api) => (
+  api.get(`/films/promo`)
+    .then(({data}) => dispatch(ActionCreator.loadPromoFilm((data))))
+);
+export const fetchReviewList = (id) => (dispatch, _getState, api) => (
+  api.get(`/comments/${id}`)
+    .then(({data}) => dispatch(ActionCreator.loadReviews((data))))
+);
 // checkAuth - для проверки авторизован пользователь или нет
 export const checkAuth = () => (dispatch, _getState, api) => (
   api.get(`/login`)

@@ -9,16 +9,17 @@ import ShowMoreButton from './show-more-button';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {ActionCreator} from '../../store/action';
+import {fetchPromoFilm} from '../../store/api-actions';
 import {filterMoviesByGenre, getCurrentFilmsShownCount, getPromofilm} from '../../selectors/selectors';
 
 const MainPage = (props) => {
-  const {resetGenre, resetShowMoreMoviesButton, promoFilm, filteredfilms, filmsShownCount} = props;
-
+  const {resetGenre, resetShowMoreMoviesButton, fetchPromoFilm, promoFilm, filteredfilms, filmsShownCount} = props;
+  console.log(`promoFilm name`, promoFilm.name)
   const history = useHistory();
   const isShowMoreButtonShown = filteredfilms.length > filmsShownCount;
 
   useEffect(() => {
-
+    // fetchPromoFilm();
     resetShowMoreMoviesButton();
     resetGenre();
   }, []);
@@ -106,6 +107,9 @@ const mapDispatchToProps = (dispatch) => ({
   },
   resetGenre(genre) {
     dispatch(ActionCreator.resetGenre(genre));
+  },
+  fetchPromoFilm() {
+    dispatch(fetchPromoFilm());
   },
 });
 export {MainPage};

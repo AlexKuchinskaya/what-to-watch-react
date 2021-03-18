@@ -11,7 +11,7 @@ export const createAPI = (onUnauthorized) => {
   const api = axios.create({
     baseURL: BACKEND_URL,
     timeout: REQUEST_TIMEOUT,
-    withCredentials: true, // куками нужно делиться
+    withCredentials: true,
   });
 
   const onSuccess = (response) => response;
@@ -22,8 +22,6 @@ export const createAPI = (onUnauthorized) => {
     if (response.status === HttpCode.UNAUTHORIZED) {
       onUnauthorized();
 
-      // Бросаем ошибку, потому что нам важно прервать цепочку промисов после запроса авторизации.
-      // Запрос авторизации — это особый случай и важно дать понять приложению, что запрос был неудачным.
       throw err;
     }
 

@@ -8,6 +8,8 @@ export const ActionType = {
   RESET_GENRE: `films/resetgenre`,
   LOAD_FILMS: `data/loadFilms`,
   REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
+  LOAD_REVIEWS: `films/loadreviews`,
+  LOAD_PROMOFILM: `promofilm/loadpromofilm`,
 };
 
 export const ActionCreator = {
@@ -35,5 +37,13 @@ export const ActionCreator = {
   requireAuthorization: (status) => ({
     type: ActionType.REQUIRED_AUTHORIZATION,
     payload: status,
-  })
+  }),
+  loadReviews: (reviews) => ({
+    type: ActionType.LOAD_REVIEWS,
+    payload: reviews
+  }),
+  loadPromoFilm: (promofilm) => ({
+    type: ActionType.LOAD_PROMOFILM,
+    payload: promofilm
+  }),
 };
