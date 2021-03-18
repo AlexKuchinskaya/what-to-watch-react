@@ -8,7 +8,8 @@ import MovieInDetails from './tab-details';
 import MovieReviews from './tab-reviews';
 import MovieOverview from './tab-overview';
 import SimilarMovies from './similar-movies';
-
+import {connect} from 'react-redux';
+import {getFilmList} from '../../selectors/selectors';
 const MoviePage = (props) => {
   const {films} = props;
 
@@ -66,7 +67,7 @@ const MoviePage = (props) => {
                 </svg>
                 <span>My list</span>
               </button>
-              <Link to="/films/:id/review" className="btn movie-card__button">Add review</Link>
+              <Link to={`/films/${selectedMovie.id}/review`} className="btn movie-card__button">Add review</Link>
             </div>
           </div>
         </div>
@@ -104,5 +105,15 @@ const MoviePage = (props) => {
   </ >;
 };
 
+
 MoviePage.propTypes = filmsListPropTypes;
-export default MoviePage;
+
+const mapStateToProps = (state) => (
+  {
+    films: getFilmList(state)
+  }
+);
+
+export {MoviePage};
+export default connect(mapStateToProps)(MoviePage);
+

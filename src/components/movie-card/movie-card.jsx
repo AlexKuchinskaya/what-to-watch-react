@@ -19,6 +19,7 @@ const MovieCard = ({film, onMovieSelect, activeMovieCardId}) => {
   };
 
   const handleFilmMouseEnter = () => {
+    onMovieSelect(film.id);
     if (timer) {
       clearTimeout(timer);
     }
@@ -26,7 +27,6 @@ const MovieCard = ({film, onMovieSelect, activeMovieCardId}) => {
     // timer = setTimeout(() => {
     //   setIsPlaying(true);
     // }, VIDEO_DELAY);
-    onMovieSelect(film.id);
   };
 
   const handleFilmMouseLeave = () => {
@@ -34,6 +34,7 @@ const MovieCard = ({film, onMovieSelect, activeMovieCardId}) => {
       clearTimeout(timer);
     }
     setIsPlaying(false);
+    // onMovieSelect(1);
   };
 
   const history = useHistory();

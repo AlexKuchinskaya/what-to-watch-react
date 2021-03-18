@@ -3,6 +3,7 @@ import {filterMoviesByGenre, getCurrentFilmsShownCount} from '../../selectors/se
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
 import PropTypes from 'prop-types';
+import {FilmsPropType} from '../../types/types';
 const ShowMoreButton = (props) => {
 
   const {onShowMoreButtonClick} = props;
@@ -29,6 +30,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 ShowMoreButton.propTypes = {
+  // filmsShownCount: PropTypes.number.isRequired,
+  // filteredfilms: FilmsPropType,
   onShowMoreButtonClick: PropTypes.func.isRequired,
 };
 export {ShowMoreButton};

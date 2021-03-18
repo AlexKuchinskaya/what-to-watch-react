@@ -1,10 +1,12 @@
 
 import React, {useEffect, useRef, useState} from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import {PromoFilmPropType} from '../../types/types';
 import PlayerPlayButtonSvg from './player-play-button';
 import PlayerPauseButtonSvg from './player-pause-button';
 import {setTime} from './player-utils';
+import {connect} from 'react-redux';
+import {getPromofilm} from '../../selectors/selectors';
 
 const Player = ({promoFilm}) => {
   // const {previewImage, name, previewVideoLink} = film;
@@ -97,7 +99,16 @@ const Player = ({promoFilm}) => {
 Player.propTypes = {
   promoFilm: PromoFilmPropType,
   // film: FilmPropType,
-  isPlaying: PropTypes.bool
 };
-export default Player;
+
+const mapStateToProps = (state) => (
+  {
+    promoFilm: getPromofilm(state),
+  }
+);
+
+
+export {Player};
+export default connect(mapStateToProps)(Player);
+
 

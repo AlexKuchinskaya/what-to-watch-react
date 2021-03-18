@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 const FilmList = (props) => {
   const {filteredfilms, filmsShownCount} = props;
 
-  const [activeMovieCardId, setActiveMovieCardId] = useState(0);
+  const [activeMovieCardId, setActiveMovieCardId] = useState(1);
 
 
   const handleMovieSelect = (selectedMovieId) => {
