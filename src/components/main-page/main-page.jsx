@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import Logo from '../logo/logo';
 import {PromoFilmPropType, FilmsPropType} from '../../types/types';
 import FilmList from '../films-list/films-list';
@@ -13,16 +13,18 @@ import {fetchPromoFilm} from '../../store/api-actions';
 import {filterMoviesByGenre, getCurrentFilmsShownCount, getPromofilm} from '../../selectors/selectors';
 
 const MainPage = (props) => {
-  const {resetGenre, resetShowMoreMoviesButton, fetchPromoFilm, promoFilm, filteredfilms, filmsShownCount} = props;
-  console.log(`promoFilm name`, promoFilm.name)
+  const {resetGenre, resetShowMoreMoviesButton, promoFilm, filteredfilms, filmsShownCount} = props;
   const history = useHistory();
   const isShowMoreButtonShown = filteredfilms.length > filmsShownCount;
 
   useEffect(() => {
-    // fetchPromoFilm();
+    // onLoadPromoFilm();
     resetShowMoreMoviesButton();
     resetGenre();
   }, []);
+  // if (isPromoFilmLoading) {
+  //   onLoadPromoFilm();
+  // }
   return <>
     <section className="movie-card">
       <div className="movie-card__bg">
@@ -93,12 +95,15 @@ MainPage.propTypes = {
   filteredfilms: FilmsPropType,
   promoFilm: PromoFilmPropType,
   filmsShownCount: PropTypes.number.isRequired,
+  resetGenre: PropTypes.func.isRequired,
+  resetShowMoreMoviesButton: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   filteredfilms: filterMoviesByGenre(state),
-  filmsShownCount: getCurrentFilmsShownCount(state),
   promoFilm: getPromofilm(state),
+  filmsShownCount: getCurrentFilmsShownCount(state),
+  isPromoFilmLoading: state.isDataLoading,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -108,7 +113,7 @@ const mapDispatchToProps = (dispatch) => ({
   resetGenre(genre) {
     dispatch(ActionCreator.resetGenre(genre));
   },
-  fetchPromoFilm() {
+  onLoadPromoFilm() {
     dispatch(fetchPromoFilm());
   },
 });

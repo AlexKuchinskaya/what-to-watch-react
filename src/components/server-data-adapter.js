@@ -56,7 +56,6 @@ export const adaptPromoFilmToClient = (promoFilm) => {
   delete adaptedPromoFilm.is_favorite;
   delete adaptedPromoFilm.video_link;
   delete adaptedPromoFilm.preview_video_link;
-
   return adaptedPromoFilm;
 };
 

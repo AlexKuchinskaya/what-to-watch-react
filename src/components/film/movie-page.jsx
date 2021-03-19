@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import Logo from '../logo/logo';
 import {Link, useParams} from 'react-router-dom';
 import Footer from '../footer/footer';
@@ -13,26 +13,20 @@ import {getFilmList, getReviews} from '../../selectors/selectors';
 import {fetchReviewList} from '../../store/api-actions';
 
 const MoviePage = (props) => {
-  const {films, reviews, isReviewsLoading, fetchReviewList} = props;
+  const {films, reviews, isReviewsLoading, onLoadReviewList} = props;
   let {id} = useParams();
   let idNumber = parseInt(id, 10);
   const selectedMovie = films.find((film) => {
     return film.id === idNumber;
   });
   const {backgroundImage, name, genre, released, posterImage} = selectedMovie;
+
   useEffect(() => {
     if (!isReviewsLoading) {
-      fetchReviewList(idNumber);
-      // console.log(`reviews useeff`, reviews)
+      onLoadReviewList(selectedMovie.id);
     }
-  }, [isReviewsLoading]);
-  // if (!isReviewsLoading) {
-  //   fetchReviewList(2);
-  //   // console.log(`reviews useeff`, reviews)
-  // }
-  console.log(`reviews`, reviews)
-  // const reviewsLength = reviews.length;
-  // console.log(`reviesLength`, reviesLength)
+  }, []);
+
   const similarMovies = films.filter((film) => {
     if (film.id !== selectedMovie.id) {
       return film.genre === genre;
@@ -100,7 +94,7 @@ const MoviePage = (props) => {
               <MovieInDetails selectedMovie={selectedMovie} />
             </div>
             <div label="Reviews">
-              <MovieReviews />
+              <MovieReviews selectedMovie={selectedMovie} reviews={reviews}/>
             </div>
           </Tabs>
         </div>
@@ -130,7 +124,7 @@ const mapStateToProps = (state) => (
 );
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchReviewList(filmId) {
+  onLoadReviewList(filmId) {
     dispatch(fetchReviewList(filmId));
   },
 });

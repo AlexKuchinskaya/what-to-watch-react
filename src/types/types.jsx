@@ -25,9 +25,9 @@ export const FilmsPropType = PropTypes.arrayOf(FilmPropType).isRequired;
 
 export const PromoFilmPropType = PropTypes.shape({
   name: PropTypes.string.isRequired,
-  backgroundImage: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
-  released: PropTypes.number.isRequired
+  released: PropTypes.number.isRequired,
+  posterImage: PropTypes.string.isRequired,
 });
 
 

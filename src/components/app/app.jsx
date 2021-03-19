@@ -10,27 +10,24 @@ import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {Routes} from '../../const/routes-path';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {ActionCreator} from '../../store/action';
-import {fetchFilmList, fetchPromoFilm, fetchReviewList} from '../../store/api-actions';
-import {filterMoviesByGenre, getCurrentFilmsShownCount, getPromofilm} from '../../selectors/selectors';
+import {fetchFilmList, fetchPromoFilm} from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 
-const App = ({isDataLoading, onLoadData, fetchPromoFilm}) => {
-//   useEffect(() => {
-//     init();
-// }, []);
-// if (!isApplicationReady) {
-//     return <Loader />;
-// }
+const App = ({isDataLoading, onLoadData, onLoadPromoFilm, isPromoFilmLoading}) => {
+
   useEffect(() => {
     if (!isDataLoading) {
       onLoadData();
-      fetchPromoFilm();
-      fetchReviewList(1);
     }
   }, [isDataLoading]);
 
-  if (!isDataLoading) {
+  useEffect(() => {
+    if (!isPromoFilmLoading) {
+      onLoadPromoFilm();
+    }
+  }, [isPromoFilmLoading]);
+
+  if (!isDataLoading || !isPromoFilmLoading) {
     return (
       <LoadingScreen />
     );
@@ -51,20 +48,23 @@ const App = ({isDataLoading, onLoadData, fetchPromoFilm}) => {
 };
 
 
-// export default App;
+App.propTypes = {
+  isDataLoading: PropTypes.bool.isRequired,
+  isPromoFilmLoading: PropTypes.bool.isRequired,
+  onLoadData: PropTypes.func.isRequired,
+  onLoadPromoFilm: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   isDataLoading: state.isDataLoading,
+  isPromoFilmLoading: state.isDataLoading,
 });
 const mapDispatchToProps = (dispatch) => ({
   onLoadData() {
     dispatch(fetchFilmList());
   },
-  fetchPromoFilm() {
+  onLoadPromoFilm() {
     dispatch(fetchPromoFilm());
-  },
-  fetchReviewList(filmId) {
-    dispatch(fetchReviewList(filmId));
   },
 });
 export {App};

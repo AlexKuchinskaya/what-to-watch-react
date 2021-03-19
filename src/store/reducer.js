@@ -1,5 +1,4 @@
 import {AuthorizationStatus, MAX_FILMS} from "../const/utils";
-import {promoFilm} from "../mocks/promo-film";
 import {ActionType} from "./action";
 import {adaptFilmsToClient, adaptPromoFilmToClient} from '../components/server-data-adapter';
 
@@ -11,7 +10,8 @@ const initialState = {
   isDataLoading: false,
   isReviewsLoading: false,
   reviews: [],
-  promoFilm: {}
+  promoFilm: {},
+  isPromoFilmLoading: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -63,6 +63,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         promoFilm: adaptPromoFilmToClient(action.payload),
+        isPromoFilmLoading: true,
       };
     default:
       return state;
