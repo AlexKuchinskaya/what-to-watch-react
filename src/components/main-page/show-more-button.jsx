@@ -29,6 +29,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 ShowMoreButton.propTypes = {
+  // filmsShownCount: PropTypes.number.isRequired,
+  // filteredfilms: FilmsPropType,
   onShowMoreButtonClick: PropTypes.func.isRequired,
 };
 export {ShowMoreButton};

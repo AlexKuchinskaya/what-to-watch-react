@@ -3,6 +3,8 @@ import FilmList from '../films-list/films-list';
 import Logo from '../logo/logo';
 import {filmsListPropTypes} from '../../types/types';
 import Footer from '../footer/footer';
+import {connect} from 'react-redux';
+import {getFilmList} from '../../selectors/selectors';
 
 const MyList = (props) => {
   const {films} = props;
@@ -34,4 +36,13 @@ const MyList = (props) => {
 };
 
 MyList.propTypes = filmsListPropTypes;
-export default MyList;
+
+const mapStateToProps = (state) => (
+  {
+    films: getFilmList(state)
+  }
+);
+
+export {MyList};
+export default connect(mapStateToProps)(MyList);
+

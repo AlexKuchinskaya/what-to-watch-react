@@ -19,6 +19,7 @@ const MovieCard = ({film, onMovieSelect, activeMovieCardId}) => {
   };
 
   const handleFilmMouseEnter = () => {
+    onMovieSelect(film.id);
     if (timer) {
       clearTimeout(timer);
     }
@@ -26,7 +27,6 @@ const MovieCard = ({film, onMovieSelect, activeMovieCardId}) => {
     // timer = setTimeout(() => {
     //   setIsPlaying(true);
     // }, VIDEO_DELAY);
-    onMovieSelect(film.id);
   };
 
   const handleFilmMouseLeave = () => {
@@ -34,18 +34,19 @@ const MovieCard = ({film, onMovieSelect, activeMovieCardId}) => {
       clearTimeout(timer);
     }
     setIsPlaying(false);
+    // onMovieSelect(1);
   };
 
   const history = useHistory();
 
   const handleMovieDescriptionRedirect = () => {
-    onMovieSelect(film.id);
+    // onMovieSelect(film.id);
     history.push(`/films/${activeMovieCardId}`);
   };
   return (
-    <article onMouseEnter={handleFilmMouseEnter} onMouseLeave={handleFilmMouseLeave} onClick={handleMovieDescriptionRedirect} className="small-movie-card catalog__movies-card">
+    <article onMouseEnter={handleFilmMouseEnter} onMouseLeave={handleFilmMouseLeave} className="small-movie-card catalog__movies-card">
 
-      <div className="small-movie-card__image">
+      <div className="small-movie-card__image" onClick={handleMovieDescriptionRedirect}>
         {isPlaying && film.id === activeMovieCardId ?
           <VideoPlayer
             src={film.previewVideoLink}

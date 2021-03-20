@@ -1,5 +1,4 @@
-import React from 'react';
-import {filmsListPropTypes} from '../../types/types';
+import React, {useEffect} from 'react';
 import MainPage from '../main-page/main-page';
 import SignIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
@@ -10,61 +9,65 @@ import ReviewAdding from '../add-review/add-review';
 import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import {Routes} from '../../const/routes-path';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/action';
-import {getFilmList, getPromofilm} from '../../selectors/selectors';
+import PropTypes from 'prop-types';
+import {fetchFilmList, fetchPromoFilm} from '../../store/api-actions';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-const App = (props) => {
-  const {films, promoFilm, resetShowMoreMoviesButton, resetGenre} = props;
+const App = ({isDataLoading, onLoadData, onLoadPromoFilm, isPromoFilmLoading}) => {
+
+  useEffect(() => {
+    if (!isDataLoading) {
+      onLoadData();
+    }
+  }, [isDataLoading]);
+
+  useEffect(() => {
+    if (!isPromoFilmLoading) {
+      onLoadPromoFilm();
+    }
+  }, [isPromoFilmLoading]);
+
+  if (!isDataLoading || !isPromoFilmLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path={Routes.MAIN}
-          render={ () => {
-            resetShowMoreMoviesButton();
-            resetGenre();
-            return <MainPage films={films} promoFilm={promoFilm} />;
-          }}
-        >
-        </Route>
-        <Route exact path={Routes.LOG_IN}>
-          <SignIn />
-        </Route>
-        <Route exact path={Routes.MY_LIST}>
-          <MyList films={films} />
-        </Route>
-        <Route exact path={Routes.FILMS_ID}>
-          <MoviePage films={films}/>
-        </Route>
-        <Route exact path={Routes.FILMS_ID_REVIEW}>
-          <ReviewAdding />
-        </Route>
-        <Route exact path={Routes.PLAYER}>
-          <Player promoFilm={promoFilm} isPlaying={true}/>
-        </Route>
-        <Route>
-          <NotFoundPage />
-        </Route>
+        <Route exact path={Routes.MAIN} component={MainPage}/>
+        <Route exact path={Routes.LOG_IN} component={SignIn} />
+        <Route exact path={Routes.MY_LIST} component={MyList} />
+        <Route exact path={Routes.FILMS_ID} component={MoviePage} />
+        <Route exact path={Routes.FILMS_ID_REVIEW} component={ReviewAdding} />
+        <Route exact path={Routes.PLAYER} component={Player} />
+        <Route component={NotFoundPage} />
       </Switch>
     </BrowserRouter>
   );
 };
-App.propTypes = filmsListPropTypes;
 
-const mapStateToProps = (state) => (
-  {
-    films: getFilmList(state),
-    promoFilm: getPromofilm(state),
-  }
-);
 
+App.propTypes = {
+  isDataLoading: PropTypes.bool.isRequired,
+  isPromoFilmLoading: PropTypes.bool.isRequired,
+  onLoadData: PropTypes.func.isRequired,
+  onLoadPromoFilm: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  isDataLoading: state.isDataLoading,
+  isPromoFilmLoading: state.isDataLoading,
+});
 const mapDispatchToProps = (dispatch) => ({
-  resetShowMoreMoviesButton() {
-    dispatch(ActionCreator.resetShowMoreMoviesButton());
+  onLoadData() {
+    dispatch(fetchFilmList());
   },
-  resetGenre(genre) {
-    dispatch(ActionCreator.resetGenre(genre));
+  onLoadPromoFilm() {
+    dispatch(fetchPromoFilm());
   },
 });
 export {App};
 export default connect(mapStateToProps, mapDispatchToProps)(App);
+
 

@@ -1,20 +1,30 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Logo from '../logo/logo';
-import {filmsListPropTypes} from '../../types/types';
+import {PromoFilmPropType, FilmsPropType} from '../../types/types';
 import FilmList from '../films-list/films-list';
 import {useHistory} from 'react-router-dom';
 import Footer from '../footer/footer';
 import GenreList from './genre-list';
 import ShowMoreButton from './show-more-button';
 import {connect} from 'react-redux';
-import {filterMoviesByGenre, getCurrentFilmsShownCount} from '../../selectors/selectors';
+import PropTypes from 'prop-types';
+import {ActionCreator} from '../../store/action';
+import {fetchPromoFilm} from '../../store/api-actions';
+import {filterMoviesByGenre, getCurrentFilmsShownCount, getPromofilm} from '../../selectors/selectors';
 
 const MainPage = (props) => {
-  const {promoFilm, filteredfilms, filmsShownCount} = props;
-
+  const {resetGenre, resetShowMoreMoviesButton, promoFilm, filteredfilms, filmsShownCount} = props;
   const history = useHistory();
   const isShowMoreButtonShown = filteredfilms.length > filmsShownCount;
 
+  useEffect(() => {
+    // onLoadPromoFilm();
+    resetShowMoreMoviesButton();
+    resetGenre();
+  }, []);
+  // if (isPromoFilmLoading) {
+  //   onLoadPromoFilm();
+  // }
   return <>
     <section className="movie-card">
       <div className="movie-card__bg">
@@ -81,14 +91,32 @@ const MainPage = (props) => {
 };
 
 
-MainPage.propTypes = filmsListPropTypes;
+MainPage.propTypes = {
+  filteredfilms: FilmsPropType,
+  promoFilm: PromoFilmPropType,
+  filmsShownCount: PropTypes.number.isRequired,
+  resetGenre: PropTypes.func.isRequired,
+  resetShowMoreMoviesButton: PropTypes.func.isRequired,
+};
 
 const mapStateToProps = (state) => ({
   filteredfilms: filterMoviesByGenre(state),
+  promoFilm: getPromofilm(state),
   filmsShownCount: getCurrentFilmsShownCount(state),
+  isPromoFilmLoading: state.isDataLoading,
 });
 
-
+const mapDispatchToProps = (dispatch) => ({
+  resetShowMoreMoviesButton() {
+    dispatch(ActionCreator.resetShowMoreMoviesButton());
+  },
+  resetGenre(genre) {
+    dispatch(ActionCreator.resetGenre(genre));
+  },
+  onLoadPromoFilm() {
+    dispatch(fetchPromoFilm());
+  },
+});
 export {MainPage};
-export default connect(mapStateToProps)(MainPage);
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
 

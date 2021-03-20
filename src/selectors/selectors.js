@@ -3,7 +3,8 @@ import {getListOfGenres} from '../utils/genre-list';
 import {ALL_GENRES_FILTER} from '../const/utils';
 
 export const getFilmList = (state) => state.filmList;
-export const getPromofilm = (state) => state.promoFilmMock;
+export const getReviews = (state) => state.reviews;
+export const getPromofilm = (state) => state.promoFilm;
 export const getAllGenresFromState = (state) => getListOfGenres(state.filmList);
 export const getCurrentGenreSelector = (state) => state.genre;
 export const getCurrentFilmsShownCount = (state) => state.filmsShownCount;

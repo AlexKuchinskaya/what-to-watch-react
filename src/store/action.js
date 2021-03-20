@@ -6,6 +6,10 @@ export const ActionType = {
   SHOW_MORE_MOVIES: `films/showmoremovies`,
   RESET_SHOW_MORE_MOVIES_BUTTON: `films/resetshowmoremoviesbutton`,
   RESET_GENRE: `films/resetgenre`,
+  LOAD_FILMS: `data/loadFilms`,
+  REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
+  LOAD_REVIEWS: `films/loadreviews`,
+  LOAD_PROMOFILM: `promofilm/loadpromofilm`,
 };
 
 export const ActionCreator = {
@@ -25,5 +29,21 @@ export const ActionCreator = {
   }),
   resetGenre: () => ({
     type: ActionType.RESET_GENRE,
-  })
+  }),
+  loadFilms: (films) => ({
+    type: ActionType.LOAD_FILMS,
+    payload: films
+  }),
+  requireAuthorization: (status) => ({
+    type: ActionType.REQUIRED_AUTHORIZATION,
+    payload: status,
+  }),
+  loadReviews: (reviews) => ({
+    type: ActionType.LOAD_REVIEWS,
+    payload: reviews
+  }),
+  loadPromoFilm: (promofilm) => ({
+    type: ActionType.LOAD_PROMOFILM,
+    payload: promofilm
+  }),
 };

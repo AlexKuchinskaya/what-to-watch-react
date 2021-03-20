@@ -1,9 +1,10 @@
 import React from 'react';
 import {checkFilmRating} from './rating-rendering';
 import {FilmPropType} from '../../types/types';
+import {RviewsPropType} from '../../types/reviews-types';
 
-const MovieOverview = ({selectedMovie}) => {
-
+const MovieOverview = ({selectedMovie, reviews}) => {
+  const reviewsLength = reviews.length;
   const {rating, description, director, starring} = selectedMovie;
   return (
     <>
@@ -11,7 +12,7 @@ const MovieOverview = ({selectedMovie}) => {
         <div className="movie-rating__score">{rating}</div>
         <p className="movie-rating__meta">
           <span className="movie-rating__level">{checkFilmRating(rating)}</span>
-          <span className="movie-rating__count">240 ratings</span>
+          <span className="movie-rating__count">{`${reviewsLength} ratings`}</span>
         </p>
       </div>
 
@@ -27,6 +28,7 @@ const MovieOverview = ({selectedMovie}) => {
 };
 
 MovieOverview.propTypes = {
-  selectedMovie: FilmPropType
+  selectedMovie: FilmPropType,
+  reviews: RviewsPropType
 };
 export default MovieOverview;

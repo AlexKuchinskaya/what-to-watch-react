@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Logo from '../logo/logo';
 import {Link, useParams} from 'react-router-dom';
 import Footer from '../footer/footer';
@@ -8,16 +8,24 @@ import MovieInDetails from './tab-details';
 import MovieReviews from './tab-reviews';
 import MovieOverview from './tab-overview';
 import SimilarMovies from './similar-movies';
+import {connect} from 'react-redux';
+import {getFilmList, getReviews} from '../../selectors/selectors';
+import {fetchReviewList} from '../../store/api-actions';
 
 const MoviePage = (props) => {
-  const {films} = props;
-
+  const {films, reviews, isReviewsLoading, onLoadReviewList} = props;
   let {id} = useParams();
   let idNumber = parseInt(id, 10);
   const selectedMovie = films.find((film) => {
     return film.id === idNumber;
   });
   const {backgroundImage, name, genre, released, posterImage} = selectedMovie;
+
+  useEffect(() => {
+    if (!isReviewsLoading) {
+      onLoadReviewList(selectedMovie.id);
+    }
+  }, []);
 
   const similarMovies = films.filter((film) => {
     if (film.id !== selectedMovie.id) {
@@ -66,7 +74,7 @@ const MoviePage = (props) => {
                 </svg>
                 <span>My list</span>
               </button>
-              <Link to="/films/:id/review" className="btn movie-card__button">Add review</Link>
+              <Link to={`/films/${selectedMovie.id}/review`} className="btn movie-card__button">Add review</Link>
             </div>
           </div>
         </div>
@@ -80,13 +88,13 @@ const MoviePage = (props) => {
 
           <Tabs>
             <div label="Overview">
-              <MovieOverview selectedMovie={selectedMovie}/>
+              <MovieOverview selectedMovie={selectedMovie} reviews={reviews}/>
             </div>
             <div label="Details">
               <MovieInDetails selectedMovie={selectedMovie} />
             </div>
             <div label="Reviews">
-              <MovieReviews />
+              <MovieReviews selectedMovie={selectedMovie} reviews={reviews}/>
             </div>
           </Tabs>
         </div>
@@ -104,5 +112,22 @@ const MoviePage = (props) => {
   </ >;
 };
 
+
 MoviePage.propTypes = filmsListPropTypes;
-export default MoviePage;
+
+const mapStateToProps = (state) => (
+  {
+    films: getFilmList(state),
+    isReviewsLoading: state.isReviewsLoading,
+    reviews: getReviews(state),
+  }
+);
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadReviewList(filmId) {
+    dispatch(fetchReviewList(filmId));
+  },
+});
+export {MoviePage};
+export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);
+
