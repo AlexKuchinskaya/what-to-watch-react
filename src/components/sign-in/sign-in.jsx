@@ -66,7 +66,7 @@ const SignIn = ({onSubmitForm}) => {
 };
 
 SignIn.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
+  onSubmitForm: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

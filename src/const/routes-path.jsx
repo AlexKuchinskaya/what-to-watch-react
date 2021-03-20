@@ -10,3 +10,8 @@ export const Routes = {
 
 };
 
+export const APIRoute = {
+  FILMS: `/films`,
+  FILM_PROMO: `/films/promo`,
+  COMMENTS: `/comments`,
+};

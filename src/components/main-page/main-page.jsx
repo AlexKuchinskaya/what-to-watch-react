@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import Logo from '../logo/logo';
 import {PromoFilmPropType, FilmsPropType} from '../../types/types';
 import FilmList from '../films-list/films-list';
-import {useHistory} from 'react-router-dom';
 import Footer from '../footer/footer';
 import GenreList from './genre-list';
 import ShowMoreButton from './show-more-button';
@@ -11,10 +10,13 @@ import PropTypes from 'prop-types';
 import {ActionCreator} from '../../store/action';
 import {fetchPromoFilm} from '../../store/api-actions';
 import {filterMoviesByGenre, getCurrentFilmsShownCount, getPromofilm} from '../../selectors/selectors';
+import AvatarLogin from '../header/header-avatar';
+import {AuthorizationStatus} from '../../const/utils';
+import HeaderSignInLink from '../header/header-sign-in-link';
 
 const MainPage = (props) => {
-  const {resetGenre, resetShowMoreMoviesButton, promoFilm, filteredfilms, filmsShownCount} = props;
-  const history = useHistory();
+  const {resetGenre, resetShowMoreMoviesButton, promoFilm, filteredfilms, filmsShownCount, authorizationStatus} = props;
+
   const isShowMoreButtonShown = filteredfilms.length > filmsShownCount;
 
   useEffect(() => {
@@ -25,6 +27,7 @@ const MainPage = (props) => {
   // if (isPromoFilmLoading) {
   //   onLoadPromoFilm();
   // }
+
   return <>
     <section className="movie-card">
       <div className="movie-card__bg">
@@ -35,12 +38,7 @@ const MainPage = (props) => {
 
       <header className="page-header movie-card__head">
         <Logo isLogoLinkLight={false}/>
-
-        <div className="user-block">
-          <div onClick={() => history.push(`/mylist`)} className="user-block__avatar">
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63"/>
-          </div>
-        </div>
+        {authorizationStatus === AuthorizationStatus.AUTH ? <AvatarLogin /> : <HeaderSignInLink/>}
       </header>
 
       <div className="movie-card__wrap">
@@ -97,6 +95,7 @@ MainPage.propTypes = {
   filmsShownCount: PropTypes.number.isRequired,
   resetGenre: PropTypes.func.isRequired,
   resetShowMoreMoviesButton: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -104,6 +103,7 @@ const mapStateToProps = (state) => ({
   promoFilm: getPromofilm(state),
   filmsShownCount: getCurrentFilmsShownCount(state),
   isPromoFilmLoading: state.isDataLoading,
+  authorizationStatus: state.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({

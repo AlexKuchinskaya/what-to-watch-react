@@ -1,29 +1,29 @@
 import {AuthorizationStatus} from '../const/utils';
-
+import {APIRoute, Routes} from './../const/routes-path';
 import {ActionCreator} from './action';
 
 export const fetchFilmList = () => (dispatch, _getState, api) => (
-  api.get(`/films`)
+  api.get(APIRoute.FILMS)
     .then(({data}) => dispatch(ActionCreator.loadFilms((data))))
 );
 
 export const fetchPromoFilm = () => (dispatch, _getState, api) => (
-  api.get(`/films/promo`)
+  api.get(APIRoute.FILM_PROMO)
     .then(({data}) => dispatch(ActionCreator.loadPromoFilm((data))))
 );
 export const fetchReviewList = (id) => (dispatch, _getState, api) => (
-  api.get(`/comments/${id}`)
+  api.get(`${APIRoute.COMMENTS}/${id}`)
     .then(({data}) => dispatch(ActionCreator.loadReviews((data))))
 );
-// checkAuth - для проверки авторизован пользователь или нет
 export const checkAuth = () => (dispatch, _getState, api) => (
-  api.get(`/login`)
+  api.get(Routes.LOG_IN)
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-    .catch(() => {}) // обрабатывать не нужно потому что сама попытка запроса нам скажет авторизован или нет
+    .catch(() => {})
 );
 
 export const login = ({login: email, password}) => (dispatch, _getState, api) => (
-  api.post(`/login`, {email, password})
+  api.post(Routes.LOG_IN, {email, password})
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
+    .then(() => dispatch(ActionCreator.redirectToRoute(Routes.MAIN)))
 );
 

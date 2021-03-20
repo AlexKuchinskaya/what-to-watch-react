@@ -11,6 +11,7 @@ import SimilarMovies from './similar-movies';
 import {connect} from 'react-redux';
 import {getFilmList, getReviews} from '../../selectors/selectors';
 import {fetchReviewList} from '../../store/api-actions';
+import {FILMS_PATH} from '../../const/routes-path';
 
 const MoviePage = (props) => {
   const {films, reviews, isReviewsLoading, onLoadReviewList} = props;
@@ -74,7 +75,7 @@ const MoviePage = (props) => {
                 </svg>
                 <span>My list</span>
               </button>
-              <Link to={`/films/${selectedMovie.id}/review`} className="btn movie-card__button">Add review</Link>
+              <Link to={`/${FILMS_PATH}/${selectedMovie.id}/review`} className="btn movie-card__button">Add review</Link>
             </div>
           </div>
         </div>

@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {FilmPropType} from '../../types/types';
-import {useHistory, Link} from 'react-router-dom';
+import browserHistory from "../../browser-history";
+import {Link} from 'react-router-dom';
 // import Player from '../player/player';
 import VideoPlayer from '../player/video-player-preview';
 import {PREVIEW_HEIGHT, PREVIEW_WIDTH, VIDEO_DELAY} from '../../const/utils';
+import {FILMS_PATH} from '../../const/routes-path';
 
 
 const MovieCard = ({film, onMovieSelect, activeMovieCardId}) => {
@@ -37,11 +39,9 @@ const MovieCard = ({film, onMovieSelect, activeMovieCardId}) => {
     // onMovieSelect(1);
   };
 
-  const history = useHistory();
-
   const handleMovieDescriptionRedirect = () => {
     // onMovieSelect(film.id);
-    history.push(`/films/${activeMovieCardId}`);
+    browserHistory.push(`/${FILMS_PATH}/${activeMovieCardId}`);
   };
   return (
     <article onMouseEnter={handleFilmMouseEnter} onMouseLeave={handleFilmMouseLeave} className="small-movie-card catalog__movies-card">
@@ -60,7 +60,7 @@ const MovieCard = ({film, onMovieSelect, activeMovieCardId}) => {
       </div>
 
       <h3 className="small-movie-card__title">
-        <Link className="small-movie-card__link" to={`/films/${activeMovieCardId}`}>{film.name}</Link>
+        <Link className="small-movie-card__link" to={`/${FILMS_PATH}/${activeMovieCardId}`}>{film.name}</Link>
       </h3>
     </article>
 
