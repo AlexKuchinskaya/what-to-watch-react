@@ -7,9 +7,10 @@ export const ActionType = {
   RESET_SHOW_MORE_MOVIES_BUTTON: `films/resetshowmoremoviesbutton`,
   RESET_GENRE: `films/resetgenre`,
   LOAD_FILMS: `data/loadFilms`,
-  REQUIRED_AUTHORIZATION: `user/requiredAuthorization`,
+  REQUIRED_AUTHORIZATION: `user/requiredauthorization`,
   LOAD_REVIEWS: `films/loadreviews`,
   LOAD_PROMOFILM: `promofilm/loadpromofilm`,
+  REDIRECT_TO_ROUTE: `app/redirectToRoute`,
 };
 
 export const ActionCreator = {
@@ -46,4 +47,8 @@ export const ActionCreator = {
     type: ActionType.LOAD_PROMOFILM,
     payload: promofilm
   }),
+  redirectToRoute: (url) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url,
+  })
 };
