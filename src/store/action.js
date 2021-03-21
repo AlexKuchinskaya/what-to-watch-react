@@ -11,9 +11,16 @@ export const ActionType = {
   LOAD_REVIEWS: `films/loadreviews`,
   LOAD_PROMOFILM: `promofilm/loadpromofilm`,
   REDIRECT_TO_ROUTE: `app/redirectToRoute`,
+  SET_APPLICATION_READY: `app/setApplicationReady`,
+  CHECK_AUTHORIZATION: `user/checkauthorization`,
+  CHECK_ERROR_COMMENT_POSTING: `comments/checkerrorcommentposting`
 };
 
 export const ActionCreator = {
+  setApplicationReady: (isReady) => ({
+    type: ActionType.SET_APPLICATION_READY,
+    payload: isReady,
+  }),
   changeGenre: (genre) => ({
     type: ActionType.CHANGE_GENRE,
     payload: genre,
@@ -50,5 +57,13 @@ export const ActionCreator = {
   redirectToRoute: (url) => ({
     type: ActionType.REDIRECT_TO_ROUTE,
     payload: url,
+  }),
+  checkAuthorization: (bool) => ({
+    type: ActionType.CHECK_AUTHORIZATION,
+    payload: bool,
+  }),
+  checkErrorCommentPost: (bool) => ({
+    type: ActionType.CHECK_ERROR_COMMENT_POSTING,
+    payload: bool,
   })
 };

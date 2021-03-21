@@ -15,25 +15,17 @@ import LoadingScreen from '../loading-screen/loading-screen';
 import PrivateRoute from '../private-route/private-route';
 import browserHistory from "../../browser-history";
 
-const App = ({isDataLoading, onLoadData, onLoadPromoFilm, isPromoFilmLoading}) => {
-
+const App = ({onLoadData, isApplicationReady}) => {
   useEffect(() => {
-    if (!isDataLoading) {
+    if (!isApplicationReady) {
       onLoadData();
     }
-  }, [isDataLoading]);
+  }, []);
 
-  useEffect(() => {
-    if (!isPromoFilmLoading) {
-      onLoadPromoFilm();
-    }
-  }, [isPromoFilmLoading]);
-
-  if (!isDataLoading || !isPromoFilmLoading) {
-    return (
-      <LoadingScreen />
-    );
+  if (!isApplicationReady) {
+    return <LoadingScreen />;
   }
+
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
@@ -44,14 +36,12 @@ const App = ({isDataLoading, onLoadData, onLoadPromoFilm, isPromoFilmLoading}) =
           render={() => <MyList />}
         >
         </PrivateRoute>
-        {/* <Route exact path={Routes.MY_LIST} component={MyList} /> */}
         <Route exact path={Routes.FILMS_ID} component={MoviePage} />
         <PrivateRoute
           exact
           path={Routes.FILMS_ID_REVIEW}
           render={() => <ReviewAdding />}
         />
-        {/* <Route exact path={Routes.FILMS_ID_REVIEW} component={ReviewAdding} /> */}
         <Route exact path={Routes.PLAYER} component={Player} />
         <Route component={NotFoundPage} />
       </Switch>
@@ -61,17 +51,14 @@ const App = ({isDataLoading, onLoadData, onLoadPromoFilm, isPromoFilmLoading}) =
 
 
 App.propTypes = {
-  isDataLoading: PropTypes.bool.isRequired,
-  isPromoFilmLoading: PropTypes.bool.isRequired,
+  isApplicationReady: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
-  onLoadPromoFilm: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  isDataLoading: state.isDataLoading,
-  isPromoFilmLoading: state.isDataLoading,
+  promoFilm: state.promoFilm,
+  isApplicationReady: state.isApplicationReady
 });
-
 const mapDispatchToProps = (dispatch) => ({
   onLoadData() {
     dispatch(fetchFilmList());

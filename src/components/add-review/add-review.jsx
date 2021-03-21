@@ -1,12 +1,25 @@
 import React, {useState} from 'react';
+import {useParams} from 'react-router-dom';
 import {ratingNumberList} from '../../const/rating-consts';
 import {getRandomInteger} from '../../utils/utils';
 import Logo from '../logo/logo';
+import {connect} from "react-redux";
+import {addReview} from "../../store/api-actions";
+import browserHistory from '../../browser-history';
+import { FILMS_PATH } from '../../const/routes-path';
+import { getFilmList, getSelectedFilm } from '../../selectors/selectors';
 
 const MIN_RATING = 1;
 const MAX_RATING = 10;
 const getRandomRatingNumber = getRandomInteger(MIN_RATING, MAX_RATING);
-const ReviewAdding = () => {
+const ReviewAdding = ({films, onSubmitFormReview, isErrorCommentPosting}) => {
+  console.log(`isErrorCommentPosting`, isErrorCommentPosting)
+  let {id} = useParams();
+  let idNumber = parseInt(id, 10);
+  const selectedMovie = films.find((film) => {
+    return film.id === idNumber;
+  });
+  console.log(`id`, id)
 
   const [review, setReview] = useState();
   const handleTextareaChange = (evt) => {
@@ -23,11 +36,23 @@ const ReviewAdding = () => {
     setRating({ratingValue: value, isRatingChecked: checked});
   };
   const {ratingValue} = rating;
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    console.log(`comment`, review)
+    onSubmitFormReview(
+        idNumber,
+        {
+          rating: ratingValue,
+          comment: review,
+        }
+    );
+    browserHistory.push(`/${FILMS_PATH}/${idNumber}`);
+  };
   return (
     <section className="movie-card movie-card--full">
       <div className="movie-card__header">
         <div className="movie-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src={selectedMovie.backgroundImage} alt={selectedMovie.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -38,7 +63,7 @@ const ReviewAdding = () => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="movie-page.html" className="breadcrumbs__link">The Grand Budapest Hotel</a>
+                <a href="movie-page.html" className="breadcrumbs__link">{selectedMovie.name}</a>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
@@ -54,14 +79,14 @@ const ReviewAdding = () => {
         </header>
 
         <div className="movie-card__poster movie-card__poster--small">
-          <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+          <img src={selectedMovie.posterImage} alt={selectedMovie.name} width="218" height="327" />
         </div>
       </div>
 
       <div className="add-review">
         <form
           action="#"
-          onSubmit={(evt) => evt.preventDefault()}
+          onSubmit={handleSubmit}
           className="add-review__htmlForm"
         >
           <div className="rating">
@@ -93,5 +118,16 @@ const ReviewAdding = () => {
     </section>
   );
 };
+const mapStateToProps = (state) => ({
+  films: getFilmList(state),
+  isErrorCommentPosting: state.isErrorCommentPosting,
+});
 
-export default ReviewAdding;
+const mapDispatchToProps = (dispatch) => ({
+  onSubmitFormReview(id, reviewData) {
+    dispatch(addReview(id, reviewData));
+  }
+});
+
+export {ReviewAdding};
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewAdding);

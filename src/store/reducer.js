@@ -7,15 +7,22 @@ const initialState = {
   filmList: [],
   filmsShownCount: MAX_FILMS,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
-  isDataLoading: false,
+  isApplicationReady: false,
+  isErrorAuthorization: false,
+  isErrorCommentPosting: false,
   isReviewsLoading: false,
   reviews: [],
   promoFilm: {},
-  isPromoFilmLoading: false,
+  // isPromoFilmLoading: false,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.SET_APPLICATION_READY:
+      return {
+        ...state,
+        isApplicationReady: action.payload,
+      };
     case ActionType.CHANGE_GENRE:
       return {
         ...state,
@@ -46,7 +53,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         filmList: adaptFilmsToClient(action.payload),
-        isDataLoading: true
+        // isDataLoading: true
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
@@ -63,7 +70,17 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         promoFilm: adaptPromoFilmToClient(action.payload),
-        isPromoFilmLoading: true,
+        // isPromoFilmLoading: true,
+      };
+    case ActionType.CHECK_AUTHORIZATION:
+      return {
+        ...state,
+        isErrorAuthorization: action.payload,
+      };
+    case ActionType.CHECK_ERROR_COMMENT_POSTING:
+      return {
+        ...state,
+        isErrorCommentPosting: action.payload,
       };
     default:
       return state;

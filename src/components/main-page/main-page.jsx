@@ -8,8 +8,7 @@ import ShowMoreButton from './show-more-button';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {ActionCreator} from '../../store/action';
-import {fetchPromoFilm} from '../../store/api-actions';
-import {filterMoviesByGenre, getCurrentFilmsShownCount, getPromofilm} from '../../selectors/selectors';
+import {filterMoviesByGenre, getCurrentFilmsShownCount} from '../../selectors/selectors';
 import AvatarLogin from '../header/header-avatar';
 import {AuthorizationStatus} from '../../const/utils';
 import HeaderSignInLink from '../header/header-sign-in-link';
@@ -20,13 +19,9 @@ const MainPage = (props) => {
   const isShowMoreButtonShown = filteredfilms.length > filmsShownCount;
 
   useEffect(() => {
-    // onLoadPromoFilm();
     resetShowMoreMoviesButton();
     resetGenre();
   }, []);
-  // if (isPromoFilmLoading) {
-  //   onLoadPromoFilm();
-  // }
 
   return <>
     <section className="movie-card">
@@ -100,7 +95,7 @@ MainPage.propTypes = {
 
 const mapStateToProps = (state) => ({
   filteredfilms: filterMoviesByGenre(state),
-  promoFilm: getPromofilm(state),
+  promoFilm: state.promoFilm,
   filmsShownCount: getCurrentFilmsShownCount(state),
   isPromoFilmLoading: state.isDataLoading,
   authorizationStatus: state.authorizationStatus,
@@ -112,9 +107,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   resetGenre(genre) {
     dispatch(ActionCreator.resetGenre(genre));
-  },
-  onLoadPromoFilm() {
-    dispatch(fetchPromoFilm());
   },
 });
 export {MainPage};

@@ -12,9 +12,12 @@ import {connect} from 'react-redux';
 import {getFilmList, getReviews} from '../../selectors/selectors';
 import {fetchReviewList} from '../../store/api-actions';
 import {FILMS_PATH} from '../../const/routes-path';
+import {AuthorizationStatus} from '../../const/utils';
+import AvatarLogin from '../header/header-avatar';
+import HeaderSignInLink from '../header/header-sign-in-link';
 
 const MoviePage = (props) => {
-  const {films, reviews, isReviewsLoading, onLoadReviewList} = props;
+  const {films, reviews, isReviewsLoading, onLoadReviewList, authorizationStatus} = props;
   let {id} = useParams();
   let idNumber = parseInt(id, 10);
   const selectedMovie = films.find((film) => {
@@ -47,11 +50,7 @@ const MoviePage = (props) => {
         <header className="page-header movie-card__head">
           <Logo isLogoLinkLight={false}/>
 
-          <div className="user-block">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
-          </div>
+          {authorizationStatus === AuthorizationStatus.AUTH ? <AvatarLogin /> : <HeaderSignInLink/>}
         </header>
 
         <div className="movie-card__wrap">
@@ -75,7 +74,8 @@ const MoviePage = (props) => {
                 </svg>
                 <span>My list</span>
               </button>
-              <Link to={`/${FILMS_PATH}/${selectedMovie.id}/review`} className="btn movie-card__button">Add review</Link>
+              {authorizationStatus === AuthorizationStatus.AUTH && <Link to={`/${FILMS_PATH}/${selectedMovie.id}/review`} className="btn movie-card__button">Add review</Link>}
+              {/* <Link to={`/${FILMS_PATH}/${selectedMovie.id}/review`} className="btn movie-card__button">Add review</Link> */}
             </div>
           </div>
         </div>
@@ -121,6 +121,8 @@ const mapStateToProps = (state) => (
     films: getFilmList(state),
     isReviewsLoading: state.isReviewsLoading,
     reviews: getReviews(state),
+    authorizationStatus: state.authorizationStatus,
+    // AuthorizationStatus.NO_AUTH,
   }
 );
 
