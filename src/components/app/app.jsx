@@ -40,7 +40,7 @@ const App = ({onLoadData, isApplicationReady}) => {
         <PrivateRoute
           exact
           path={Routes.FILMS_ID_REVIEW}
-          render={() => <ReviewAdding />}
+          render={(props) => <ReviewAdding {...props}/>}
         />
         <Route exact path={Routes.PLAYER} component={Player} />
         <Route component={NotFoundPage} />

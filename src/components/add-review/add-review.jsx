@@ -6,20 +6,15 @@ import Logo from '../logo/logo';
 import {connect} from "react-redux";
 import {addReview} from "../../store/api-actions";
 import browserHistory from '../../browser-history';
-import { FILMS_PATH } from '../../const/routes-path';
-import { getFilmList, getSelectedFilm } from '../../selectors/selectors';
+import {FILMS_PATH} from '../../const/routes-path';
+import {getFilmList, getSelectedFilm} from '../../selectors/selectors';
 
 const MIN_RATING = 1;
 const MAX_RATING = 10;
 const getRandomRatingNumber = getRandomInteger(MIN_RATING, MAX_RATING);
-const ReviewAdding = ({films, onSubmitFormReview, isErrorCommentPosting}) => {
-  console.log(`isErrorCommentPosting`, isErrorCommentPosting)
-  let {id} = useParams();
-  let idNumber = parseInt(id, 10);
-  const selectedMovie = films.find((film) => {
-    return film.id === idNumber;
-  });
-  console.log(`id`, id)
+const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selectedMovie}) => {
+  let idNumber = parseInt(movieId, 10);
+
 
   const [review, setReview] = useState();
   const handleTextareaChange = (evt) => {
@@ -27,7 +22,7 @@ const ReviewAdding = ({films, onSubmitFormReview, isErrorCommentPosting}) => {
   };
 
   const [rating, setRating] = useState({
-    ratingValue: getRandomRatingNumber.toString(),
+    ratingValue: 0,
     isRatingChecked: false
   });
 
@@ -35,10 +30,11 @@ const ReviewAdding = ({films, onSubmitFormReview, isErrorCommentPosting}) => {
     const {value, checked} = evt.target;
     setRating({ratingValue: value, isRatingChecked: checked});
   };
+
   const {ratingValue} = rating;
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log(`comment`, review)
+    console.log(`comment`, review);
     onSubmitFormReview(
         idNumber,
         {
@@ -84,6 +80,11 @@ const ReviewAdding = ({films, onSubmitFormReview, isErrorCommentPosting}) => {
       </div>
 
       <div className="add-review">
+        {isErrorCommentPosting && (
+          <div >
+            <p style={{color: `yellow`, backgroundColot: `#12baac`}}>We are so sorry, but there were produced some erros while sending your comment. <br/> Please, try to post it later </p>
+          </div>
+        )}
         <form
           action="#"
           onSubmit={handleSubmit}
@@ -118,10 +119,13 @@ const ReviewAdding = ({films, onSubmitFormReview, isErrorCommentPosting}) => {
     </section>
   );
 };
-const mapStateToProps = (state) => ({
-  films: getFilmList(state),
-  isErrorCommentPosting: state.isErrorCommentPosting,
-});
+const mapStateToProps = (state, ownProps) => (
+  {
+    movieId: ownProps.match.params.id,
+    films: getFilmList(state),
+    selectedMovie: getSelectedFilm(state, parseInt(ownProps.match.params.id, 10)),
+    isErrorCommentPosting: state.isErrorCommentPosting,
+  });
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmitFormReview(id, reviewData) {

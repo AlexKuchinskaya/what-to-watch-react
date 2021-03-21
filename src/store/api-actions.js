@@ -53,11 +53,6 @@ export const addReview = (id, {rating, comment}) => (dispatch, _getState, api) =
       dispatch(ActionCreator.checkErrorCommentPost(true));
       throw error;
     })
-  // .then(() => {
-  //   dispatch(fetchReviewList(id));
-  // })
-  // .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
-  // .then(() => dispatch(ActionCreator.redirectToRoute(Routes.MAIN)))
 );
 
 
