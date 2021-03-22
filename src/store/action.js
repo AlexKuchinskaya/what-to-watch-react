@@ -13,7 +13,10 @@ export const ActionType = {
   REDIRECT_TO_ROUTE: `app/redirectToRoute`,
   SET_APPLICATION_READY: `app/setApplicationReady`,
   CHECK_AUTHORIZATION: `user/checkauthorization`,
-  CHECK_ERROR_COMMENT_POSTING: `comments/checkerrorcommentposting`
+  CHECK_ERROR_COMMENT_POSTING: `comments/checkerrorcommentposting`,
+  SET_FORM_DISABLE: `from/setformdisable`,
+  LOAD_USER_INFO: `user/loaduserinfo`,
+  LOAD_FAVORITE_FILMS: `films/loadfavoritefilms`,
 };
 
 export const ActionCreator = {
@@ -65,5 +68,17 @@ export const ActionCreator = {
   checkErrorCommentPost: (bool) => ({
     type: ActionType.CHECK_ERROR_COMMENT_POSTING,
     payload: bool,
+  }),
+  setFormDisable: (bool) => ({
+    type: ActionType.SET_FORM_DISABLE,
+    payload: bool,
+  }),
+  loadUserInfo: (userInfo) => ({
+    type: ActionType.LOAD_USER_INFO,
+    payload: userInfo,
+  }),
+  loadFavoriteFilms: (favoriteFilms) => ({
+    type: ActionType.LOAD_FAVORITE_FILMS,
+    payload: favoriteFilms,
   })
 };

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-export const RviewPropType = PropTypes.shape({
+export const ReviewPropType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   user: PropTypes.shape({
     id: PropTypes.number.isRequired,
@@ -10,4 +10,4 @@ export const RviewPropType = PropTypes.shape({
   date: PropTypes.string.isRequired,
 });
 
-export const RviewsPropType = PropTypes.arrayOf(RviewPropType).isRequired;
+export const RviewsPropType = PropTypes.arrayOf(ReviewPropType).isRequired;

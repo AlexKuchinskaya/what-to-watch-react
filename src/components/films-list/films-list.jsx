@@ -6,7 +6,7 @@ import {filterMoviesByGenre, getCurrentFilmsShownCount} from '../../selectors/se
 import PropTypes from 'prop-types';
 
 const FilmList = (props) => {
-  const {filteredfilms, filmsShownCount} = props;
+  const {films, filmsShownCount} = props;
 
   const [activeMovieCardId, setActiveMovieCardId] = useState(1);
 
@@ -18,8 +18,7 @@ const FilmList = (props) => {
 
   return (
     <div className="catalog__movies-list">
-      {/* Active film id: {activeMovieCardId} */}
-      {filteredfilms.slice(0, filmsShownCount).map((film) => (
+      {films.slice(0, filmsShownCount).map((film) => (
         <MovieCard
           key={film.id}
           film={film}
@@ -33,7 +32,7 @@ const FilmList = (props) => {
 };
 
 FilmList.propTypes = {
-  filteredfilms: FilmsPropType,
+  films: FilmsPropType,
   filmsShownCount: PropTypes.number.isRequired
 };
 

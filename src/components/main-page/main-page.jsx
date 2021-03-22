@@ -23,6 +23,10 @@ const MainPage = (props) => {
     resetGenre();
   }, []);
 
+  const handleMyListClick = (evt) => {
+    evt.preventDefault();
+
+  }
   return <>
     <section className="movie-card">
       <div className="movie-card__bg">
@@ -56,7 +60,7 @@ const MainPage = (props) => {
                 </svg>
                 <span>Play</span>
               </button>
-              <button className="btn btn--list movie-card__button" type="button">
+              <button onClick={handleMyListClick} className="btn btn--list movie-card__button" type="button">
                 <svg viewBox="0 0 19 20" width="19" height="20">
                   <use xlinkHref="#add"></use>
                 </svg>
@@ -73,7 +77,7 @@ const MainPage = (props) => {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <GenreList />
-        <FilmList />
+        <FilmList films={filteredfilms}/>
         {isShowMoreButtonShown ? <ShowMoreButton /> : null}
 
       </section>

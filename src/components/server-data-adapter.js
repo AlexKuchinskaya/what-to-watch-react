@@ -59,3 +59,14 @@ export const adaptPromoFilmToClient = (promoFilm) => {
   return adaptedPromoFilm;
 };
 
+export const adaptUserLoggedInInfo = (data) => {
+  const adaptedUserLoggedInInfo = Object.assign(
+      {},
+      data,
+      {
+        avatarUrl: data.avatar_url,
+      }
+  );
+  delete adaptedUserLoggedInInfo.avatar_url;
+  return adaptedUserLoggedInInfo;
+};

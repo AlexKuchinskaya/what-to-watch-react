@@ -1,24 +1,36 @@
 import React, {useState} from 'react';
-import {useParams} from 'react-router-dom';
+// import {useParams} from 'react-router-dom';
 import {ratingNumberList} from '../../const/rating-consts';
-import {getRandomInteger} from '../../utils/utils';
+// import {getRandomInteger} from '../../utils/utils';
 import Logo from '../logo/logo';
 import {connect} from "react-redux";
 import {addReview} from "../../store/api-actions";
 import browserHistory from '../../browser-history';
-import {FILMS_PATH} from '../../const/routes-path';
-import {getFilmList, getSelectedFilm} from '../../selectors/selectors';
+import {getSelectedFilm} from '../../selectors/selectors';
+import {AuthorizationStatus} from '../../const/utils';
+import AvatarLogin from '../header/header-avatar';
+import HeaderSignInLink from '../header/header-sign-in-link';
+import PropTypes from 'prop-types';
+import {FilmPropType} from '../../types/types';
 
-const MIN_RATING = 1;
-const MAX_RATING = 10;
-const getRandomRatingNumber = getRandomInteger(MIN_RATING, MAX_RATING);
-const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selectedMovie}) => {
+// const MIN_RATING = 1;
+// const MAX_RATING = 10;
+// const getRandomRatingNumber = getRandomInteger(MIN_RATING, MAX_RATING);
+const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selectedMovie, isFormDisabled, userLoggedInInfo, authorizationStatus}) => {
   let idNumber = parseInt(movieId, 10);
 
 
-  const [review, setReview] = useState();
+  const [review, setReview] = useState([]);
   const handleTextareaChange = (evt) => {
     setReview(evt.target.value);
+    if (review.length < 50) {
+      evt.target.setCustomValidity(`Please, introduce ${50 - review.length} more symbols to complete your comment`);
+    } else if (review.length > 400) {
+      evt.target.setCustomValidity(`Please, delete ${review.length - 400} symbols to complete your comment`);
+    } else {
+      evt.target.setCustomValidity(``);
+    }
+    evt.target.reportValidity();
   };
 
   const [rating, setRating] = useState({
@@ -31,7 +43,9 @@ const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selec
     setRating({ratingValue: value, isRatingChecked: checked});
   };
 
-  const {ratingValue} = rating;
+  const {ratingValue, isRatingChecked} = rating;
+  console.log(`ratingValue`, ratingValue);
+  console.log(`isRatingChecked`, isRatingChecked);
   const handleSubmit = (evt) => {
     evt.preventDefault();
     console.log(`comment`, review);
@@ -42,7 +56,7 @@ const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selec
           comment: review,
         }
     );
-    browserHistory.push(`/${FILMS_PATH}/${idNumber}`);
+
   };
   return (
     <section className="movie-card movie-card--full">
@@ -67,11 +81,7 @@ const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selec
             </ul>
           </nav>
 
-          <div className="user-block">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
-          </div>
+          {authorizationStatus === AuthorizationStatus.AUTH ? <AvatarLogin /> : <HeaderSignInLink/>}
         </header>
 
         <div className="movie-card__poster movie-card__poster--small">
@@ -82,13 +92,14 @@ const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selec
       <div className="add-review">
         {isErrorCommentPosting && (
           <div >
-            <p style={{color: `yellow`, backgroundColot: `#12baac`}}>We are so sorry, but there were produced some erros while sending your comment. <br/> Please, try to post it later </p>
+            <p style={{color: `yellow`}}>We are so sorry, but there were produced some erros while sending your comment. <br/> Please, try to post it later or check if you fullfilled all the fields </p>
           </div>
         )}
         <form
           action="#"
           onSubmit={handleSubmit}
           className="add-review__htmlForm"
+          disabled={isFormDisabled}
         >
           <div className="rating">
             <div className="rating__stars">
@@ -100,7 +111,9 @@ const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selec
                     type="radio"
                     name="rating"
                     value={ratingNumber}
-                    checked={ratingNumber === ratingValue ? `checked` : ``}
+                    defaultChecked={isRatingChecked && ratingNumber === ratingValue ? true : false}
+                    // checked={ratingNumber === ratingValue ? true : false}
+                    disabled={isFormDisabled}
                   />
                   <label className="rating__label" htmlFor={`star-${ratingNumber}`}>{`Rating ${ratingNumber}`}</label>
                 </React.Fragment>
@@ -109,9 +122,23 @@ const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selec
           </div>
 
           <div className="add-review__text">
-            <textarea onChange={handleTextareaChange} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" value={review}></textarea>
+            <textarea
+              onChange={handleTextareaChange}
+              className="add-review__textarea"
+              name="review-text"
+              id="review-text"
+              placeholder="Review text"
+              value={review}
+              disabled={isFormDisabled}
+            >
+            </textarea>
             <div className="add-review__submit">
-              <button className="add-review__btn" type="submit">Post</button>
+              <button
+                className="add-review__btn"
+                type="submit"
+                disabled={isFormDisabled} >
+                Post
+              </button>
             </div>
           </div>
         </form>
@@ -119,17 +146,30 @@ const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selec
     </section>
   );
 };
+
+ReviewAdding.propTypes = {
+  selectedMovie: FilmPropType,
+  movieId: PropTypes.string.isRequired,
+  isErrorCommentPosting: PropTypes.bool.isRequired,
+  isFormDisabled: PropTypes.bool,
+  userLoggedInInfo: PropTypes.object.isRequired,
+  onSubmitFormReview: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+};
+
 const mapStateToProps = (state, ownProps) => (
   {
     movieId: ownProps.match.params.id,
-    films: getFilmList(state),
     selectedMovie: getSelectedFilm(state, parseInt(ownProps.match.params.id, 10)),
     isErrorCommentPosting: state.isErrorCommentPosting,
+    isFormDisabled: state.isFormDisabled,
+    userLoggedInInfo: state.userLoggedInInfo,
+    authorizationStatus: state.authorizationStatus,
   });
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmitFormReview(id, reviewData) {
-    dispatch(addReview(id, reviewData));
+    dispatch(addReview(id, reviewData, browserHistory));
   }
 });
 
