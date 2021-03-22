@@ -1,13 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import FilmList from '../films-list/films-list';
 import Logo from '../logo/logo';
-import {filmsListPropTypes} from '../../types/types';
+import {FilmsPropType} from '../../types/types';
 import Footer from '../footer/footer';
 import {connect} from 'react-redux';
-import {getFilmList} from '../../selectors/selectors';
+import {AuthorizationStatus} from '../../const/utils';
+import AvatarLogin from '../header/header-avatar';
+import HeaderSignInLink from '../header/header-sign-in-link';
+import {fetchFavoriteFilmList} from '../../store/api-actions';
+import PropTypes from 'prop-types';
 
 const MyList = (props) => {
-  const {films} = props;
+  const {favoriteFilms, authorizationStatus, onLoadFavoriteFilmsList, isFavoriteFilmLoading} = props;
+
+  useEffect(() => {
+    if (!isFavoriteFilmLoading) {
+      onLoadFavoriteFilmsList();
+    }
+  }, []);
+
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -15,18 +26,14 @@ const MyList = (props) => {
 
         <h1 className="page-title user-page__title">My list</h1>
 
-        <div className="user-block">
-          <div className="user-block__avatar">
-            <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-          </div>
-        </div>
+        {authorizationStatus === AuthorizationStatus.AUTH ? <AvatarLogin /> : <HeaderSignInLink/>}
       </header>
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__movies-list">
-          <FilmList films={films}/>
+          <FilmList films={favoriteFilms}/>
         </div>
       </section>
 
@@ -35,14 +42,26 @@ const MyList = (props) => {
   );
 };
 
-MyList.propTypes = filmsListPropTypes;
+MyList.propTypes = {
+  favoriteFilms: FilmsPropType,
+  isFavoriteFilmLoading: PropTypes.bool.isRequired,
+  onLoadFavoriteFilmsList: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+};
 
 const mapStateToProps = (state) => (
   {
-    films: getFilmList(state)
+    favoriteFilms: state.favoriteFilms,
+    isFavoriteFilmLoading: state.isFavoriteFilmLoading,
+    authorizationStatus: state.authorizationStatus,
   }
 );
 
+const mapDispatchToProps = (dispatch) => ({
+  onLoadFavoriteFilmsList() {
+    dispatch(fetchFavoriteFilmList());
+  }
+});
 export {MyList};
-export default connect(mapStateToProps)(MyList);
+export default connect(mapStateToProps, mapDispatchToProps)(MyList);
 

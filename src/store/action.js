@@ -11,9 +11,20 @@ export const ActionType = {
   LOAD_REVIEWS: `films/loadreviews`,
   LOAD_PROMOFILM: `promofilm/loadpromofilm`,
   REDIRECT_TO_ROUTE: `app/redirectToRoute`,
+  SET_APPLICATION_READY: `app/setApplicationReady`,
+  CHECK_AUTHORIZATION: `user/checkauthorization`,
+  CHECK_ERROR_COMMENT_POSTING: `comments/checkerrorcommentposting`,
+  SET_FORM_DISABLE: `from/setformdisable`,
+  LOAD_USER_INFO: `user/loaduserinfo`,
+  LOAD_FAVORITE_FILMS: `films/loadfavoritefilms`,
+  POST_FAVORITE_FILM: `films/postfavoritefilm`
 };
 
 export const ActionCreator = {
+  setApplicationReady: (isReady) => ({
+    type: ActionType.SET_APPLICATION_READY,
+    payload: isReady,
+  }),
   changeGenre: (genre) => ({
     type: ActionType.CHANGE_GENRE,
     payload: genre,
@@ -50,5 +61,29 @@ export const ActionCreator = {
   redirectToRoute: (url) => ({
     type: ActionType.REDIRECT_TO_ROUTE,
     payload: url,
-  })
+  }),
+  checkAuthorization: (bool) => ({
+    type: ActionType.CHECK_AUTHORIZATION,
+    payload: bool,
+  }),
+  checkErrorCommentPost: (bool) => ({
+    type: ActionType.CHECK_ERROR_COMMENT_POSTING,
+    payload: bool,
+  }),
+  setFormDisable: (bool) => ({
+    type: ActionType.SET_FORM_DISABLE,
+    payload: bool,
+  }),
+  loadUserInfo: (userInfo) => ({
+    type: ActionType.LOAD_USER_INFO,
+    payload: userInfo,
+  }),
+  loadFavoriteFilms: (favoriteFilms) => ({
+    type: ActionType.LOAD_FAVORITE_FILMS,
+    payload: favoriteFilms,
+  }),
+  postFavoriteFilm: (status) => ({
+    type: ActionType.POST_FAVORITE_FILM,
+    payload: status,
+  }),
 };

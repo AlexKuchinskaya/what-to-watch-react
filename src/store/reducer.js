@@ -1,21 +1,32 @@
 import {AuthorizationStatus, MAX_FILMS} from "../const/utils";
 import {ActionType} from "./action";
-import {adaptFilmsToClient, adaptPromoFilmToClient} from '../components/server-data-adapter';
+import {adaptFilmsToClient, adaptPromoFilmToClient, adaptUserLoggedInInfo} from '../components/server-data-adapter';
 
 const initialState = {
   genre: `All genres`,
   filmList: [],
   filmsShownCount: MAX_FILMS,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
-  isDataLoading: false,
+  isApplicationReady: false,
+  isErrorAuthorization: false,
+  isErrorCommentPosting: false,
   isReviewsLoading: false,
   reviews: [],
   promoFilm: {},
-  isPromoFilmLoading: false,
+  isFormDisabled: false,
+  userLoggedInInfo: {},
+  favoriteFilms: [],
+  isFavoriteFilmLoading: false,
+  isFilmFavorite: false,
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.SET_APPLICATION_READY:
+      return {
+        ...state,
+        isApplicationReady: action.payload,
+      };
     case ActionType.CHANGE_GENRE:
       return {
         ...state,
@@ -46,7 +57,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         filmList: adaptFilmsToClient(action.payload),
-        isDataLoading: true
       };
     case ActionType.REQUIRED_AUTHORIZATION:
       return {
@@ -63,7 +73,37 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         promoFilm: adaptPromoFilmToClient(action.payload),
-        isPromoFilmLoading: true,
+      };
+    case ActionType.CHECK_AUTHORIZATION:
+      return {
+        ...state,
+        isErrorAuthorization: action.payload,
+      };
+    case ActionType.CHECK_ERROR_COMMENT_POSTING:
+      return {
+        ...state,
+        isErrorCommentPosting: action.payload,
+      };
+    case ActionType.SET_FORM_DISABLE:
+      return {
+        ...state,
+        isFormDisabled: action.payload,
+      };
+    case ActionType.LOAD_USER_INFO:
+      return {
+        ...state,
+        userLoggedInInfo: adaptUserLoggedInInfo(action.payload),
+      };
+    case ActionType.LOAD_FAVORITE_FILMS:
+      return {
+        ...state,
+        favoriteFilms: adaptFilmsToClient(action.payload),
+        isFavoriteFilmLoading: true,
+      };
+    case ActionType.POST_FAVORITE_FILM:
+      return {
+        ...state,
+        isFilmFavorite: action.payload,
       };
     default:
       return state;

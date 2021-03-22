@@ -8,25 +8,21 @@ import ShowMoreButton from './show-more-button';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {ActionCreator} from '../../store/action';
-import {fetchPromoFilm} from '../../store/api-actions';
-import {filterMoviesByGenre, getCurrentFilmsShownCount, getPromofilm} from '../../selectors/selectors';
+import {filterMoviesByGenre, getCurrentFilmsShownCount} from '../../selectors/selectors';
 import AvatarLogin from '../header/header-avatar';
 import {AuthorizationStatus} from '../../const/utils';
 import HeaderSignInLink from '../header/header-sign-in-link';
 
+import MyListButton from '../my-list-button/my-list-button';
+
 const MainPage = (props) => {
   const {resetGenre, resetShowMoreMoviesButton, promoFilm, filteredfilms, filmsShownCount, authorizationStatus} = props;
-
   const isShowMoreButtonShown = filteredfilms.length > filmsShownCount;
-
+  const promoFilmIdString = promoFilm.id.toString();
   useEffect(() => {
-    // onLoadPromoFilm();
     resetShowMoreMoviesButton();
     resetGenre();
   }, []);
-  // if (isPromoFilmLoading) {
-  //   onLoadPromoFilm();
-  // }
 
   return <>
     <section className="movie-card">
@@ -61,12 +57,7 @@ const MainPage = (props) => {
                 </svg>
                 <span>Play</span>
               </button>
-              <button className="btn btn--list movie-card__button" type="button">
-                <svg viewBox="0 0 19 20" width="19" height="20">
-                  <use xlinkHref="#add"></use>
-                </svg>
-                <span>My list</span>
-              </button>
+              <MyListButton favoriteMovieId={promoFilmIdString}/>
             </div>
           </div>
         </div>
@@ -78,7 +69,7 @@ const MainPage = (props) => {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <GenreList />
-        <FilmList />
+        <FilmList films={filteredfilms}/>
         {isShowMoreButtonShown ? <ShowMoreButton /> : null}
 
       </section>
@@ -100,10 +91,11 @@ MainPage.propTypes = {
 
 const mapStateToProps = (state) => ({
   filteredfilms: filterMoviesByGenre(state),
-  promoFilm: getPromofilm(state),
+  promoFilm: state.promoFilm,
   filmsShownCount: getCurrentFilmsShownCount(state),
   isPromoFilmLoading: state.isDataLoading,
   authorizationStatus: state.authorizationStatus,
+  isFilmFavorite: state.isFilmFavorite,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -112,9 +104,6 @@ const mapDispatchToProps = (dispatch) => ({
   },
   resetGenre(genre) {
     dispatch(ActionCreator.resetGenre(genre));
-  },
-  onLoadPromoFilm() {
-    dispatch(fetchPromoFilm());
   },
 });
 export {MainPage};

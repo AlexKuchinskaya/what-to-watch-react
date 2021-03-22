@@ -9,6 +9,7 @@ export const getAllGenresFromState = (state) => getListOfGenres(state.filmList);
 export const getCurrentGenreSelector = (state) => state.genre;
 export const getCurrentFilmsShownCount = (state) => state.filmsShownCount;
 
+
 const filterMoviesByGenre = createSelector(
     getFilmList,
     getCurrentGenreSelector,
@@ -18,6 +19,11 @@ const filterMoviesByGenre = createSelector(
         films.filter((film) => film.genre === genre);
     }
 );
+export const getSelectedFilm = (state, filmId) => {
+  const films = getFilmList(state);
+  return films.find((film) => film.id === filmId ? film : undefined);
+};
+
 
 export {filterMoviesByGenre};
 

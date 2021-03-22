@@ -5,16 +5,22 @@ import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {login} from "../../store/api-actions";
 
-const SignIn = ({onSubmitForm}) => {
+const SignIn = ({onSubmitForm, isErrorAuthorization}) => {
+
   const emailRef = useRef();
   const passwordRef = useRef();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    onSubmitForm({
-      login: emailRef.current.value,
-      password: passwordRef.current.value,
-    });
+    let emailCurrentValue = emailRef.current.value;
+    let passwordCurrentValue = passwordRef.current.value;
+    if (emailCurrentValue.length !== 0 && emailCurrentValue.length !== 0) {
+      onSubmitForm({
+        login: emailCurrentValue,
+        password: passwordCurrentValue,
+      });
+    }
+
   };
   return (
     <div className="user-page">
@@ -30,6 +36,11 @@ const SignIn = ({onSubmitForm}) => {
           className="sign-in__form"
           onSubmit={handleSubmit}
         >
+          {isErrorAuthorization ? (
+            <div className="sign-in__message">
+              <p>We can’t recognize this email <br/> and password combination. Please try again.</p>
+            </div>
+          ) : null}
           <div className="sign-in__fields">
             <div className="sign-in__field">
               <input
@@ -67,7 +78,12 @@ const SignIn = ({onSubmitForm}) => {
 
 SignIn.propTypes = {
   onSubmitForm: PropTypes.func.isRequired,
+  isErrorAuthorization: PropTypes.bool.isRequired
 };
+
+const mapStateToProps = (state) => ({
+  isErrorAuthorization: state.isErrorAuthorization,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmitForm(authData) {
@@ -76,4 +92,4 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export {SignIn};
-export default connect(null, mapDispatchToProps)(SignIn);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

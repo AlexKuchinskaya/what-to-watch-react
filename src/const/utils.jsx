@@ -11,4 +11,8 @@ export const AuthorizationStatus = {
   NO_AUTH: `NO_AUTH`,
 };
 
+export const ReviewLenght = {
+  MAX_LENGHT: 400,
+  MIN_LENGHT: 50,
+};
 export const AVATAR_IMAGE = `img/avatar.jpg`;

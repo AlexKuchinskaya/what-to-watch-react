@@ -1,20 +1,36 @@
 import React, {useState} from 'react';
 import {ratingNumberList} from '../../const/rating-consts';
-import {getRandomInteger} from '../../utils/utils';
 import Logo from '../logo/logo';
+import {connect} from "react-redux";
+import {addReview} from "../../store/api-actions";
+import browserHistory from '../../browser-history';
+import {getSelectedFilm} from '../../selectors/selectors';
+import {AuthorizationStatus, ReviewLenght} from '../../const/utils';
+import AvatarLogin from '../header/header-avatar';
+import HeaderSignInLink from '../header/header-sign-in-link';
+import PropTypes from 'prop-types';
+import {FilmPropType} from '../../types/types';
 
-const MIN_RATING = 1;
-const MAX_RATING = 10;
-const getRandomRatingNumber = getRandomInteger(MIN_RATING, MAX_RATING);
-const ReviewAdding = () => {
 
-  const [review, setReview] = useState();
+const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selectedMovie, isFormDisabled, authorizationStatus}) => {
+  let idNumber = parseInt(movieId, 10);
+
+
+  const [review, setReview] = useState([]);
   const handleTextareaChange = (evt) => {
     setReview(evt.target.value);
+    if (review.length < ReviewLenght.MIN_LENGHT) {
+      evt.target.setCustomValidity(`Please, introduce ${ReviewLenght.MIN_LENGHT - review.length} more symbols to complete your comment`);
+    } else if (review.length > ReviewLenght.MAX_LENGHT) {
+      evt.target.setCustomValidity(`Please, delete ${review.length - ReviewLenght.MAX_LENGHT} symbols to complete your comment`);
+    } else {
+      evt.target.setCustomValidity(``);
+    }
+    evt.target.reportValidity();
   };
 
   const [rating, setRating] = useState({
-    ratingValue: getRandomRatingNumber.toString(),
+    ratingValue: 0,
     isRatingChecked: false
   });
 
@@ -22,12 +38,24 @@ const ReviewAdding = () => {
     const {value, checked} = evt.target;
     setRating({ratingValue: value, isRatingChecked: checked});
   };
-  const {ratingValue} = rating;
+
+  const {ratingValue, isRatingChecked} = rating;
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
+    onSubmitFormReview(
+        idNumber,
+        {
+          rating: ratingValue,
+          comment: review,
+        }
+    );
+
+  };
   return (
     <section className="movie-card movie-card--full">
       <div className="movie-card__header">
         <div className="movie-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src={selectedMovie.backgroundImage} alt={selectedMovie.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -38,7 +66,7 @@ const ReviewAdding = () => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="movie-page.html" className="breadcrumbs__link">The Grand Budapest Hotel</a>
+                <a href="movie-page.html" className="breadcrumbs__link">{selectedMovie.name}</a>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
@@ -46,23 +74,25 @@ const ReviewAdding = () => {
             </ul>
           </nav>
 
-          <div className="user-block">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
-          </div>
+          {authorizationStatus === AuthorizationStatus.AUTH ? <AvatarLogin /> : <HeaderSignInLink/>}
         </header>
 
         <div className="movie-card__poster movie-card__poster--small">
-          <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+          <img src={selectedMovie.posterImage} alt={selectedMovie.name} width="218" height="327" />
         </div>
       </div>
 
       <div className="add-review">
+        {isErrorCommentPosting && (
+          <div >
+            <p style={{color: `yellow`}}>We are so sorry, but there were produced some erros while sending your comment. <br/> Please, try to post it later or check if you fullfilled all the fields </p>
+          </div>
+        )}
         <form
           action="#"
-          onSubmit={(evt) => evt.preventDefault()}
+          onSubmit={handleSubmit}
           className="add-review__htmlForm"
+          disabled={isFormDisabled}
         >
           <div className="rating">
             <div className="rating__stars">
@@ -74,7 +104,8 @@ const ReviewAdding = () => {
                     type="radio"
                     name="rating"
                     value={ratingNumber}
-                    checked={ratingNumber === ratingValue ? `checked` : ``}
+                    defaultChecked={isRatingChecked && ratingNumber === ratingValue ? true : false}
+                    disabled={isFormDisabled}
                   />
                   <label className="rating__label" htmlFor={`star-${ratingNumber}`}>{`Rating ${ratingNumber}`}</label>
                 </React.Fragment>
@@ -83,9 +114,23 @@ const ReviewAdding = () => {
           </div>
 
           <div className="add-review__text">
-            <textarea onChange={handleTextareaChange} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text" value={review}></textarea>
+            <textarea
+              onChange={handleTextareaChange}
+              className="add-review__textarea"
+              name="review-text"
+              id="review-text"
+              placeholder="Review text"
+              value={review}
+              disabled={isFormDisabled}
+            >
+            </textarea>
             <div className="add-review__submit">
-              <button className="add-review__btn" type="submit">Post</button>
+              <button
+                className="add-review__btn"
+                type="submit"
+                disabled={isFormDisabled} >
+                Post
+              </button>
             </div>
           </div>
         </form>
@@ -94,4 +139,31 @@ const ReviewAdding = () => {
   );
 };
 
-export default ReviewAdding;
+ReviewAdding.propTypes = {
+  selectedMovie: FilmPropType,
+  movieId: PropTypes.string.isRequired,
+  isErrorCommentPosting: PropTypes.bool.isRequired,
+  isFormDisabled: PropTypes.bool,
+  userLoggedInInfo: PropTypes.object.isRequired,
+  onSubmitFormReview: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+};
+
+const mapStateToProps = (state, ownProps) => (
+  {
+    movieId: ownProps.match.params.id,
+    selectedMovie: getSelectedFilm(state, parseInt(ownProps.match.params.id, 10)),
+    isErrorCommentPosting: state.isErrorCommentPosting,
+    isFormDisabled: state.isFormDisabled,
+    userLoggedInInfo: state.userLoggedInInfo,
+    authorizationStatus: state.authorizationStatus,
+  });
+
+const mapDispatchToProps = (dispatch) => ({
+  onSubmitFormReview(id, reviewData) {
+    dispatch(addReview(id, reviewData, browserHistory));
+  }
+});
+
+export {ReviewAdding};
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewAdding);
