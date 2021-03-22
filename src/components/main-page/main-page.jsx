@@ -13,20 +13,17 @@ import AvatarLogin from '../header/header-avatar';
 import {AuthorizationStatus} from '../../const/utils';
 import HeaderSignInLink from '../header/header-sign-in-link';
 
+import MyListButton from '../my-list-button/my-list-button';
+
 const MainPage = (props) => {
   const {resetGenre, resetShowMoreMoviesButton, promoFilm, filteredfilms, filmsShownCount, authorizationStatus} = props;
-
   const isShowMoreButtonShown = filteredfilms.length > filmsShownCount;
-
+  const promoFilmIdString = promoFilm.id.toString();
   useEffect(() => {
     resetShowMoreMoviesButton();
     resetGenre();
   }, []);
 
-  const handleMyListClick = (evt) => {
-    evt.preventDefault();
-
-  }
   return <>
     <section className="movie-card">
       <div className="movie-card__bg">
@@ -60,12 +57,7 @@ const MainPage = (props) => {
                 </svg>
                 <span>Play</span>
               </button>
-              <button onClick={handleMyListClick} className="btn btn--list movie-card__button" type="button">
-                <svg viewBox="0 0 19 20" width="19" height="20">
-                  <use xlinkHref="#add"></use>
-                </svg>
-                <span>My list</span>
-              </button>
+              <MyListButton favoriteMovieId={promoFilmIdString}/>
             </div>
           </div>
         </div>
@@ -103,6 +95,7 @@ const mapStateToProps = (state) => ({
   filmsShownCount: getCurrentFilmsShownCount(state),
   isPromoFilmLoading: state.isDataLoading,
   authorizationStatus: state.authorizationStatus,
+  isFilmFavorite: state.isFilmFavorite,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -58,19 +58,6 @@ export const fetchUserLoggedInInfo = () => (dispatch, _getState, api) =>
     )
     .then(({data}) => dispatch(ActionCreator.loadUserInfo(data)))
     .catch(() => {});
-// export const addReview = (id, {rating, comment}) => (dispatch, _getState, api) => {
-//   dispatch(ActionCreator.setFormDisable(true));
-//   api.post(`${APIRoute.COMMENTS}/${id}`, {rating, comment})
-//     .then(() => dispatch(ActionCreator.checkErrorCommentPost(false)))
-//     .then(() => {
-//       dispatch(fetchReviewList(id));
-//     })
-//     .catch((error) => {
-//       dispatch(ActionCreator.checkErrorCommentPost(true));
-//       throw error;
-//     })
-// };
-
 
 export const addReview = (id, {rating, comment}, browserHistory) => (dispatch, _getState, api) => {
   dispatch(ActionCreator.setFormDisable(true));
@@ -84,6 +71,20 @@ export const addReview = (id, {rating, comment}, browserHistory) => (dispatch, _
     .catch((error) => {
       dispatch(ActionCreator.setFormDisable(false));
       dispatch(ActionCreator.checkErrorCommentPost(true));
+
+      throw error;
+    });
+};
+
+export const addNewFavoriteFilm = (id, isFilmFavorite) => (dispatch, _getState, api) => {
+  const status = isFilmFavorite ? 1 : 0;
+  dispatch(ActionCreator.postFavoriteFilm(true));
+  return api.post(`/favorite/${id}/${status}`)
+   .then(() => {
+     dispatch(ActionCreator.postFavoriteFilm(false));
+     dispatch(fetchFavoriteFilmList());
+   })
+    .catch((error) => {
 
       throw error;
     });

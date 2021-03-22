@@ -1,18 +1,17 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import FilmList from '../films-list/films-list';
 import Logo from '../logo/logo';
-import {filmsListPropTypes} from '../../types/types';
+import {FilmsPropType} from '../../types/types';
 import Footer from '../footer/footer';
 import {connect} from 'react-redux';
-import {getFilmList} from '../../selectors/selectors';
 import {AuthorizationStatus} from '../../const/utils';
 import AvatarLogin from '../header/header-avatar';
 import HeaderSignInLink from '../header/header-sign-in-link';
-import { fetchFavoriteFilmList } from '../../store/api-actions';
+import {fetchFavoriteFilmList} from '../../store/api-actions';
+import PropTypes from 'prop-types';
 
 const MyList = (props) => {
   const {favoriteFilms, authorizationStatus, onLoadFavoriteFilmsList, isFavoriteFilmLoading} = props;
-  console.log(`films`, favoriteFilms)
 
   useEffect(() => {
     if (!isFavoriteFilmLoading) {
@@ -43,7 +42,12 @@ const MyList = (props) => {
   );
 };
 
-// MyList.propTypes = filmsListPropTypes;
+MyList.propTypes = {
+  favoriteFilms: FilmsPropType,
+  isFavoriteFilmLoading: PropTypes.bool.isRequired,
+  onLoadFavoriteFilmsList: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
+};
 
 const mapStateToProps = (state) => (
   {

@@ -1,13 +1,12 @@
 import React from 'react';
 import {Routes} from '../../const/routes-path';
 import browserHistory from "../../browser-history";
-import {AVATAR_IMAGE} from '../../const/utils';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 const AvatarLogin = ({userLoggedInInfo}) => {
+
   const {avatarUrl} = userLoggedInInfo;
-  console.log(`avatarUrl`, avatarUrl)
   return (
     <div className="user-block" onClick={() => browserHistory.push(`${Routes.MY_LIST}`)}>
       <div className="user-block__avatar">
@@ -19,7 +18,11 @@ const AvatarLogin = ({userLoggedInInfo}) => {
 
 
 AvatarLogin.propTypes = {
-  // authorizationStatus: PropTypes.string.isRequired,
+  userLoggedInInfo: PropTypes.shape({
+    id: PropTypes.number,
+    email: PropTypes.string,
+    avatarUrl: PropTypes.string.isRequired,
+  })
 };
 
 const mapStateToProps = (state) => ({

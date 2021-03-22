@@ -18,7 +18,6 @@ const initialState = {
   favoriteFilms: [],
   isFavoriteFilmLoading: false,
   isFilmFavorite: false,
-  // isPromoFilmLoading: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -100,6 +99,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         favoriteFilms: adaptFilmsToClient(action.payload),
         isFavoriteFilmLoading: true,
+      };
+    case ActionType.POST_FAVORITE_FILM:
+      return {
+        ...state,
+        isFilmFavorite: action.payload,
       };
     default:
       return state;

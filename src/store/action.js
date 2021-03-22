@@ -17,6 +17,7 @@ export const ActionType = {
   SET_FORM_DISABLE: `from/setformdisable`,
   LOAD_USER_INFO: `user/loaduserinfo`,
   LOAD_FAVORITE_FILMS: `films/loadfavoritefilms`,
+  POST_FAVORITE_FILM: `films/postfavoritefilm`
 };
 
 export const ActionCreator = {
@@ -80,5 +81,9 @@ export const ActionCreator = {
   loadFavoriteFilms: (favoriteFilms) => ({
     type: ActionType.LOAD_FAVORITE_FILMS,
     payload: favoriteFilms,
-  })
+  }),
+  postFavoriteFilm: (status) => ({
+    type: ActionType.POST_FAVORITE_FILM,
+    payload: status,
+  }),
 };

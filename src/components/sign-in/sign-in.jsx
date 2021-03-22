@@ -6,7 +6,6 @@ import {connect} from "react-redux";
 import {login} from "../../store/api-actions";
 
 const SignIn = ({onSubmitForm, isErrorAuthorization}) => {
-  console.log(`isErrorAuthorization`, isErrorAuthorization);
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -15,8 +14,6 @@ const SignIn = ({onSubmitForm, isErrorAuthorization}) => {
     evt.preventDefault();
     let emailCurrentValue = emailRef.current.value;
     let passwordCurrentValue = passwordRef.current.value;
-    console.log(`emailCurrentValue`, emailCurrentValue.length)
-    console.log(`passwordCurrentValue`, passwordCurrentValue.length)
     if (emailCurrentValue.length !== 0 && emailCurrentValue.length !== 0) {
       onSubmitForm({
         login: emailCurrentValue,
@@ -81,6 +78,7 @@ const SignIn = ({onSubmitForm, isErrorAuthorization}) => {
 
 SignIn.propTypes = {
   onSubmitForm: PropTypes.func.isRequired,
+  isErrorAuthorization: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({

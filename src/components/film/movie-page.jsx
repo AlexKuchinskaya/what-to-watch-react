@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import Logo from '../logo/logo';
-import {Link, useParams} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {FilmPropType, FilmsPropType} from '../../types/types';
 import Footer from '../footer/footer';
 import {RviewsPropType} from '../../types/reviews-types';
@@ -18,11 +18,11 @@ import AvatarLogin from '../header/header-avatar';
 import HeaderSignInLink from '../header/header-sign-in-link';
 import PropTypes from 'prop-types';
 import NotFoundPage from '../not-found-page/not-found-page';
+import MyListButton from '../my-list-button/my-list-button';
+
 
 const MoviePage = (props) => {
   const {films, reviews, isReviewsLoading, onLoadReviewList, authorizationStatus, movieId, selectedMovie} = props;
-
-  // const {backgroundImage, name, genre, released, posterImage} = selectedMovie;
 
   useEffect(() => {
     if (!isReviewsLoading && selectedMovie !== undefined) {
@@ -69,12 +69,7 @@ const MoviePage = (props) => {
                     </svg>
                     <span>Play</span>
                   </button>
-                  <button className="btn btn--list movie-card__button" type="button">
-                    <svg viewBox="0 0 19 20" width="19" height="20">
-                      <use xlinkHref="#add"></use>
-                    </svg>
-                    <span>My list</span>
-                  </button>
+                  <MyListButton favoriteMovieId={movieId}/>
                   {authorizationStatus === AuthorizationStatus.AUTH && <Link to={`/${FILMS_PATH}/${movieId}/review`} className="btn movie-card__button">Add review</Link>}
                 </div>
               </div>
@@ -133,7 +128,6 @@ const mapStateToProps = (state, ownProps) => (
     isReviewsLoading: state.isReviewsLoading,
     reviews: getReviews(state),
     authorizationStatus: state.authorizationStatus,
-    // AuthorizationStatus.NO_AUTH,
   }
 );
 

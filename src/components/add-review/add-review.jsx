@@ -1,32 +1,28 @@
 import React, {useState} from 'react';
-// import {useParams} from 'react-router-dom';
 import {ratingNumberList} from '../../const/rating-consts';
-// import {getRandomInteger} from '../../utils/utils';
 import Logo from '../logo/logo';
 import {connect} from "react-redux";
 import {addReview} from "../../store/api-actions";
 import browserHistory from '../../browser-history';
 import {getSelectedFilm} from '../../selectors/selectors';
-import {AuthorizationStatus} from '../../const/utils';
+import {AuthorizationStatus, ReviewLenght} from '../../const/utils';
 import AvatarLogin from '../header/header-avatar';
 import HeaderSignInLink from '../header/header-sign-in-link';
 import PropTypes from 'prop-types';
 import {FilmPropType} from '../../types/types';
 
-// const MIN_RATING = 1;
-// const MAX_RATING = 10;
-// const getRandomRatingNumber = getRandomInteger(MIN_RATING, MAX_RATING);
-const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selectedMovie, isFormDisabled, userLoggedInInfo, authorizationStatus}) => {
+
+const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selectedMovie, isFormDisabled, authorizationStatus}) => {
   let idNumber = parseInt(movieId, 10);
 
 
   const [review, setReview] = useState([]);
   const handleTextareaChange = (evt) => {
     setReview(evt.target.value);
-    if (review.length < 50) {
-      evt.target.setCustomValidity(`Please, introduce ${50 - review.length} more symbols to complete your comment`);
-    } else if (review.length > 400) {
-      evt.target.setCustomValidity(`Please, delete ${review.length - 400} symbols to complete your comment`);
+    if (review.length < ReviewLenght.MIN_LENGHT) {
+      evt.target.setCustomValidity(`Please, introduce ${ReviewLenght.MIN_LENGHT - review.length} more symbols to complete your comment`);
+    } else if (review.length > ReviewLenght.MAX_LENGHT) {
+      evt.target.setCustomValidity(`Please, delete ${review.length - ReviewLenght.MAX_LENGHT} symbols to complete your comment`);
     } else {
       evt.target.setCustomValidity(``);
     }
@@ -44,11 +40,8 @@ const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selec
   };
 
   const {ratingValue, isRatingChecked} = rating;
-  console.log(`ratingValue`, ratingValue);
-  console.log(`isRatingChecked`, isRatingChecked);
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    console.log(`comment`, review);
     onSubmitFormReview(
         idNumber,
         {
@@ -112,7 +105,6 @@ const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selec
                     name="rating"
                     value={ratingNumber}
                     defaultChecked={isRatingChecked && ratingNumber === ratingValue ? true : false}
-                    // checked={ratingNumber === ratingValue ? true : false}
                     disabled={isFormDisabled}
                   />
                   <label className="rating__label" htmlFor={`star-${ratingNumber}`}>{`Rating ${ratingNumber}`}</label>
