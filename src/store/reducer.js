@@ -5,7 +5,6 @@ import {adaptFilmsToClient, adaptPromoFilmToClient, adaptUserLoggedInInfo} from 
 const initialState = {
   genre: `All genres`,
   filmList: [],
-  filmsShownCount: MAX_FILMS,
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   isApplicationReady: false,
   isErrorAuthorization: false,
@@ -37,16 +36,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         filmList: state.filmList
-      };
-    case ActionType.SHOW_MORE_MOVIES:
-      return {
-        ...state,
-        filmsShownCount: state.filmsShownCount + action.payload
-      };
-    case ActionType.RESET_SHOW_MORE_MOVIES_BUTTON:
-      return {
-        ...state,
-        filmsShownCount: MAX_FILMS,
       };
     case ActionType.RESET_GENRE:
       return {

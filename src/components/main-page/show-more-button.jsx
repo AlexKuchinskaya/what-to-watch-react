@@ -1,38 +1,24 @@
-import React from 'react';
-import {filterMoviesByGenre, getCurrentFilmsShownCount} from '../../selectors/selectors';
+import React, { useState } from 'react';
+import {filterMoviesByGenre, getCurrentFilmsShownCount, getFilmList} from '../../selectors/selectors';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../store/action';
 import PropTypes from 'prop-types';
 const ShowMoreButton = (props) => {
 
-  const {onShowMoreButtonClick} = props;
-
-
+  const {handleShowMoreButton} = props;
   return (
     <div className="catalog__more">
-      <button className="catalog__button" type="button" onClick={onShowMoreButtonClick}>Show more</button>
+      <button className="catalog__button" type="button" onClick={handleShowMoreButton}>Show more</button>
     </div>
   );
 };
 
 
-const mapStateToProps = (state) => ({
-  filteredfilms: filterMoviesByGenre(state),
-  filmsShownCount: getCurrentFilmsShownCount(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onShowMoreButtonClick() {
-    dispatch(ActionCreator.showMoreMovies());
-  },
-
-});
-
 ShowMoreButton.propTypes = {
   // filmsShownCount: PropTypes.number.isRequired,
   // filteredfilms: FilmsPropType,
-  onShowMoreButtonClick: PropTypes.func.isRequired,
+  handleShowMoreButton: PropTypes.func.isRequired,
 };
-export {ShowMoreButton};
-export default connect(mapStateToProps, mapDispatchToProps)(ShowMoreButton);
+
+export default ShowMoreButton;
 

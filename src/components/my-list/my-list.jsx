@@ -33,7 +33,7 @@ const MyList = (props) => {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__movies-list">
-          <FilmList films={favoriteFilms}/>
+          <FilmList films={favoriteFilms} filmsShownCount={favoriteFilms.length}/>
         </div>
       </section>
 

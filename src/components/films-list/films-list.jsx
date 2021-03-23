@@ -15,7 +15,6 @@ const FilmList = (props) => {
     setActiveMovieCardId(selectedMovieId);
   };
 
-
   return (
     <div className="catalog__movies-list">
       {films.slice(0, filmsShownCount).map((film) => (
@@ -39,7 +38,7 @@ FilmList.propTypes = {
 const mapStateToProps = (state) => (
   {
     filteredfilms: filterMoviesByGenre(state),
-    filmsShownCount: getCurrentFilmsShownCount(state),
+    // filmsShownCount: getCurrentFilmsShownCount(state),
   }
 );
 

@@ -26,10 +26,10 @@ const VideoPlayer = ({src, poster, isPlaying, width, height, playVideo}) => {
   }, [isPlaying]);
 
   return (
-    <>
-      <video ref={videoRef} muted={true} src={src} poster={poster} width={width} height={height}/>
 
-    </>
+    <video ref={videoRef} muted={true} src={src} poster={poster} width={width} height={height}/>
+
+
   );
 };
 

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import Logo from '../logo/logo';
-import {Link} from 'react-router-dom';
+import {Link, Route} from 'react-router-dom';
 import {FilmPropType, FilmsPropType} from '../../types/types';
 import Footer from '../footer/footer';
 import {RviewsPropType} from '../../types/reviews-types';
@@ -12,13 +12,14 @@ import SimilarMovies from './similar-movies';
 import {connect} from 'react-redux';
 import {getFilmList, getReviews, getSelectedFilm} from '../../selectors/selectors';
 import {fetchReviewList} from '../../store/api-actions';
-import {FILMS_PATH} from '../../const/routes-path';
+import {FILMS_PATH, Routes} from '../../const/routes-path';
 import {AuthorizationStatus} from '../../const/utils';
 import AvatarLogin from '../header/header-avatar';
 import HeaderSignInLink from '../header/header-sign-in-link';
 import PropTypes from 'prop-types';
 import NotFoundPage from '../not-found-page/not-found-page';
 import MyListButton from '../my-list-button/my-list-button';
+import browserHistory from '../../browser-history';
 
 
 const MoviePage = (props) => {
@@ -63,7 +64,7 @@ const MoviePage = (props) => {
                 </p>
 
                 <div className="movie-card__buttons">
-                  <button className="btn btn--play movie-card__button" type="button">
+                  <button onClick={() => browserHistory.push(`${Routes.PLAYER_NO_ID}/${movieId}`)} className="btn btn--play movie-card__button" type="button">
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>
