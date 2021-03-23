@@ -56,6 +56,11 @@ const App = ({onLoadData, isApplicationReady}) => {
 App.propTypes = {
   isApplicationReady: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 const mapStateToProps = (state) => ({

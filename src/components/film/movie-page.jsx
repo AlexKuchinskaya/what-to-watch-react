@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import Logo from '../logo/logo';
-import {Link, Route} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {FilmPropType, FilmsPropType} from '../../types/types';
 import Footer from '../footer/footer';
 import {RviewsPropType} from '../../types/reviews-types';

@@ -1,7 +1,4 @@
-import React, { useState } from 'react';
-import {filterMoviesByGenre, getCurrentFilmsShownCount, getFilmList} from '../../selectors/selectors';
-import {connect} from 'react-redux';
-import {ActionCreator} from '../../store/action';
+import React from 'react';
 import PropTypes from 'prop-types';
 const ShowMoreButton = (props) => {
 

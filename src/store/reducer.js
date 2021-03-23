@@ -1,4 +1,4 @@
-import {AuthorizationStatus, MAX_FILMS} from "../const/utils";
+import {AuthorizationStatus} from "../const/utils";
 import {ActionType} from "./action";
 import {adaptFilmsToClient, adaptPromoFilmToClient, adaptUserLoggedInInfo} from '../components/server-data-adapter';
 

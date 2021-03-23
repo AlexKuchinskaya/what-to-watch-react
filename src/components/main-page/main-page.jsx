@@ -8,7 +8,7 @@ import ShowMoreButton from './show-more-button';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {ActionCreator} from '../../store/action';
-import {filterMoviesByGenre, getCurrentFilmsShownCount} from '../../selectors/selectors';
+import {filterMoviesByGenre} from '../../selectors/selectors';
 import AvatarLogin from '../header/header-avatar';
 import {AuthorizationStatus, MAX_FILMS} from '../../const/utils';
 import HeaderSignInLink from '../header/header-sign-in-link';
@@ -18,18 +18,18 @@ import browserHistory from '../../browser-history';
 import {Routes} from '../../const/routes-path';
 
 const MainPage = (props) => {
-  const {resetGenre, resetShowMoreMoviesButton, promoFilm, filteredfilms, authorizationStatus} = props;
+  const {resetGenre, promoFilm, filteredfilms, authorizationStatus} = props;
 
   const [filmsShownCount, setFilmsShownCount] = useState(MAX_FILMS);
   const handleShowMoreButton = () => {
-    console.log(`filmsShownCount`, filmsShownCount)
-    setFilmsShownCount(filmsShownCount + 8)
+    setFilmsShownCount(filmsShownCount + 8);
   };
   const isShowMoreButtonShown = filteredfilms.length > filmsShownCount;
   const promoFilmIdString = promoFilm.id.toString();
   const resetFilmsCount = () => {
-    setFilmsShownCount(MAX_FILMS)
-  }
+    setFilmsShownCount(MAX_FILMS);
+  };
+
   useEffect(() => {
     // resetShowMoreMoviesButton();
     setFilmsShownCount(MAX_FILMS);
