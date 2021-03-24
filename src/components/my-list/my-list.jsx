@@ -9,6 +9,8 @@ import AvatarLogin from '../header/header-avatar';
 import HeaderSignInLink from '../header/header-sign-in-link';
 import {fetchFavoriteFilmList} from '../../store/api-actions';
 import PropTypes from 'prop-types';
+import Header from '../header/header';
+import {ExtraClassNames} from '../header/header-class-utils';
 
 const MyList = (props) => {
   const {favoriteFilms, authorizationStatus, onLoadFavoriteFilmsList, isFavoriteFilmLoading} = props;
@@ -21,13 +23,13 @@ const MyList = (props) => {
 
   return (
     <div className="user-page">
-      <header className="page-header user-page__head">
+      <Header extraClassName={ExtraClassNames.USER_PAGE_HEAD}>
         <Logo isLogoLinkLight={false}/>
 
         <h1 className="page-title user-page__title">My list</h1>
 
         {authorizationStatus === AuthorizationStatus.AUTH ? <AvatarLogin /> : <HeaderSignInLink/>}
-      </header>
+      </Header>
 
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>

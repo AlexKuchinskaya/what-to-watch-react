@@ -16,6 +16,8 @@ import HeaderSignInLink from '../header/header-sign-in-link';
 import MyListButton from '../my-list-button/my-list-button';
 import browserHistory from '../../browser-history';
 import {Routes} from '../../const/routes-path';
+import Header from '../header/header';
+import {ExtraClassNames} from '../header/header-class-utils';
 
 const MainPage = (props) => {
   const {resetGenre, promoFilm, filteredfilms, authorizationStatus} = props;
@@ -43,10 +45,10 @@ const MainPage = (props) => {
 
       <h1 className="visually-hidden">WTW</h1>
 
-      <header className="page-header movie-card__head">
+      <Header extraClassName={ExtraClassNames.MOVIE_CARD_HEADER}>
         <Logo isLogoLinkLight={false}/>
         {authorizationStatus === AuthorizationStatus.AUTH ? <AvatarLogin /> : <HeaderSignInLink/>}
-      </header>
+      </Header>
 
       <div className="movie-card__wrap">
         <div className="movie-card__info">

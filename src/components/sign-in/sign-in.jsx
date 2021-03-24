@@ -4,6 +4,8 @@ import Logo from '../logo/logo';
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {login} from "../../store/api-actions";
+import {ExtraClassNames} from '../header/header-class-utils';
+import Header from '../header/header';
 
 const SignIn = ({onSubmitForm, isErrorAuthorization}) => {
 
@@ -24,11 +26,11 @@ const SignIn = ({onSubmitForm, isErrorAuthorization}) => {
   };
   return (
     <div className="user-page">
-      <header className="page-header user-page__head">
+      <Header extraClassName={ExtraClassNames.USER_PAGE_HEAD}>
         <Logo isLogoLinkLight={false}/>
 
         <h1 className="page-title user-page__title">Sign in</h1>
-      </header>
+      </Header>
 
       <div className="sign-in user-page__content">
         <form

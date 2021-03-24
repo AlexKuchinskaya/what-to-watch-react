@@ -10,6 +10,7 @@ import AvatarLogin from '../header/header-avatar';
 import HeaderSignInLink from '../header/header-sign-in-link';
 import PropTypes from 'prop-types';
 import {FilmPropType} from '../../types/types';
+import Header from '../header/header';
 
 
 const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selectedMovie, isFormDisabled, authorizationStatus}) => {
@@ -60,7 +61,7 @@ const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selec
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <header className="page-header">
+        <Header >
           <Logo />
 
           <nav className="breadcrumbs">
@@ -75,7 +76,7 @@ const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selec
           </nav>
 
           {authorizationStatus === AuthorizationStatus.AUTH ? <AvatarLogin /> : <HeaderSignInLink/>}
-        </header>
+        </Header>
 
         <div className="movie-card__poster movie-card__poster--small">
           <img src={selectedMovie.posterImage} alt={selectedMovie.name} width="218" height="327" />

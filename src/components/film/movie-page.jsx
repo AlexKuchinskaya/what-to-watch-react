@@ -20,6 +20,8 @@ import PropTypes from 'prop-types';
 import NotFoundPage from '../not-found-page/not-found-page';
 import MyListButton from '../my-list-button/my-list-button';
 import browserHistory from '../../browser-history';
+import Header from '../header/header';
+import {ExtraClassNames} from '../header/header-class-utils';
 
 
 const MoviePage = (props) => {
@@ -48,11 +50,11 @@ const MoviePage = (props) => {
 
             <h1 className="visually-hidden">WTW</h1>
 
-            <header className="page-header movie-card__head">
+            <Header extraClassName={ExtraClassNames.MOVIE_CARD_HEADER}>
               <Logo isLogoLinkLight={false}/>
 
               {authorizationStatus === AuthorizationStatus.AUTH ? <AvatarLogin /> : <HeaderSignInLink/>}
-            </header>
+            </Header>
 
             <div className="movie-card__wrap">
               <div className="movie-card__desc">
