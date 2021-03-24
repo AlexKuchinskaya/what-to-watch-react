@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import FilmList from '../films-list/films-list';
 import Logo from '../logo/logo';
 import {FilmsPropType} from '../../types/types';
@@ -13,12 +13,9 @@ import Header from '../header/header';
 import {ExtraClassNames} from '../header/header-class-utils';
 
 const MyList = (props) => {
-  const {favoriteFilms, authorizationStatus, onLoadFavoriteFilmsList, isFavoriteFilmLoading} = props;
-
+  const {favoriteFilms, authorizationStatus, onLoadFavoriteFilmsList} = props;
   useEffect(() => {
-    if (!isFavoriteFilmLoading) {
-      onLoadFavoriteFilmsList();
-    }
+    onLoadFavoriteFilmsList();
   }, []);
 
   return (

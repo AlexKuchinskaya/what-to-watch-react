@@ -1,9 +1,9 @@
-import {AuthorizationStatus} from "../const/utils";
+import {ALL_GENRES_FILTER, AuthorizationStatus} from "../const/utils";
 import {ActionType} from "./action";
 import {adaptFilmsToClient, adaptPromoFilmToClient, adaptUserLoggedInInfo} from '../components/server-data-adapter';
 
 const initialState = {
-  genre: `All genres`,
+  genre: ALL_GENRES_FILTER,
   filmList: [],
   authorizationStatus: AuthorizationStatus.NO_AUTH,
   isApplicationReady: false,
@@ -15,7 +15,6 @@ const initialState = {
   isFormDisabled: false,
   userLoggedInInfo: {},
   favoriteFilms: [],
-  isFavoriteFilmLoading: false,
   isFilmFavorite: false,
 };
 
@@ -40,7 +39,7 @@ const reducer = (state = initialState, action) => {
     case ActionType.RESET_GENRE:
       return {
         ...state,
-        genre: `All genres`
+        genre: ALL_GENRES_FILTER
       };
     case ActionType.LOAD_FILMS:
       return {
@@ -87,7 +86,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         favoriteFilms: adaptFilmsToClient(action.payload),
-        isFavoriteFilmLoading: true,
       };
     case ActionType.POST_FAVORITE_FILM:
       return {
