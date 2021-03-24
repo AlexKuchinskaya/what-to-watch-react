@@ -9,10 +9,8 @@ const initialState = {
   isApplicationReady: false,
   isErrorAuthorization: false,
   isErrorCommentPosting: false,
-  isReviewsLoading: false,
   reviews: [],
   promoFilm: {},
-  isFormDisabled: false,
   userLoggedInInfo: {},
   favoriteFilms: [],
   isFilmFavorite: false,
@@ -29,12 +27,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         genre: action.payload
-      };
-
-    case ActionType.GET_NEW_FILMLIST_BY_GENRE:
-      return {
-        ...state,
-        filmList: state.filmList
       };
     case ActionType.RESET_GENRE:
       return {
@@ -55,7 +47,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         reviews: action.payload,
-        isReviewsLoading: true,
       };
     case ActionType.LOAD_PROMOFILM:
       return {
@@ -71,11 +62,6 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isErrorCommentPosting: action.payload,
-      };
-    case ActionType.SET_FORM_DISABLE:
-      return {
-        ...state,
-        isFormDisabled: action.payload,
       };
     case ActionType.LOAD_USER_INFO:
       return {

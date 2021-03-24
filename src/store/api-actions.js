@@ -60,16 +60,13 @@ export const fetchUserLoggedInInfo = () => (dispatch, _getState, api) =>
     .catch(() => {});
 
 export const addReview = (id, {rating, comment}, browserHistory) => (dispatch, _getState, api) => {
-  dispatch(ActionCreator.setFormDisable(true));
   return api.post(`${APIRoute.COMMENTS}/${id}`, {rating, comment})
    .then(() => {
-     dispatch(ActionCreator.setFormDisable(false));
      dispatch(ActionCreator.checkErrorCommentPost(false));
      dispatch(fetchReviewList(id));
      browserHistory.push(`/${FILMS_PATH}/${id}`);
    })
     .catch((error) => {
-      dispatch(ActionCreator.setFormDisable(false));
       dispatch(ActionCreator.checkErrorCommentPost(true));
 
       throw error;

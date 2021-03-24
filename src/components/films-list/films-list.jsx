@@ -38,7 +38,6 @@ FilmList.propTypes = {
 const mapStateToProps = (state) => (
   {
     filteredfilms: filterMoviesByGenre(state),
-    // filmsShownCount: getCurrentFilmsShownCount(state),
   }
 );
 

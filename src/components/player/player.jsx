@@ -5,7 +5,6 @@ import PlayerPlayButtonSvg from './player-play-button';
 import PlayerPauseButtonSvg from './player-pause-button';
 import {setTime} from './player-utils';
 import {connect} from 'react-redux';
-import {getPromofilm} from '../../selectors/selectors';
 import {getSelectedFilm} from '../../selectors/selectors';
 import PropTypes from 'prop-types';
 import browserHistory from '../../browser-history';
@@ -147,7 +146,7 @@ Player.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   const {movieId} = ownProps;
   return {
-    promoFilm: getPromofilm(state),
+    promoFilm: state.promoFilm,
     selectedMovie: getSelectedFilm(state, parseInt(movieId, 10)),
   };
 };

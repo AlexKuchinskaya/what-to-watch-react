@@ -13,11 +13,15 @@ import {FilmPropType} from '../../types/types';
 import Header from '../header/header';
 
 
-const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selectedMovie, isFormDisabled, authorizationStatus}) => {
+const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selectedMovie, authorizationStatus}) => {
   let idNumber = parseInt(movieId, 10);
-
-
+  const [isFormDisabled, setIsFormDisabled] = useState(false);
+  const [rating, setRating] = useState({
+    ratingValue: 0,
+    isRatingChecked: false
+  });
   const [review, setReview] = useState([]);
+  const {ratingValue, isRatingChecked} = rating;
   const handleTextareaChange = (evt) => {
     setReview(evt.target.value);
     if (review.length < ReviewLenght.MIN_LENGHT) {
@@ -30,19 +34,14 @@ const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selec
     evt.target.reportValidity();
   };
 
-  const [rating, setRating] = useState({
-    ratingValue: 0,
-    isRatingChecked: false
-  });
-
   const handleFilmRatingInput = (evt) => {
     const {value, checked} = evt.target;
     setRating({ratingValue: value, isRatingChecked: checked});
   };
 
-  const {ratingValue, isRatingChecked} = rating;
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    setIsFormDisabled(!isFormDisabled);
     onSubmitFormReview(
         idNumber,
         {
@@ -144,7 +143,6 @@ ReviewAdding.propTypes = {
   selectedMovie: FilmPropType,
   movieId: PropTypes.string.isRequired,
   isErrorCommentPosting: PropTypes.bool.isRequired,
-  isFormDisabled: PropTypes.bool,
   userLoggedInInfo: PropTypes.object.isRequired,
   onSubmitFormReview: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
@@ -155,7 +153,6 @@ const mapStateToProps = (state, ownProps) => (
     movieId: ownProps.match.params.id,
     selectedMovie: getSelectedFilm(state, parseInt(ownProps.match.params.id, 10)),
     isErrorCommentPosting: state.isErrorCommentPosting,
-    isFormDisabled: state.isFormDisabled,
     userLoggedInInfo: state.userLoggedInInfo,
     authorizationStatus: state.authorizationStatus,
   });

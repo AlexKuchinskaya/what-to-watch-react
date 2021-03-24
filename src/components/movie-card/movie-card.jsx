@@ -4,7 +4,7 @@ import {FilmPropType} from '../../types/types';
 import browserHistory from "../../browser-history";
 import {Link} from 'react-router-dom';
 import Player from '../player/player';
-import {PREVIEW_HEIGHT, PREVIEW_WIDTH, VIDEO_DELAY} from '../../const/utils';
+import {PlayerFunctionality} from '../../const/utils';
 import {FILMS_PATH} from '../../const/routes-path';
 
 
@@ -15,7 +15,7 @@ const MovieCard = ({film, onMovieSelect, activeMovieCardId}) => {
 
   const playVideo = (element) => {
     if (element) {
-      setTimeout(() => element.play(), VIDEO_DELAY);
+      setTimeout(() => element.play(), PlayerFunctionality.VIDEO_DELAY);
     }
   };
 
@@ -48,10 +48,10 @@ const MovieCard = ({film, onMovieSelect, activeMovieCardId}) => {
             poster={film.previewImage}
             playSmallVideo={playVideo}
             isSmallPlayerPlaying={isPlaying}
-            width={PREVIEW_WIDTH}
-            height={PREVIEW_HEIGHT}
+            width={PlayerFunctionality.PREVIEW_WIDTH}
+            height={PlayerFunctionality.PREVIEW_HEIGHT}
           /> :
-          <img src={film.previewImage} alt={film.name} width={PREVIEW_WIDTH} height={PREVIEW_HEIGHT} />}
+          <img src={film.previewImage} alt={film.name} width={PlayerFunctionality.PREVIEW_WIDTH} height={PlayerFunctionality.PREVIEW_HEIGHT} />}
       </div>
 
       <h3 className="small-movie-card__title">

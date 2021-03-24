@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import FilmList from '../films-list/films-list';
 import Logo from '../logo/logo';
 import {FilmsPropType} from '../../types/types';
@@ -43,7 +43,6 @@ const MyList = (props) => {
 
 MyList.propTypes = {
   favoriteFilms: FilmsPropType,
-  isFavoriteFilmLoading: PropTypes.bool.isRequired,
   onLoadFavoriteFilmsList: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
 };

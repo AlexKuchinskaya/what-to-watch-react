@@ -10,7 +10,7 @@ import MovieReviews from './tab-reviews';
 import MovieOverview from './tab-overview';
 import SimilarMovies from './similar-movies';
 import {connect} from 'react-redux';
-import {getFilmList, getReviews, getSelectedFilm} from '../../selectors/selectors';
+import {getFilmList, getSelectedFilm} from '../../selectors/selectors';
 import {fetchReviewList} from '../../store/api-actions';
 import {FILMS_PATH, Routes} from '../../const/routes-path';
 import {AuthorizationStatus} from '../../const/utils';
@@ -25,9 +25,9 @@ import {ExtraClassNames} from '../header/header-class-utils';
 
 
 const MoviePage = (props) => {
-  const {films, reviews, isReviewsLoading, onLoadReviewList, authorizationStatus, movieId, selectedMovie} = props;
+  const {films, reviews, onLoadReviewList, authorizationStatus, movieId, selectedMovie} = props;
   useEffect(() => {
-    if (!isReviewsLoading && selectedMovie !== null) {
+    if (selectedMovie !== null) {
       onLoadReviewList(selectedMovie.id);
     }
   }, []);
@@ -117,7 +117,6 @@ MoviePage.propTypes = {
   reviews: RviewsPropType,
   selectedMovie: FilmPropType,
   movieId: PropTypes.string.isRequired,
-  isReviewsLoading: PropTypes.bool.isRequired,
   onLoadReviewList: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
 };
@@ -127,8 +126,7 @@ const mapStateToProps = (state, ownProps) => (
     movieId: ownProps.match.params.id,
     films: getFilmList(state),
     selectedMovie: getSelectedFilm(state, parseInt(ownProps.match.params.id, 10)),
-    isReviewsLoading: state.isReviewsLoading,
-    reviews: getReviews(state),
+    reviews: state.reviews,
     authorizationStatus: state.authorizationStatus,
   }
 );
