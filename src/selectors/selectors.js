@@ -21,10 +21,10 @@ const filterMoviesByGenre = createSelector(
 );
 export const getSelectedFilm = (state, filmId) => {
   const films = getFilmList(state);
-  if (filmId !== undefined) {
+  if (filmId <= films.length) {
     return films.find((film) => film.id === filmId);
   }
-  return films[1];
+  return null;
 };
 
 

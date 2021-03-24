@@ -31,7 +31,6 @@ const MainPage = (props) => {
   };
 
   useEffect(() => {
-    // resetShowMoreMoviesButton();
     setFilmsShownCount(MAX_FILMS);
     resetGenre();
   }, []);
@@ -95,25 +94,19 @@ const MainPage = (props) => {
 MainPage.propTypes = {
   filteredfilms: FilmsPropType,
   promoFilm: PromoFilmPropType,
-  filmsShownCount: PropTypes.number.isRequired,
   resetGenre: PropTypes.func.isRequired,
-  // resetShowMoreMoviesButton: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   filteredfilms: filterMoviesByGenre(state),
   promoFilm: state.promoFilm,
-  // filmsShownCount: getCurrentFilmsShownCount(state),
   isPromoFilmLoading: state.isDataLoading,
   authorizationStatus: state.authorizationStatus,
   isFilmFavorite: state.isFilmFavorite,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  // resetShowMoreMoviesButton() {
-  //   dispatch(ActionCreator.resetShowMoreMoviesButton());
-  // },
   resetGenre(genre) {
     dispatch(ActionCreator.resetGenre(genre));
   },

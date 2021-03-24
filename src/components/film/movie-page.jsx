@@ -24,22 +24,21 @@ import browserHistory from '../../browser-history';
 
 const MoviePage = (props) => {
   const {films, reviews, isReviewsLoading, onLoadReviewList, authorizationStatus, movieId, selectedMovie} = props;
-
   useEffect(() => {
-    if (!isReviewsLoading && selectedMovie !== undefined) {
+    if (!isReviewsLoading && selectedMovie !== null) {
       onLoadReviewList(selectedMovie.id);
     }
   }, []);
 
   const similarMovies = films.filter((film) => {
-    if (film.id !== selectedMovie.id && selectedMovie !== undefined) {
+    if (selectedMovie !== null && film.id !== selectedMovie.id) {
       return film.genre === selectedMovie.genre;
     }
     return null;
   });
 
   return (
-    selectedMovie === undefined ? <NotFoundPage /> :
+    selectedMovie === null ? <NotFoundPage /> :
       <>
         <section className="movie-card movie-card--full">
           <div className="movie-card__hero">
