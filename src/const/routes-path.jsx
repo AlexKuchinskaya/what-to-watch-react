@@ -6,8 +6,8 @@ export const Routes = {
   LOG_IN: `/login`,
   FILMS_ID: `/${FILMS_PATH}/:id`,
   FILMS_ID_REVIEW: `/${FILMS_PATH}/:id/review`,
-  PLAYER: `/player/:id`
-
+  PLAYER: `/player/:id`,
+  PLAYER_NO_ID: `/player`
 };
 
 export const APIRoute = {

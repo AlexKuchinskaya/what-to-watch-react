@@ -1,13 +1,15 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
+import Header from '../header/header';
+import {ExtraClassNames} from '../header/header-class-utils';
 import Logo from '../logo/logo';
 
 const NotFoundPage = () => {
   return (
     <section className="movie-card">
-      <header className="page-header movie-card__head">
+      <Header extraClassName={ExtraClassNames.MOVIE_CARD_HEADER}>
         <Logo />
-      </header>
+      </Header>
 
       <section className="game__screen">
         <h1>404. Page not found</h1>

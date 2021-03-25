@@ -42,7 +42,10 @@ const App = ({onLoadData, isApplicationReady}) => {
           path={Routes.FILMS_ID_REVIEW}
           render={(props) => <ReviewAdding {...props}/>}
         />
-        <Route exact path={Routes.PLAYER} component={Player} />
+        <Route exact path={Routes.PLAYER}
+          render={(props) => (
+            <Player {...props} isMovieCardPlayer={false} movieId={props.match.params.id}/>
+          )}/>
         <Route component={NotFoundPage} />
       </Switch>
     </BrowserRouter>
@@ -53,11 +56,16 @@ const App = ({onLoadData, isApplicationReady}) => {
 App.propTypes = {
   isApplicationReady: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }),
 };
 
 const mapStateToProps = (state) => ({
   promoFilm: state.promoFilm,
-  isApplicationReady: state.isApplicationReady
+  isApplicationReady: state.isApplicationReady,
 });
 const mapDispatchToProps = (dispatch) => ({
   onLoadData() {

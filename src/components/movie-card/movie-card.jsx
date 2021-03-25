@@ -3,8 +3,7 @@ import PropTypes from 'prop-types';
 import {FilmPropType} from '../../types/types';
 import browserHistory from "../../browser-history";
 import {Link} from 'react-router-dom';
-// import Player from '../player/player';
-import VideoPlayer from '../player/video-player-preview';
+import Player from '../player/player';
 import {PREVIEW_HEIGHT, PREVIEW_WIDTH, VIDEO_DELAY} from '../../const/utils';
 import {FILMS_PATH} from '../../const/routes-path';
 
@@ -26,9 +25,6 @@ const MovieCard = ({film, onMovieSelect, activeMovieCardId}) => {
       clearTimeout(timer);
     }
     setIsPlaying(true);
-    // timer = setTimeout(() => {
-    //   setIsPlaying(true);
-    // }, VIDEO_DELAY);
   };
 
   const handleFilmMouseLeave = () => {
@@ -36,11 +32,9 @@ const MovieCard = ({film, onMovieSelect, activeMovieCardId}) => {
       clearTimeout(timer);
     }
     setIsPlaying(false);
-    // onMovieSelect(1);
   };
 
   const handleMovieDescriptionRedirect = () => {
-    // onMovieSelect(film.id);
     browserHistory.push(`/${FILMS_PATH}/${activeMovieCardId}`);
   };
   return (
@@ -48,11 +42,12 @@ const MovieCard = ({film, onMovieSelect, activeMovieCardId}) => {
 
       <div className="small-movie-card__image" onClick={handleMovieDescriptionRedirect}>
         {isPlaying && film.id === activeMovieCardId ?
-          <VideoPlayer
+          <Player
+            isMovieCardPlayer={true}
             src={film.previewVideoLink}
             poster={film.previewImage}
-            playVideo={playVideo}
-            isPlaying={isPlaying}
+            playSmallVideo={playVideo}
+            isSmallPlayerPlaying={isPlaying}
             width={PREVIEW_WIDTH}
             height={PREVIEW_HEIGHT}
           /> :

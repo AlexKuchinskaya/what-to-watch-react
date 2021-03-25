@@ -10,4 +10,4 @@ const HeaderSignInLink = () => {
   );
 };
 
-export default HeaderSignInLink;
+export default React.memo(HeaderSignInLink);

@@ -29,12 +29,12 @@ export const fetchReviewList = (id) => (dispatch, _getState, api) =>
 
 
 export const checkAuth = () => (dispatch, _getState, api) =>
-  api
-    .get(Routes.LOG_IN)
-    .then(({data}) => dispatch(ActionCreator.loadUserInfo(data)))
-    .then(() =>
-      dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH))
-    )
+  api.get(Routes.LOG_IN)
+    // .then(({data}) => dispatch(ActionCreator.loadUserInfo(data)))
+    .then(({data}) =>{
+      dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH));
+      dispatch(ActionCreator.loadUserInfo(data));
+    })
     // .then(({data}) => dispatch(ActionCreator.loadUserInfo(data)))
     .catch(() => {});
 

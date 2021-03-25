@@ -12,33 +12,35 @@ import SimilarMovies from './similar-movies';
 import {connect} from 'react-redux';
 import {getFilmList, getReviews, getSelectedFilm} from '../../selectors/selectors';
 import {fetchReviewList} from '../../store/api-actions';
-import {FILMS_PATH} from '../../const/routes-path';
+import {FILMS_PATH, Routes} from '../../const/routes-path';
 import {AuthorizationStatus} from '../../const/utils';
 import AvatarLogin from '../header/header-avatar';
 import HeaderSignInLink from '../header/header-sign-in-link';
 import PropTypes from 'prop-types';
 import NotFoundPage from '../not-found-page/not-found-page';
 import MyListButton from '../my-list-button/my-list-button';
+import browserHistory from '../../browser-history';
+import Header from '../header/header';
+import {ExtraClassNames} from '../header/header-class-utils';
 
 
 const MoviePage = (props) => {
   const {films, reviews, isReviewsLoading, onLoadReviewList, authorizationStatus, movieId, selectedMovie} = props;
-
   useEffect(() => {
-    if (!isReviewsLoading && selectedMovie !== undefined) {
+    if (!isReviewsLoading && selectedMovie !== null) {
       onLoadReviewList(selectedMovie.id);
     }
   }, []);
 
   const similarMovies = films.filter((film) => {
-    if (film.id !== selectedMovie.id && selectedMovie !== undefined) {
+    if (selectedMovie !== null && film.id !== selectedMovie.id) {
       return film.genre === selectedMovie.genre;
     }
     return null;
   });
 
   return (
-    selectedMovie === undefined ? <NotFoundPage /> :
+    selectedMovie === null ? <NotFoundPage /> :
       <>
         <section className="movie-card movie-card--full">
           <div className="movie-card__hero">
@@ -48,11 +50,11 @@ const MoviePage = (props) => {
 
             <h1 className="visually-hidden">WTW</h1>
 
-            <header className="page-header movie-card__head">
+            <Header extraClassName={ExtraClassNames.MOVIE_CARD_HEADER}>
               <Logo isLogoLinkLight={false}/>
 
               {authorizationStatus === AuthorizationStatus.AUTH ? <AvatarLogin /> : <HeaderSignInLink/>}
-            </header>
+            </Header>
 
             <div className="movie-card__wrap">
               <div className="movie-card__desc">
@@ -63,7 +65,7 @@ const MoviePage = (props) => {
                 </p>
 
                 <div className="movie-card__buttons">
-                  <button className="btn btn--play movie-card__button" type="button">
+                  <button onClick={() => browserHistory.push(`${Routes.PLAYER_NO_ID}/${movieId}`)} className="btn btn--play movie-card__button" type="button">
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>

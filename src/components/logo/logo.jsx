@@ -15,7 +15,7 @@ const Logo = ({isLogoLinkLight}) => {
   );
 };
 
-export default Logo;
+export default React.memo(Logo);
 
 Logo.propTypes = {
   isLogoLinkLight: PropTypes.bool

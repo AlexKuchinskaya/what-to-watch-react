@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import MovieCard from '../movie-card/movie-card';
 import {FilmsPropType} from '../../types/types';
 import {connect} from 'react-redux';
-import {filterMoviesByGenre, getCurrentFilmsShownCount} from '../../selectors/selectors';
+import {filterMoviesByGenre} from '../../selectors/selectors';
 import PropTypes from 'prop-types';
 
 const FilmList = (props) => {
@@ -14,7 +14,6 @@ const FilmList = (props) => {
   const handleMovieSelect = (selectedMovieId) => {
     setActiveMovieCardId(selectedMovieId);
   };
-
 
   return (
     <div className="catalog__movies-list">
@@ -39,7 +38,7 @@ FilmList.propTypes = {
 const mapStateToProps = (state) => (
   {
     filteredfilms: filterMoviesByGenre(state),
-    filmsShownCount: getCurrentFilmsShownCount(state),
+    // filmsShownCount: getCurrentFilmsShownCount(state),
   }
 );
 

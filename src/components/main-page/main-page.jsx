@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Logo from '../logo/logo';
 import {PromoFilmPropType, FilmsPropType} from '../../types/types';
 import FilmList from '../films-list/films-list';
@@ -8,19 +8,32 @@ import ShowMoreButton from './show-more-button';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {ActionCreator} from '../../store/action';
-import {filterMoviesByGenre, getCurrentFilmsShownCount} from '../../selectors/selectors';
+import {filterMoviesByGenre} from '../../selectors/selectors';
 import AvatarLogin from '../header/header-avatar';
-import {AuthorizationStatus} from '../../const/utils';
+import {AuthorizationStatus, MAX_FILMS} from '../../const/utils';
 import HeaderSignInLink from '../header/header-sign-in-link';
 
 import MyListButton from '../my-list-button/my-list-button';
+import browserHistory from '../../browser-history';
+import {Routes} from '../../const/routes-path';
+import Header from '../header/header';
+import {ExtraClassNames} from '../header/header-class-utils';
 
 const MainPage = (props) => {
-  const {resetGenre, resetShowMoreMoviesButton, promoFilm, filteredfilms, filmsShownCount, authorizationStatus} = props;
+  const {resetGenre, promoFilm, filteredfilms, authorizationStatus} = props;
+
+  const [filmsShownCount, setFilmsShownCount] = useState(MAX_FILMS);
+  const handleShowMoreButton = () => {
+    setFilmsShownCount(filmsShownCount + 8);
+  };
   const isShowMoreButtonShown = filteredfilms.length > filmsShownCount;
   const promoFilmIdString = promoFilm.id.toString();
+  const resetFilmsCount = () => {
+    setFilmsShownCount(MAX_FILMS);
+  };
+
   useEffect(() => {
-    resetShowMoreMoviesButton();
+    setFilmsShownCount(MAX_FILMS);
     resetGenre();
   }, []);
 
@@ -32,10 +45,10 @@ const MainPage = (props) => {
 
       <h1 className="visually-hidden">WTW</h1>
 
-      <header className="page-header movie-card__head">
+      <Header extraClassName={ExtraClassNames.MOVIE_CARD_HEADER}>
         <Logo isLogoLinkLight={false}/>
         {authorizationStatus === AuthorizationStatus.AUTH ? <AvatarLogin /> : <HeaderSignInLink/>}
-      </header>
+      </Header>
 
       <div className="movie-card__wrap">
         <div className="movie-card__info">
@@ -51,7 +64,7 @@ const MainPage = (props) => {
             </p>
 
             <div className="movie-card__buttons">
-              <button className="btn btn--play movie-card__button" type="button">
+              <button onClick={() => browserHistory.push(`${Routes.PLAYER_NO_ID}/${promoFilm.id}`)} className="btn btn--play movie-card__button" type="button">
                 <svg viewBox="0 0 19 19" width="19" height="19">
                   <use xlinkHref="#play-s"></use>
                 </svg>
@@ -68,9 +81,9 @@ const MainPage = (props) => {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-        <GenreList />
-        <FilmList films={filteredfilms}/>
-        {isShowMoreButtonShown ? <ShowMoreButton /> : null}
+        <GenreList resetFilmsCount={resetFilmsCount}/>
+        <FilmList films={filteredfilms} filmsShownCount={filmsShownCount}/>
+        {isShowMoreButtonShown ? <ShowMoreButton handleShowMoreButton={handleShowMoreButton}/> : null}
 
       </section>
 
@@ -83,25 +96,19 @@ const MainPage = (props) => {
 MainPage.propTypes = {
   filteredfilms: FilmsPropType,
   promoFilm: PromoFilmPropType,
-  filmsShownCount: PropTypes.number.isRequired,
   resetGenre: PropTypes.func.isRequired,
-  resetShowMoreMoviesButton: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   filteredfilms: filterMoviesByGenre(state),
   promoFilm: state.promoFilm,
-  filmsShownCount: getCurrentFilmsShownCount(state),
   isPromoFilmLoading: state.isDataLoading,
   authorizationStatus: state.authorizationStatus,
   isFilmFavorite: state.isFilmFavorite,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  resetShowMoreMoviesButton() {
-    dispatch(ActionCreator.resetShowMoreMoviesButton());
-  },
   resetGenre(genre) {
     dispatch(ActionCreator.resetGenre(genre));
   },

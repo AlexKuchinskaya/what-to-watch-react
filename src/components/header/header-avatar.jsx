@@ -5,7 +5,6 @@ import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 
 const AvatarLogin = ({userLoggedInInfo}) => {
-
   const {avatarUrl} = userLoggedInInfo;
   return (
     <div className="user-block" onClick={() => browserHistory.push(`${Routes.MY_LIST}`)}>
