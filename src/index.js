@@ -6,7 +6,6 @@ import {Provider} from 'react-redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import App from './components/app/app';
 import {ActionCreator} from './store/action';
-import {checkAuth} from "./store/api-actions";
 import {redirect} from "./store/middleware/redirect";
 import {createAPI} from "./services/api";
 import {AuthorizationStatus} from './const/utils';
@@ -23,8 +22,6 @@ const store = createStore(
         applyMiddleware(redirect)
     )
 );
-
-store.dispatch(checkAuth());
 
 ReactDOM.render(
     <Provider store={store}>

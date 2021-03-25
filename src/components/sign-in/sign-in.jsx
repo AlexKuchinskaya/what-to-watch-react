@@ -53,7 +53,6 @@ const SignIn = ({onSubmitForm, isErrorAuthorization}) => {
                 placeholder="Email address"
                 name="user-email"
                 id="user-email"
-                required
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>
@@ -65,7 +64,6 @@ const SignIn = ({onSubmitForm, isErrorAuthorization}) => {
                 placeholder="Password"
                 name="user-password"
                 id="user-password"
-                required
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
             </div>

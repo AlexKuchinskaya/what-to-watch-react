@@ -6,7 +6,7 @@ import {user} from './user/user';
 
 export const NameSpace = {
   APP: `APP`,
-  FILMS: `GAME`,
+  FILMS: `FILMS`,
   USER: `USER`
 };
 

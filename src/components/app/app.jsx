@@ -10,13 +10,14 @@ import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
 import {Routes} from '../../const/routes-path';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {fetchFilmList, fetchPromoFilm} from '../../store/api-actions';
+import {initApp} from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import PrivateRoute from '../private-route/private-route';
 import browserHistory from "../../browser-history";
 import {getIsApplicationReady} from '../../store/app-data/selectors';
 
 const App = ({onLoadData, isApplicationReady}) => {
+
   useEffect(() => {
     if (!isApplicationReady) {
       onLoadData();
@@ -69,10 +70,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = (dispatch) => ({
   onLoadData() {
-    dispatch(fetchFilmList());
-  },
-  onLoadPromoFilm() {
-    dispatch(fetchPromoFilm());
+    dispatch(initApp());
   },
 });
 export {App};
