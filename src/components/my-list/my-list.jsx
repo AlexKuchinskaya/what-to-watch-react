@@ -11,6 +11,8 @@ import {fetchFavoriteFilmList} from '../../store/api-actions';
 import PropTypes from 'prop-types';
 import Header from '../header/header';
 import {ExtraClassNames} from '../header/header-class-utils';
+import {getAuthorizationStatus} from '../../store/user/selectors';
+import {getFavoriteFilms} from '../../store/films-data-interaction/selectors';
 
 const MyList = (props) => {
   const {favoriteFilms, authorizationStatus, onLoadFavoriteFilmsList} = props;
@@ -49,9 +51,8 @@ MyList.propTypes = {
 
 const mapStateToProps = (state) => (
   {
-    favoriteFilms: state.favoriteFilms,
-    isFavoriteFilmLoading: state.isFavoriteFilmLoading,
-    authorizationStatus: state.authorizationStatus,
+    favoriteFilms: getFavoriteFilms(state),
+    authorizationStatus: getAuthorizationStatus(state),
   }
 );
 

@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import MovieCard from '../movie-card/movie-card';
 import {FilmsPropType} from '../../types/types';
 import {connect} from 'react-redux';
-import {filterMoviesByGenre} from '../../selectors/selectors';
+
 import PropTypes from 'prop-types';
+import {filterMoviesByGenre} from '../../store/films-data-interaction/selectors';
 
 const FilmList = (props) => {
   const {films, filmsShownCount} = props;

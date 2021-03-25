@@ -1,14 +1,13 @@
 export const ActionType = {
   CHANGE_GENRE: `films/changegenre`,
   RESET_GENRE: `films/resetgenre`,
-  LOAD_FILMS: `data/loadFilms`,
+  LOAD_FILMS: `films/loadFilms`,
   REQUIRED_AUTHORIZATION: `user/requiredauthorization`,
   LOAD_REVIEWS: `films/loadreviews`,
-  LOAD_PROMOFILM: `promofilm/loadpromofilm`,
-  REDIRECT_TO_ROUTE: `app/redirectToRoute`,
+  LOAD_PROMOFILM: `film/loadpromofilm`,
   SET_APPLICATION_READY: `app/setApplicationReady`,
   CHECK_AUTHORIZATION: `user/checkauthorization`,
-  CHECK_ERROR_COMMENT_POSTING: `comments/checkerrorcommentposting`,
+  CHECK_ERROR_COMMENT_POSTING: `films/checkerrorcommentposting`,
   LOAD_USER_INFO: `user/loaduserinfo`,
   LOAD_FAVORITE_FILMS: `films/loadfavoritefilms`,
   POST_FAVORITE_FILM: `films/postfavoritefilm`
@@ -41,10 +40,6 @@ export const ActionCreator = {
   loadPromoFilm: (promofilm) => ({
     type: ActionType.LOAD_PROMOFILM,
     payload: promofilm
-  }),
-  redirectToRoute: (url) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
-    payload: url,
   }),
   checkAuthorization: (bool) => ({
     type: ActionType.CHECK_AUTHORIZATION,

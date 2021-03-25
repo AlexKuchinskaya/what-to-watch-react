@@ -14,6 +14,7 @@ import {fetchFilmList, fetchPromoFilm} from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
 import PrivateRoute from '../private-route/private-route';
 import browserHistory from "../../browser-history";
+import {getIsApplicationReady} from '../../store/app-data/selectors';
 
 const App = ({onLoadData, isApplicationReady}) => {
   useEffect(() => {
@@ -64,8 +65,7 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  promoFilm: state.promoFilm,
-  isApplicationReady: state.isApplicationReady,
+  isApplicationReady: getIsApplicationReady(state),
 });
 const mapDispatchToProps = (dispatch) => ({
   onLoadData() {

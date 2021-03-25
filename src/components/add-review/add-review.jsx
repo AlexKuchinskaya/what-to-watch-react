@@ -3,14 +3,14 @@ import {ratingNumberList} from '../../const/rating-consts';
 import Logo from '../logo/logo';
 import {connect} from "react-redux";
 import {addReview} from "../../store/api-actions";
-import browserHistory from '../../browser-history';
-import {getSelectedFilm} from '../../selectors/selectors';
+import {getIsErrorCommentPosting, getSelectedFilm} from '../../store/films-data-interaction/selectors';
 import {AuthorizationStatus, ReviewLenght} from '../../const/utils';
 import AvatarLogin from '../header/header-avatar';
 import HeaderSignInLink from '../header/header-sign-in-link';
 import PropTypes from 'prop-types';
 import {FilmPropType} from '../../types/types';
 import Header from '../header/header';
+import {getAuthorizationStatus, getUserLoggedInInfo} from '../../store/user/selectors';
 
 
 const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selectedMovie, authorizationStatus}) => {
@@ -152,14 +152,14 @@ const mapStateToProps = (state, ownProps) => (
   {
     movieId: ownProps.match.params.id,
     selectedMovie: getSelectedFilm(state, parseInt(ownProps.match.params.id, 10)),
-    isErrorCommentPosting: state.isErrorCommentPosting,
-    userLoggedInInfo: state.userLoggedInInfo,
-    authorizationStatus: state.authorizationStatus,
+    isErrorCommentPosting: getIsErrorCommentPosting(state),
+    userLoggedInInfo: getUserLoggedInInfo(state),
+    authorizationStatus: getAuthorizationStatus(state),
   });
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmitFormReview(id, reviewData) {
-    dispatch(addReview(id, reviewData, browserHistory));
+    dispatch(addReview(id, reviewData));
   }
 });
 

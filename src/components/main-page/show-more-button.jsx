@@ -12,8 +12,6 @@ const ShowMoreButton = (props) => {
 
 
 ShowMoreButton.propTypes = {
-  // filmsShownCount: PropTypes.number.isRequired,
-  // filteredfilms: FilmsPropType,
   handleShowMoreButton: PropTypes.func.isRequired,
 };
 

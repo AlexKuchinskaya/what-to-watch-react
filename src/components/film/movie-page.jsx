@@ -10,7 +10,6 @@ import MovieReviews from './tab-reviews';
 import MovieOverview from './tab-overview';
 import SimilarMovies from './similar-movies';
 import {connect} from 'react-redux';
-import {getFilmList, getSelectedFilm} from '../../selectors/selectors';
 import {fetchReviewList} from '../../store/api-actions';
 import {FILMS_PATH, Routes} from '../../const/routes-path';
 import {AuthorizationStatus} from '../../const/utils';
@@ -22,6 +21,8 @@ import MyListButton from '../my-list-button/my-list-button';
 import browserHistory from '../../browser-history';
 import Header from '../header/header';
 import {ExtraClassNames} from '../header/header-class-utils';
+import {getAuthorizationStatus} from '../../store/user/selectors';
+import {getFilmList, getReviews, getSelectedFilm} from '../../store/films-data-interaction/selectors';
 
 
 const MoviePage = (props) => {
@@ -126,8 +127,8 @@ const mapStateToProps = (state, ownProps) => (
     movieId: ownProps.match.params.id,
     films: getFilmList(state),
     selectedMovie: getSelectedFilm(state, parseInt(ownProps.match.params.id, 10)),
-    reviews: state.reviews,
-    authorizationStatus: state.authorizationStatus,
+    reviews: getReviews(state),
+    authorizationStatus: getAuthorizationStatus(state),
   }
 );
 

@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import browserHistory from '../../browser-history';
 import {Routes} from '../../const/routes-path';
 import {addNewFavoriteFilm} from '../../store/api-actions';
+import {getAuthorizationStatus} from '../../store/user/selectors';
+import {getIsFilmFavorite} from '../../store/films-data-interaction/selectors';
 
 const MyListButton = ({authorizationStatus, favoriteMovieId, isFilmFavorite, onMyListButtonClick}) => {
 
@@ -38,8 +40,8 @@ MyListButton.propTypes = {
 
 const mapStateToProps = (state) => (
   {
-    authorizationStatus: state.authorizationStatus,
-    isFilmFavorite: state.isFilmFavorite
+    authorizationStatus: getAuthorizationStatus(state),
+    isFilmFavorite: getIsFilmFavorite(state)
   }
 );
 

@@ -1,3 +1,4 @@
+import browserHistory from '../browser-history';
 import {AuthorizationStatus} from '../const/utils';
 import {APIRoute, FILMS_PATH, Routes} from './../const/routes-path';
 import {ActionCreator} from './action';
@@ -42,7 +43,7 @@ export const login = ({login: email, password}) => (dispatch, _getState, api) =>
   api.post(Routes.LOG_IN, {email, password})
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTH)))
     .then(() => dispatch(ActionCreator.checkAuthorization(false)))
-    .then(() => dispatch(ActionCreator.redirectToRoute(Routes.MAIN)))
+    .then(() => browserHistory.goBack())
     .catch((error) => {
       dispatch(ActionCreator.checkAuthorization(true));
       throw error;
@@ -59,7 +60,7 @@ export const fetchUserLoggedInInfo = () => (dispatch, _getState, api) =>
     .then(({data}) => dispatch(ActionCreator.loadUserInfo(data)))
     .catch(() => {});
 
-export const addReview = (id, {rating, comment}, browserHistory) => (dispatch, _getState, api) => {
+export const addReview = (id, {rating, comment}) => (dispatch, _getState, api) => {
   return api.post(`${APIRoute.COMMENTS}/${id}`, {rating, comment})
    .then(() => {
      dispatch(ActionCreator.checkErrorCommentPost(false));

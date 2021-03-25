@@ -5,9 +5,10 @@ import PlayerPlayButtonSvg from './player-play-button';
 import PlayerPauseButtonSvg from './player-pause-button';
 import {setTime} from './player-utils';
 import {connect} from 'react-redux';
-import {getSelectedFilm} from '../../selectors/selectors';
+
 import PropTypes from 'prop-types';
 import browserHistory from '../../browser-history';
+import {getPromoFilm, getSelectedFilm} from '../../store/films-data-interaction/selectors';
 
 const Player = (props) => {
   const {src, poster, isSmallPlayerPlaying, width, height, playSmallVideo, isMovieCardPlayer, selectedMovie} = props;
@@ -146,7 +147,7 @@ Player.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   const {movieId} = ownProps;
   return {
-    promoFilm: state.promoFilm,
+    promoFilm: getPromoFilm(state),
     selectedMovie: getSelectedFilm(state, parseInt(movieId, 10)),
   };
 };

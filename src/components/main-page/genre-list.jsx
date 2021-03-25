@@ -1,8 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {getAllGenresFromState, getCurrentGenreSelector} from '../../selectors/selectors';
+
 import {ActionCreator} from '../../store/action';
 import PropTypes from 'prop-types';
+import {getAllGenresFromState, getCurrentGenreSelector} from '../../store/films-data-interaction/selectors';
 
 const GenreList = (props) => {
   const {allGenres, activeGenre, onGenreClick, resetFilmsCount} = props;

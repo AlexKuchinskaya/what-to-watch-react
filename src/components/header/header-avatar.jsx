@@ -3,6 +3,7 @@ import {Routes} from '../../const/routes-path';
 import browserHistory from "../../browser-history";
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import {getUserLoggedInInfo} from '../../store/user/selectors';
 
 const AvatarLogin = ({userLoggedInInfo}) => {
   const {avatarUrl} = userLoggedInInfo;
@@ -25,7 +26,7 @@ AvatarLogin.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  userLoggedInInfo: state.userLoggedInInfo,
+  userLoggedInInfo: getUserLoggedInInfo(state),
 });
 
 

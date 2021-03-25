@@ -8,7 +8,7 @@ import ShowMoreButton from './show-more-button';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {ActionCreator} from '../../store/action';
-import {filterMoviesByGenre} from '../../selectors/selectors';
+
 import AvatarLogin from '../header/header-avatar';
 import {AuthorizationStatus, MAX_FILMS} from '../../const/utils';
 import HeaderSignInLink from '../header/header-sign-in-link';
@@ -18,6 +18,8 @@ import browserHistory from '../../browser-history';
 import {Routes} from '../../const/routes-path';
 import Header from '../header/header';
 import {ExtraClassNames} from '../header/header-class-utils';
+import {filterMoviesByGenre, getIsFilmFavorite, getPromoFilm} from '../../store/films-data-interaction/selectors';
+import {getAuthorizationStatus} from '../../store/user/selectors';
 
 const MainPage = (props) => {
   const {resetGenre, promoFilm, filteredfilms, authorizationStatus} = props;
@@ -102,10 +104,9 @@ MainPage.propTypes = {
 
 const mapStateToProps = (state) => ({
   filteredfilms: filterMoviesByGenre(state),
-  promoFilm: state.promoFilm,
-  isPromoFilmLoading: state.isDataLoading,
-  authorizationStatus: state.authorizationStatus,
-  isFilmFavorite: state.isFilmFavorite,
+  promoFilm: getPromoFilm(state),
+  authorizationStatus: getAuthorizationStatus(state),
+  isFilmFavorite: getIsFilmFavorite(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
