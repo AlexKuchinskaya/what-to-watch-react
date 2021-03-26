@@ -30,8 +30,3 @@ export const PromoFilmPropType = PropTypes.shape({
   posterImage: PropTypes.string.isRequired,
 });
 
-
-export const filmsListPropTypes = {
-  films: FilmsPropType,
-  promoFilm: PromoFilmPropType
-};

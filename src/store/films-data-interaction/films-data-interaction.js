@@ -14,11 +14,6 @@ const initialState = {
 
 const filmsDataAndInteraction = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.SET_APPLICATION_READY:
-      return {
-        ...state,
-        isApplicationReady: action.payload,
-      };
     case ActionType.LOAD_FILMS:
       return {
         ...state,

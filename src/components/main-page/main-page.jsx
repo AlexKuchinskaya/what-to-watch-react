@@ -106,7 +106,6 @@ const mapStateToProps = (state) => ({
   filteredfilms: filterMoviesByGenre(state),
   promoFilm: getPromoFilm(state),
   authorizationStatus: getAuthorizationStatus(state),
-  isFilmFavorite: getIsFilmFavorite(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
