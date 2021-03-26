@@ -18,7 +18,7 @@ import browserHistory from '../../browser-history';
 import {Routes} from '../../const/routes-path';
 import Header from '../header/header';
 import {ExtraClassNames} from '../header/header-class-utils';
-import {filterMoviesByGenre, getIsFilmFavorite, getPromoFilm} from '../../store/films-data-interaction/selectors';
+import {filterMoviesByGenre, getPromoFilm} from '../../store/films-data-interaction/selectors';
 import {getAuthorizationStatus} from '../../store/user/selectors';
 
 const MainPage = (props) => {
