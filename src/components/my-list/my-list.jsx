@@ -11,14 +11,13 @@ import {fetchFavoriteFilmList} from '../../store/api-actions';
 import PropTypes from 'prop-types';
 import Header from '../header/header';
 import {ExtraClassNames} from '../header/header-class-utils';
+import {getAuthorizationStatus} from '../../store/user/selectors';
+import {getFavoriteFilms} from '../../store/films-data-interaction/selectors';
 
 const MyList = (props) => {
-  const {favoriteFilms, authorizationStatus, onLoadFavoriteFilmsList, isFavoriteFilmLoading} = props;
-
+  const {favoriteFilms, authorizationStatus, onLoadFavoriteFilmsList} = props;
   useEffect(() => {
-    if (!isFavoriteFilmLoading) {
-      onLoadFavoriteFilmsList();
-    }
+    onLoadFavoriteFilmsList();
   }, []);
 
   return (
@@ -46,16 +45,14 @@ const MyList = (props) => {
 
 MyList.propTypes = {
   favoriteFilms: FilmsPropType,
-  isFavoriteFilmLoading: PropTypes.bool.isRequired,
   onLoadFavoriteFilmsList: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => (
   {
-    favoriteFilms: state.favoriteFilms,
-    isFavoriteFilmLoading: state.isFavoriteFilmLoading,
-    authorizationStatus: state.authorizationStatus,
+    favoriteFilms: getFavoriteFilms(state),
+    authorizationStatus: getAuthorizationStatus(state),
   }
 );
 

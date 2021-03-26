@@ -3,21 +3,25 @@ import {ratingNumberList} from '../../const/rating-consts';
 import Logo from '../logo/logo';
 import {connect} from "react-redux";
 import {addReview} from "../../store/api-actions";
-import browserHistory from '../../browser-history';
-import {getSelectedFilm} from '../../selectors/selectors';
+import {getIsErrorCommentPosting, getSelectedFilm} from '../../store/films-data-interaction/selectors';
 import {AuthorizationStatus, ReviewLenght} from '../../const/utils';
 import AvatarLogin from '../header/header-avatar';
 import HeaderSignInLink from '../header/header-sign-in-link';
 import PropTypes from 'prop-types';
 import {FilmPropType} from '../../types/types';
 import Header from '../header/header';
+import {getAuthorizationStatus, getUserLoggedInInfo} from '../../store/user/selectors';
 
 
-const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selectedMovie, isFormDisabled, authorizationStatus}) => {
+const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selectedMovie, authorizationStatus}) => {
   let idNumber = parseInt(movieId, 10);
-
-
+  const [isFormDisabled, setIsFormDisabled] = useState(false);
+  const [rating, setRating] = useState({
+    ratingValue: 0,
+    isRatingChecked: false
+  });
   const [review, setReview] = useState([]);
+  const {ratingValue, isRatingChecked} = rating;
   const handleTextareaChange = (evt) => {
     setReview(evt.target.value);
     if (review.length < ReviewLenght.MIN_LENGHT) {
@@ -30,19 +34,14 @@ const ReviewAdding = ({onSubmitFormReview, isErrorCommentPosting, movieId, selec
     evt.target.reportValidity();
   };
 
-  const [rating, setRating] = useState({
-    ratingValue: 0,
-    isRatingChecked: false
-  });
-
   const handleFilmRatingInput = (evt) => {
     const {value, checked} = evt.target;
     setRating({ratingValue: value, isRatingChecked: checked});
   };
 
-  const {ratingValue, isRatingChecked} = rating;
   const handleSubmit = (evt) => {
     evt.preventDefault();
+    setIsFormDisabled(!isFormDisabled);
     onSubmitFormReview(
         idNumber,
         {
@@ -144,7 +143,6 @@ ReviewAdding.propTypes = {
   selectedMovie: FilmPropType,
   movieId: PropTypes.string.isRequired,
   isErrorCommentPosting: PropTypes.bool.isRequired,
-  isFormDisabled: PropTypes.bool,
   userLoggedInInfo: PropTypes.object.isRequired,
   onSubmitFormReview: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
@@ -154,15 +152,14 @@ const mapStateToProps = (state, ownProps) => (
   {
     movieId: ownProps.match.params.id,
     selectedMovie: getSelectedFilm(state, parseInt(ownProps.match.params.id, 10)),
-    isErrorCommentPosting: state.isErrorCommentPosting,
-    isFormDisabled: state.isFormDisabled,
-    userLoggedInInfo: state.userLoggedInInfo,
-    authorizationStatus: state.authorizationStatus,
+    isErrorCommentPosting: getIsErrorCommentPosting(state),
+    userLoggedInInfo: getUserLoggedInInfo(state),
+    authorizationStatus: getAuthorizationStatus(state),
   });
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmitFormReview(id, reviewData) {
-    dispatch(addReview(id, reviewData, browserHistory));
+    dispatch(addReview(id, reviewData));
   }
 });
 

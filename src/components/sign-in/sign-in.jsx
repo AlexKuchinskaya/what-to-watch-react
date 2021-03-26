@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {login} from "../../store/api-actions";
 import {ExtraClassNames} from '../header/header-class-utils';
 import Header from '../header/header';
+import {getIsErrorAuthorization} from '../../store/user/selectors';
 
 const SignIn = ({onSubmitForm, isErrorAuthorization}) => {
 
@@ -52,7 +53,6 @@ const SignIn = ({onSubmitForm, isErrorAuthorization}) => {
                 placeholder="Email address"
                 name="user-email"
                 id="user-email"
-                required
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-email">Email address</label>
             </div>
@@ -64,7 +64,6 @@ const SignIn = ({onSubmitForm, isErrorAuthorization}) => {
                 placeholder="Password"
                 name="user-password"
                 id="user-password"
-                required
               />
               <label className="sign-in__label visually-hidden" htmlFor="user-password">Password</label>
             </div>
@@ -86,7 +85,7 @@ SignIn.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  isErrorAuthorization: state.isErrorAuthorization,
+  isErrorAuthorization: getIsErrorAuthorization(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

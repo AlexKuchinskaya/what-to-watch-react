@@ -1,16 +1,13 @@
 export const ActionType = {
   CHANGE_GENRE: `films/changegenre`,
-  GET_NEW_FILMLIST_BY_GENRE: `films/getnewfilmlistbygenre`,
   RESET_GENRE: `films/resetgenre`,
-  LOAD_FILMS: `data/loadFilms`,
+  LOAD_FILMS: `films/loadFilms`,
   REQUIRED_AUTHORIZATION: `user/requiredauthorization`,
   LOAD_REVIEWS: `films/loadreviews`,
-  LOAD_PROMOFILM: `promofilm/loadpromofilm`,
-  REDIRECT_TO_ROUTE: `app/redirectToRoute`,
+  LOAD_PROMOFILM: `film/loadpromofilm`,
   SET_APPLICATION_READY: `app/setApplicationReady`,
   CHECK_AUTHORIZATION: `user/checkauthorization`,
-  CHECK_ERROR_COMMENT_POSTING: `comments/checkerrorcommentposting`,
-  SET_FORM_DISABLE: `from/setformdisable`,
+  CHECK_ERROR_COMMENT_POSTING: `films/checkerrorcommentposting`,
   LOAD_USER_INFO: `user/loaduserinfo`,
   LOAD_FAVORITE_FILMS: `films/loadfavoritefilms`,
   POST_FAVORITE_FILM: `films/postfavoritefilm`
@@ -24,9 +21,6 @@ export const ActionCreator = {
   changeGenre: (genre) => ({
     type: ActionType.CHANGE_GENRE,
     payload: genre,
-  }),
-  getNewFilmlistByGenre: () => ({
-    type: ActionType.GET_NEW_FILMLIST_BY_GENRE,
   }),
   resetGenre: () => ({
     type: ActionType.RESET_GENRE,
@@ -47,20 +41,12 @@ export const ActionCreator = {
     type: ActionType.LOAD_PROMOFILM,
     payload: promofilm
   }),
-  redirectToRoute: (url) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
-    payload: url,
-  }),
   checkAuthorization: (bool) => ({
     type: ActionType.CHECK_AUTHORIZATION,
     payload: bool,
   }),
   checkErrorCommentPost: (bool) => ({
     type: ActionType.CHECK_ERROR_COMMENT_POSTING,
-    payload: bool,
-  }),
-  setFormDisable: (bool) => ({
-    type: ActionType.SET_FORM_DISABLE,
     payload: bool,
   }),
   loadUserInfo: (userInfo) => ({
