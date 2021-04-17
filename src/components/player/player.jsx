@@ -3,7 +3,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {FilmPropType} from '../../types/types';
 import PlayerPlayButtonSvg from './player-play-button';
 import PlayerPauseButtonSvg from './player-pause-button';
-import {setTime} from './player-utils';
+import {setTime} from './player-utils.js';
 import {connect} from 'react-redux';
 
 import PropTypes from 'prop-types';

@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {addReview} from "../../store/api-actions";
 import {getIsErrorCommentPosting, getSelectedFilm} from '../../store/films-data-interaction/selectors';
 import {AuthorizationStatus, ReviewLenght} from '../../const/utils';
-import AvatarLogin from '../header/header-avatar';
+import AvatarLogin from '../header/avatar-login';
 import HeaderSignInLink from '../header/header-sign-in-link';
 import PropTypes from 'prop-types';
 import {FilmPropType} from '../../types/types';

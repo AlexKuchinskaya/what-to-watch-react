@@ -5,7 +5,7 @@ import {FilmsPropType} from '../../types/types';
 import Footer from '../footer/footer';
 import {connect} from 'react-redux';
 import {AuthorizationStatus} from '../../const/utils';
-import AvatarLogin from '../header/header-avatar';
+import AvatarLogin from '../header/avatar-login';
 import HeaderSignInLink from '../header/header-sign-in-link';
 import {fetchFavoriteFilmList} from '../../store/api-actions';
 import PropTypes from 'prop-types';

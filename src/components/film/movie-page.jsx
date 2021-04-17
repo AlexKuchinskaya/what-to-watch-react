@@ -13,7 +13,7 @@ import {connect} from 'react-redux';
 import {fetchReviewList} from '../../store/api-actions';
 import {FILMS_PATH, Routes} from '../../const/routes-path';
 import {AuthorizationStatus} from '../../const/utils';
-import AvatarLogin from '../header/header-avatar';
+import AvatarLogin from '../header/avatar-login';
 import HeaderSignInLink from '../header/header-sign-in-link';
 import PropTypes from 'prop-types';
 import NotFoundPage from '../not-found-page/not-found-page';

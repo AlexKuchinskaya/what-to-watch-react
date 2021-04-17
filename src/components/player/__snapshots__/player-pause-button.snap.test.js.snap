@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should PlayerPauseButton render correctly 1`] = `
+<div>
+  <svg
+    height="21"
+    viewBox="0 0 14 21"
+    width="14"
+  >
+    <use
+      xlink:href="#pause"
+    />
+  </svg>
+</div>
+`;

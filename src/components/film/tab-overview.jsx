@@ -1,7 +1,7 @@
 import React from 'react';
-import {checkFilmRating} from './rating-rendering';
 import {FilmPropType} from '../../types/types';
 import {RviewsPropType} from '../../types/reviews-types';
+import {checkFilmRating} from './rating-rendering';
 
 const MovieOverview = ({selectedMovie, reviews}) => {
   const reviewsLength = reviews.length;

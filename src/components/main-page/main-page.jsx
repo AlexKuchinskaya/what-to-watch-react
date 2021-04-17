@@ -7,12 +7,10 @@ import GenreList from './genre-list';
 import ShowMoreButton from './show-more-button';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
-import {ActionCreator} from '../../store/action';
-
-import AvatarLogin from '../header/header-avatar';
+import {resetGenre} from '../../store/action';
+import AvatarLogin from '../header/avatar-login';
 import {AuthorizationStatus, MAX_FILMS} from '../../const/utils';
 import HeaderSignInLink from '../header/header-sign-in-link';
-
 import MyListButton from '../my-list-button/my-list-button';
 import browserHistory from '../../browser-history';
 import {Routes} from '../../const/routes-path';
@@ -22,7 +20,7 @@ import {filterMoviesByGenre, getPromoFilm} from '../../store/films-data-interact
 import {getAuthorizationStatus} from '../../store/user/selectors';
 
 const MainPage = (props) => {
-  const {resetGenre, promoFilm, filteredfilms, authorizationStatus} = props;
+  const {onResetGenre, promoFilm, filteredfilms, authorizationStatus} = props;
 
   const [filmsShownCount, setFilmsShownCount] = useState(MAX_FILMS);
   const handleShowMoreButton = () => {
@@ -36,7 +34,7 @@ const MainPage = (props) => {
 
   useEffect(() => {
     setFilmsShownCount(MAX_FILMS);
-    resetGenre();
+    onResetGenre();
   }, []);
 
   return <>
@@ -98,7 +96,7 @@ const MainPage = (props) => {
 MainPage.propTypes = {
   filteredfilms: FilmsPropType,
   promoFilm: PromoFilmPropType,
-  resetGenre: PropTypes.func.isRequired,
+  onResetGenre: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
 };
 
@@ -109,8 +107,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  resetGenre(genre) {
-    dispatch(ActionCreator.resetGenre(genre));
+  onResetGenre(genre) {
+    dispatch(resetGenre(genre));
   },
 });
 export {MainPage};

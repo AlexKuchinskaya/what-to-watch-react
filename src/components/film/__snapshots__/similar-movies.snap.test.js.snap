@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should SimilarMovies render correctly 1`] = `
+<div>
+  <div
+    class="catalog__movies-list"
+  >
+    <article
+      class="small-movie-card catalog__movies-card"
+    >
+      <div
+        class="small-movie-card__image"
+      >
+        <img
+          alt="Fantastic Beasts: The Crimes of Grindelwald"
+          height="175"
+          src="https://assets.htmlacademy.ru/intensives/javascript-3/film/preview/fantastic-beasts-the-crimes-of-grindelwald.jpg"
+          width="280"
+        />
+      </div>
+      <h3
+        class="small-movie-card__title"
+      >
+        <a
+          class="small-movie-card__link"
+          href="/films/1"
+        >
+          Fantastic Beasts: The Crimes of Grindelwald
+           
+        </a>
+      </h3>
+    </article>
+  </div>
+</div>
+`;

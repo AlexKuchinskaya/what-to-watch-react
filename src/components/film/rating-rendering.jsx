@@ -1,26 +1,29 @@
-const filmRatings = {
+const FilmRatings = {
   BAD: `Bad`,
   NORMAL: `Normal`,
   GOOD: `Good`,
   VERY_GOOD: `Very good`,
   AWESOME: `Awesome`
 };
-const RATING_0 = 1;
-const RATING_3 = 3;
-const RATING_5 = 5;
-const RATING_8 = 8;
-const RATING_10 = 10;
+
+const FilmRatingsNumber = {
+  RATING_0: 0,
+  RATING_3: 3,
+  RATING_5: 5,
+  RATING_8: 8,
+  RATING_10: 10
+};
 
 export const checkFilmRating = (ratingNumber) => {
-  if (ratingNumber >= RATING_0 && ratingNumber < RATING_3) {
-    return filmRatings.BAD;
-  } else if (ratingNumber >= RATING_3 && ratingNumber < RATING_5) {
-    return filmRatings.NORMAL;
-  } else if (ratingNumber > RATING_5 && ratingNumber <= RATING_8) {
-    return filmRatings.GOOD;
-  } else if (ratingNumber > RATING_8 && ratingNumber < RATING_10) {
-    return filmRatings.VERY_GOOD;
+  if (ratingNumber >= FilmRatingsNumber.RATING_0 && ratingNumber < FilmRatingsNumber.RATING_3) {
+    return FilmRatings.BAD;
+  } else if (ratingNumber >= FilmRatingsNumber.RATING_3 && ratingNumber < FilmRatingsNumber.RATING_5) {
+    return FilmRatings.NORMAL;
+  } else if (ratingNumber > FilmRatingsNumber.RATING_5 && ratingNumber <= FilmRatingsNumber.RATING_8) {
+    return FilmRatings.GOOD;
+  } else if (ratingNumber > FilmRatingsNumber.RATING_8 && ratingNumber < FilmRatingsNumber.RATING_10) {
+    return FilmRatings.VERY_GOOD;
   } else {
-    return filmRatings.AWESOME;
+    return FilmRatings.AWESOME;
   }
 };

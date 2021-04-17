@@ -1,7 +1,6 @@
 import {adaptUserLoggedInInfo} from '../../components/server-data-adapter';
 import {AuthorizationStatus} from '../../const/utils';
 import {ActionType} from '../action';
-// import {AuthorizationStatus} from "../const/utils";
 
 const initialState = {
   authorizationStatus: AuthorizationStatus.NO_AUTH,
